@@ -1,4 +1,4 @@
-package board
+package bitboards
 
 // rank4 and rank5 constants represent the 4th and 5th rows on a chess board.
 const (
@@ -9,6 +9,22 @@ const (
 type WhitePawnBitboard BitBoard
 
 type BlackPawnBitboard BitBoard
+
+func (b BlackPawnBitboard) BitBoard() BitBoard {
+	return BitBoard(b)
+}
+
+func (b WhitePawnBitboard) BitBoard() BitBoard {
+	return BitBoard(b)
+}
+
+func (b *BlackPawnBitboard) BitBoardPointer() *BitBoard {
+	return (*BitBoard)(b)
+}
+
+func (b *WhitePawnBitboard) BitBoardPointer() *BitBoard {
+	return (*BitBoard)(b)
+}
 
 func (p WhitePawnBitboard) Moves(empty BitBoard) BitBoard {
 	return p.SinglePushTargets(empty) & p.DoublePushTargets(empty)

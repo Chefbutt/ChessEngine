@@ -1,6 +1,14 @@
-package board
+package bitboards
 
 type QueenBitboard BitBoard
+
+func (b *QueenBitboard) BitBoardPointer() *BitBoard {
+	return (*BitBoard)(b)
+}
+
+func (b QueenBitboard) BitBoard() BitBoard {
+	return BitBoard(b)
+}
 
 // Moves calculates all possible movements for a queen combining both straight and diagonal paths.
 func (q QueenBitboard) Moves(occupancy BitBoard) BitBoard {

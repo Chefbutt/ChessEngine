@@ -17,99 +17,18 @@ func main() {
 
 	b := board.NewBoard()
 
-	b.OccupiedSquares.Display()
+	// 1. e4 e5 2. Nf3 Nc6 3. Bb5 Nf6 4. O-O Bc5 5. Re1 O-O 6. c3 a6 7. Ba4 b5 8. Bc2 Re8 9. d4 exd4 10. cxd4 Bb6 11. e5
+	moves := []string{"e2e4", "e7e5", "g1f3", "b8c6", "f1b5", "g8f6", "e1g1", "f8c5", "f1e1", "e8g8"}
 
-	uci := "e2e4"
-	move := b.UCItoMove(uci)
-
-	b.MakeMove(move)
-
-	fmt.Println()
-	fmt.Println()
-	fmt.Println()
-
-	b.OccupiedSquares.Display()
-
-	uci = "e7e5"
-
-	getPos(b.ToFEN())
-
-	move = b.UCItoMove(uci)
-
-	b.MakeMove(move)
-
-	fmt.Println()
-	fmt.Println()
-	fmt.Println()
-
-	b.OccupiedSquares.Display()
-
-	uci = "g1f3"
-
-	move = b.UCItoMove(uci)
-
-	b.MakeMove(move)
-
-	fmt.Println()
-	fmt.Println()
-	fmt.Println()
-
-	b.OccupiedSquares.Display()
-
-	uci = "b8c6"
-	move = b.UCItoMove(uci)
-
-	b.MakeMove(move)
-
-	fmt.Println()
-	fmt.Println()
-	fmt.Println()
-
-	b.OccupiedSquares.Display()
-
-	uci = "f1b5"
-	move = b.UCItoMove(uci)
-
-	b.MakeMove(move)
-
-	fmt.Println()
-	fmt.Println()
-	fmt.Println()
-
-	b.OccupiedSquares.Display()
-
-	uci = "g8f6"
-	move = b.UCItoMove(uci)
-
-	b.MakeMove(move)
-
-	fmt.Println()
-	fmt.Println()
-	fmt.Println()
-
-	b.OccupiedSquares.Display()
-
-	uci = "e1g1"
-	move = b.UCItoMove(uci)
-
-	b.MakeMove(move)
-
-	fmt.Println()
-	fmt.Println()
-	fmt.Println()
-
-	b.OccupiedSquares.Display()
-
-	fmt.Println(b.ToFEN())
-	// getPos()
-
-	fmt.Println()
-	fmt.Println()
+	for _, move := range moves {
+		err := b.MakeMove(move)
+		if err != nil {
+			panic(err)
+		}
+	}
 
 	// 1 - baltų ėjimas, -1 - juodų
 	fmt.Println("Eval: ", b.Evaluate(0))
-
-	b.OccupiedSquares.Display()
 }
 
 func getPos(fen string) {

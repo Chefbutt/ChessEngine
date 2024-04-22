@@ -1,6 +1,14 @@
-package board
+package bitboards
 
 type BishopBitboard BitBoard
+
+func (b BishopBitboard) BitBoard() BitBoard {
+	return BitBoard(b)
+}
+
+func (b *BishopBitboard) BitBoardPointer() *BitBoard {
+	return (*BitBoard)(b)
+}
 
 // DiagonalMoves calculates all diagonal movement possibilities for a bishop.
 func (b BishopBitboard) Moves(occupancy BitBoard) BitBoard {

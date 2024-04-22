@@ -1,6 +1,14 @@
-package board
+package bitboards
 
 type KnightBitboard BitBoard
+
+func (b *KnightBitboard) BitBoardPointer() *BitBoard {
+	return (*BitBoard)(b)
+}
+
+func (b KnightBitboard) BitBoard() BitBoard {
+	return BitBoard(b)
+}
 
 func (k KnightBitboard) Attacks(otherColorPieces, empty BitBoard) BitBoard {
 	return k.Moves(empty) & otherColorPieces

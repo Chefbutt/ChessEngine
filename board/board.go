@@ -3,30 +3,32 @@ package board
 import (
 	"fmt"
 	"strings"
+
+	"engine/board/bitboards"
 )
 
 // Board holds the state of the game, including piece positions, turn, and move count.
 type Board struct {
-	WhitePawns   WhitePawnBitboard // Bitboard for white pawns
-	BlackPawns   BlackPawnBitboard // Bitboard for black pawns
-	WhiteKnights KnightBitboard    // Bitboard for white knights
-	BlackKnights KnightBitboard    // Bitboard for black knights
-	WhiteBishops BishopBitboard    // Bitboard for white bishops
-	BlackBishops BishopBitboard    // Bitboard for black bishops
-	WhiteRooks   RookBitboard      // Bitboard for white rooks
-	BlackRooks   RookBitboard      // Bitboard for black rooks
-	WhiteQueens  QueenBitboard     // Bitboard for white queens
-	BlackQueens  QueenBitboard     // Bitboard for black queens
-	WhiteKing    KingBitboard      // Bitboard for the white king
-	BlackKing    KingBitboard      // Bitboard for the black king
+	WhitePawns   bitboards.WhitePawnBitboard // Bitboard for white pawns
+	BlackPawns   bitboards.BlackPawnBitboard // Bitboard for black pawns
+	WhiteKnights bitboards.KnightBitboard    // Bitboard for white knights
+	BlackKnights bitboards.KnightBitboard    // Bitboard for black knights
+	WhiteBishops bitboards.BishopBitboard    // Bitboard for white bishops
+	BlackBishops bitboards.BishopBitboard    // Bitboard for black bishops
+	WhiteRooks   bitboards.RookBitboard      // Bitboard for white rooks
+	BlackRooks   bitboards.RookBitboard      // Bitboard for black rooks
+	WhiteQueens  bitboards.QueenBitboard     // Bitboard for white queens
+	BlackQueens  bitboards.QueenBitboard     // Bitboard for black queens
+	WhiteKing    bitboards.KingBitboard      // Bitboard for the white king
+	BlackKing    bitboards.KingBitboard      // Bitboard for the black king
 
-	OccupiedSquares BitBoard // Bitboard for all occupied squares
-	EmptySquares    BitBoard // Bitboard for all empty squares
+	OccupiedSquares bitboards.BitBoard // Bitboard for all occupied squares
+	EmptySquares    bitboards.BitBoard // Bitboard for all empty squares
 
-	WhitePieces BitBoard // Bitboard for all white pieces
-	BlackPieces BitBoard // Bitboard for all black pieces
+	WhitePieces bitboards.BitBoard // Bitboard for all white pieces
+	BlackPieces bitboards.BitBoard // Bitboard for all black pieces
 
-	EnPassantTarget BitBoard // Bitboard for possible en passant capture squares
+	EnPassantTarget bitboards.BitBoard // Bitboard for possible en passant capture squares
 
 	CastlingRights uint8 // Flags for castling rights, encoded as bits
 
@@ -34,9 +36,6 @@ type Board struct {
 
 	Turn int // What is the turn
 }
-
-// BitBoard represents a position on a chess board using a 64-bit integer.
-type BitBoard uint64
 
 func pieceToFEN(piece int) string {
 	switch piece {
@@ -101,60 +100,4 @@ func (board *Board) ToFEN() string {
 	} else {
 		return strings.Join(rankStrings, "/") + " w - -"
 	}
-}
-
-func (b BitBoard) Display() {
-	// Iterate over each row
-	for row := 0; row < 8; row++ {
-		for col := 0; col < 8; col++ {
-			// Calculate the position of the bit to check
-			position := 8*(7-row) + col // bit position from the top left
-			if (b & (1 << position)) != 0 {
-				fmt.Print("1 ")
-			} else {
-				fmt.Print(". ")
-			}
-		}
-		fmt.Println() // New line after each row
-	}
-}
-
-// eastOne shifts the square one position to the right (East) on the board.
-func (s BitBoard) eastOne() BitBoard {
-	return (s >> 1) & 0x7f7f7f7f7f7f7f7f
-}
-
-// westOne shifts the square one position to the left (West) on the board.
-func (s BitBoard) westOne() BitBoard {
-	return (s << 1) & 0xfefefefefefefefe
-}
-
-// northOne shifts the square eight positions up (North) on the board.
-func (s BitBoard) northOne() BitBoard {
-	return s << 8
-}
-
-// southOne shifts the square eight positions down (South) on the board.
-func (s BitBoard) southOne() BitBoard {
-	return s >> 8
-}
-
-// northEastOne shifts north-east for capturing moves.
-func (b BitBoard) northEastOne() BitBoard {
-	return (b << 9) & ^BitBoard(0x0101010101010101) // Exclude a-file wraparounds
-}
-
-// northWestOne shifts north-west for capturing moves.
-func (b BitBoard) northWestOne() BitBoard {
-	return (b << 7) & ^BitBoard(0x8080808080808080) // Exclude h-file wraparounds
-}
-
-// southEastOne shifts south-east for capturing moves.
-func (b BitBoard) southEastOne() BitBoard {
-	return (b >> 7) & ^BitBoard(0x0101010101010101) // Exclude a-file wraparounds
-}
-
-// southWestOne shifts south-west for capturing moves.
-func (b BitBoard) southWestOne() BitBoard {
-	return (b >> 9) & ^BitBoard(0x8080808080808080) // Exclude h-file wraparounds
 }

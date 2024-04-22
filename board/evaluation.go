@@ -1,29 +1,22 @@
 package board
 
-func popCount(b BitBoard) int {
-	count := 0
-	for b != 0 {
-		count++
-		b &= b - 1 // reset least significant bit
-	}
-	return count
-}
+import "engine/board/bitboards"
 
 func (board *Board) materialScore() int {
 	kingWt, queenWt, rookWt, knightWt, bishopWt, pawnWt := 200, 9, 5, 3, 3, 1
 
-	wK := popCount(BitBoard(board.WhiteKing))
-	bK := popCount(BitBoard(board.BlackKing))
-	wQ := popCount(BitBoard(board.WhiteQueens))
-	bQ := popCount(BitBoard(board.BlackQueens))
-	wR := popCount(BitBoard(board.WhiteRooks))
-	bR := popCount(BitBoard(board.BlackRooks))
-	wN := popCount(BitBoard(board.WhiteKnights))
-	bN := popCount(BitBoard(board.BlackKnights))
-	wB := popCount(BitBoard(board.WhiteBishops))
-	bB := popCount(BitBoard(board.BlackBishops))
-	wP := popCount(BitBoard(board.WhitePawns))
-	bP := popCount(BitBoard(board.BlackPawns))
+	wK := board.WhiteKing.BitBoard().PopCount()
+	bK := board.BlackKing.BitBoard().PopCount()
+	wQ := board.WhiteQueens.BitBoard().PopCount()
+	bQ := board.BlackQueens.BitBoard().PopCount()
+	wR := board.WhiteRooks.BitBoard().PopCount()
+	bR := board.BlackRooks.BitBoard().PopCount()
+	wN := board.WhiteKnights.BitBoard().PopCount()
+	bN := board.BlackKnights.BitBoard().PopCount()
+	wB := board.WhiteBishops.BitBoard().PopCount()
+	bB := board.BlackBishops.BitBoard().PopCount()
+	wP := board.WhitePawns.BitBoard().PopCount()
+	bP := board.BlackPawns.BitBoard().PopCount()
 
 	return kingWt*(wK-bK) + queenWt*(wQ-bQ) + rookWt*(wR-bR) + knightWt*(wN-bN) + bishopWt*(wB-bB) + pawnWt*(wP-bP)
 }
@@ -33,15 +26,15 @@ func (board *Board) calculateDoubledPawns() int {
 	// Example for white pawns, same logic applies for black with relevant bitboard
 	doubled := 0
 	for file := 0; file < 8; file++ {
-		fileMask := BitBoard(0x0101010101010101 << file)
-		pawnsInFile := BitBoard(board.WhitePawns) & fileMask
-		if popCount(pawnsInFile) > 1 {
-			doubled += popCount(pawnsInFile) - 1
+		fileMask := bitboards.FileMask(file)
+		pawnsInFile := board.WhitePawns.BitBoard() & fileMask
+		if pawnsInFile.PopCount() > 1 {
+			doubled += pawnsInFile.PopCount() - 1
 		}
 
-		pawnsInFile = BitBoard(board.BlackPawns) & fileMask
-		if popCount(pawnsInFile) > 1 {
-			doubled += popCount(pawnsInFile) + 1
+		pawnsInFile = board.BlackPawns.BitBoard() & fileMask
+		if pawnsInFile.PopCount() > 1 {
+			doubled += pawnsInFile.PopCount() + 1
 		}
 	}
 	return doubled
@@ -49,11 +42,11 @@ func (board *Board) calculateDoubledPawns() int {
 
 func (board *Board) calculateBlockedPawns() int {
 	// Shift white pawns one rank up and check for overlap with occupied squares (both colors)
-	occupied := BitBoard(board.WhitePawns) | BitBoard(board.BlackPawns)
-	blockedWhite := (BitBoard(board.WhitePawns) << 8) & occupied
-	blockedBlack := (BitBoard(board.BlackPawns) >> 8) & occupied
+	occupied := bitboards.BitBoard(board.WhitePawns) | bitboards.BitBoard(board.BlackPawns)
+	blockedWhite := (bitboards.BitBoard(board.WhitePawns) << 8) & occupied
+	blockedBlack := (bitboards.BitBoard(board.BlackPawns) >> 8) & occupied
 
-	return popCount(blockedWhite) + popCount(blockedBlack)
+	return blockedWhite.PopCount() + blockedBlack.PopCount()
 }
 
 func (board *Board) calculateIsolatedPawns() int {
@@ -67,26 +60,26 @@ func (board *Board) calculateIsolatedPawns() int {
 	isolatedWhite &= ^neighborFilesWhite
 	isolatedBlack &= ^neighborFilesBlack
 
-	return popCount(BitBoard(isolatedWhite)) + popCount(BitBoard(isolatedBlack))
+	return isolatedWhite.BitBoard().PopCount() + isolatedBlack.BitBoard().PopCount()
 }
 
 // Calculate mobility score (stub)
 func (board *Board) mobilityScore() int {
 	totalMoves := 0
 
-	totalMoves += popCount(board.WhitePawns.Moves(board.EmptySquares))
-	totalMoves += popCount(board.WhiteKnights.Moves(board.EmptySquares))
-	totalMoves += popCount(board.WhiteBishops.Moves(board.OccupiedSquares))
-	totalMoves += popCount(board.WhiteRooks.Moves(board.OccupiedSquares))
-	totalMoves += popCount(board.WhiteQueens.Moves(board.OccupiedSquares))
-	totalMoves += popCount(board.WhiteKing.Moves(board.EmptySquares))
+	totalMoves += board.WhitePawns.Moves(board.EmptySquares).PopCount()
+	totalMoves += board.WhiteKnights.Moves(board.EmptySquares).PopCount()
+	totalMoves += board.WhiteBishops.Moves(board.OccupiedSquares).PopCount()
+	totalMoves += board.WhiteRooks.Moves(board.OccupiedSquares).PopCount()
+	totalMoves += board.WhiteQueens.Moves(board.OccupiedSquares).PopCount()
+	totalMoves += board.WhiteKing.Moves(board.EmptySquares).PopCount()
 
-	totalMoves -= popCount(board.BlackPawns.Moves(board.EmptySquares))
-	totalMoves -= popCount(board.BlackKnights.Moves(board.EmptySquares))
-	totalMoves -= popCount(board.BlackBishops.Moves(board.OccupiedSquares))
-	totalMoves -= popCount(board.BlackRooks.Moves(board.OccupiedSquares))
-	totalMoves -= popCount(board.BlackQueens.Moves(board.OccupiedSquares))
-	totalMoves -= popCount(board.BlackKing.Moves(board.EmptySquares))
+	totalMoves -= board.BlackPawns.Moves(board.EmptySquares).PopCount()
+	totalMoves -= board.BlackKnights.Moves(board.EmptySquares).PopCount()
+	totalMoves -= board.BlackBishops.Moves(board.OccupiedSquares).PopCount()
+	totalMoves -= board.BlackRooks.Moves(board.OccupiedSquares).PopCount()
+	totalMoves -= board.BlackQueens.Moves(board.OccupiedSquares).PopCount()
+	totalMoves -= board.BlackKing.Moves(board.EmptySquares).PopCount()
 
 	return totalMoves
 }

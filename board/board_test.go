@@ -3,6 +3,8 @@ package board
 import (
 	"fmt"
 	"testing"
+
+	"engine/board/bitboards"
 )
 
 func TestKingAttacks(t *testing.T) {
@@ -14,8 +16,8 @@ func TestKingAttacks(t *testing.T) {
 	// }
 
 	// King at position e1 (the 5th bit in the lowest row)
-	var kingPos BitBoard = 0x10
-	var king KingBitboard = 5 // King piece at index 5, which corresponds to e1
+	var kingPos bitboards.BitBoard = 0x10
+	var king bitboards.KingBitboard = 5 // King piece at index 5, which corresponds to e1
 
 	// board.Pieces[kingPos] = Piece{PieceType: byte(king)}
 	attacks := king.Moves(kingPos)

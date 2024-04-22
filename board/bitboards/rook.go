@@ -1,6 +1,14 @@
-package board
+package bitboards
 
 type RookBitboard BitBoard
+
+func (b RookBitboard) BitBoard() BitBoard {
+	return BitBoard(b)
+}
+
+func (b *RookBitboard) BitBoardPointer() *BitBoard {
+	return (*BitBoard)(b)
+}
 
 // VerticalMoves calculates the vertical movement possibilities for a rook.
 func (r RookBitboard) Moves(occupancy BitBoard) BitBoard {
