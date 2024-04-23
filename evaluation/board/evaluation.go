@@ -1,6 +1,6 @@
 package board
 
-import "engine/board/bitboards"
+import "engine/evaluation/board/bitboards"
 
 func (board *Board) materialScore() int {
 	kingWt, queenWt, rookWt, knightWt, bishopWt, pawnWt := 200, 9, 5, 3, 3, 1
@@ -21,7 +21,6 @@ func (board *Board) materialScore() int {
 	return kingWt*(wK-bK) + queenWt*(wQ-bQ) + rookWt*(wR-bR) + knightWt*(wN-bN) + bishopWt*(wB-bB) + pawnWt*(wP-bP)
 }
 
-// Stub functions for calculating doubled, blocked, and isolated pawns
 func (board *Board) calculateDoubledPawns() int {
 	// Example for white pawns, same logic applies for black with relevant bitboard
 	doubled := 0
@@ -67,19 +66,19 @@ func (board *Board) calculateIsolatedPawns() int {
 func (board *Board) mobilityScore() int {
 	totalMoves := 0
 
-	totalMoves += board.WhitePawns.Moves(board.EmptySquares).PopCount()
-	totalMoves += board.WhiteKnights.Moves(board.EmptySquares).PopCount()
-	totalMoves += board.WhiteBishops.Moves(board.OccupiedSquares).PopCount()
-	totalMoves += board.WhiteRooks.Moves(board.OccupiedSquares).PopCount()
-	totalMoves += board.WhiteQueens.Moves(board.OccupiedSquares).PopCount()
-	totalMoves += board.WhiteKing.Moves(board.EmptySquares).PopCount()
+	totalMoves += board.WhitePawns.Moves(board.EmptySquares, board.BlackPieces, board.EnPassantTarget).PopCount()
+	totalMoves += board.WhiteKnights.Moves(board.EmptySquares, board.BlackPieces).PopCount()
+	totalMoves += board.WhiteBishops.Moves(board.WhitePieces, board.BlackPieces).PopCount()
+	totalMoves += board.WhiteRooks.Moves(board.WhitePieces, board.BlackPieces).PopCount()
+	totalMoves += board.WhiteQueens.Moves(board.WhitePieces, board.BlackPieces).PopCount()
+	totalMoves += board.WhiteKing.Moves(board.EmptySquares, board.BlackPieces).PopCount()
 
-	totalMoves -= board.BlackPawns.Moves(board.EmptySquares).PopCount()
-	totalMoves -= board.BlackKnights.Moves(board.EmptySquares).PopCount()
-	totalMoves -= board.BlackBishops.Moves(board.OccupiedSquares).PopCount()
-	totalMoves -= board.BlackRooks.Moves(board.OccupiedSquares).PopCount()
-	totalMoves -= board.BlackQueens.Moves(board.OccupiedSquares).PopCount()
-	totalMoves -= board.BlackKing.Moves(board.EmptySquares).PopCount()
+	totalMoves -= board.BlackPawns.Moves(board.EmptySquares, board.WhitePieces, board.EnPassantTarget).PopCount()
+	totalMoves -= board.BlackKnights.Moves(board.EmptySquares, board.BlackPieces).PopCount()
+	totalMoves -= board.BlackBishops.Moves(board.BlackPieces, board.WhitePieces).PopCount()
+	totalMoves -= board.BlackRooks.Moves(board.BlackPieces, board.WhitePieces).PopCount()
+	totalMoves -= board.BlackQueens.Moves(board.BlackPieces, board.WhitePieces).PopCount()
+	totalMoves -= board.BlackKing.Moves(board.EmptySquares, board.BlackPieces).PopCount()
 
 	return totalMoves
 }

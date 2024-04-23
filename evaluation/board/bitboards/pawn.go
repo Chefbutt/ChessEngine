@@ -26,8 +26,38 @@ func (b *WhitePawnBitboard) BitBoardPointer() *BitBoard {
 	return (*BitBoard)(b)
 }
 
-func (p WhitePawnBitboard) Moves(empty BitBoard) BitBoard {
-	return p.SinglePushTargets(empty) & p.DoublePushTargets(empty)
+func (p WhitePawnBitboard) Attacks(oppositeColorOccupancy, enPassantTarget BitBoard) BitBoard {
+	return (p.whitePawnEastAttacks() | p.whitePawnWestAttacks()) & (oppositeColorOccupancy | enPassantTarget)
+}
+
+func (p WhitePawnBitboard) Moves(empty, oppositeColorOccupancy, enPassantTarget BitBoard) BitBoard {
+	return p.SinglePushTargets(empty) | p.DoublePushTargets(empty) | ((p.whitePawnEastAttacks() | p.whitePawnWestAttacks()) & (oppositeColorOccupancy | enPassantTarget))
+}
+
+func (b WhitePawnBitboard) MovesByPiece(empty, oppositeColorOccupancy, enPassantTarget BitBoard) map[BitBoard]BitBoard {
+	pawns := b.BitBoard().Split()
+	moves := make(map[BitBoard]BitBoard)
+
+	for _, pawn := range pawns {
+		moves[pawn] = WhitePawnBitboard(pawn).Moves(empty, oppositeColorOccupancy, enPassantTarget)
+	}
+
+	return moves
+}
+
+func (b BlackPawnBitboard) MovesByPiece(empty, oppositeColorOccupancy, enPassantTarget BitBoard) map[BitBoard]BitBoard {
+	pawns := b.BitBoard().Split()
+	moves := make(map[BitBoard]BitBoard)
+
+	for _, pawn := range pawns {
+		moves[pawn] = BlackPawnBitboard(pawn).Moves(empty, oppositeColorOccupancy, enPassantTarget)
+	}
+
+	return moves
+}
+
+func (p BlackPawnBitboard) Attacks(oppositeColorOccupancy, enPassantTarget BitBoard) BitBoard {
+	return (p.eastAttacks() | p.westAttacks()) & (oppositeColorOccupancy | enPassantTarget)
 }
 
 // whiteSinglePushTargets calculates the targets for white pawns that can move forward one square.
@@ -51,8 +81,18 @@ func (p WhitePawnBitboard) whitePawnWestAttacks() BitBoard {
 	return BitBoard(p).northWestOne()
 }
 
-func (p BlackPawnBitboard) Moves(empty BitBoard) BitBoard {
-	return p.SinglePushTargets(empty) & p.DoublePushTargets(empty)
+func (p BlackPawnBitboard) Moves(empty, oppositeColorOccupancy, enPassantTarget BitBoard) BitBoard {
+	return p.SinglePushTargets(empty) | p.DoublePushTargets(empty) | ((p.eastAttacks() | p.westAttacks()) & (oppositeColorOccupancy | enPassantTarget))
+}
+
+// whitePawnEastAttacks computes the eastward attacks for white pawns.
+func (p BlackPawnBitboard) eastAttacks() BitBoard {
+	return BitBoard(p).southEastOne()
+}
+
+// wPawnWestAttacks computes the westward attacks for white pawns.
+func (p BlackPawnBitboard) westAttacks() BitBoard {
+	return BitBoard(p).southWestOne()
 }
 
 // blackSinglePushTargets calculates the targets for black pawns that can move forward one square.

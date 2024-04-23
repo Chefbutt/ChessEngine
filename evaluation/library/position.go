@@ -1,4 +1,4 @@
-package position
+package library
 
 import (
 	"bufio"
@@ -11,7 +11,7 @@ import (
 	"strings"
 	"unicode"
 
-	"engine/position/json_converter"
+	"engine/evaluation/library/json_converter"
 )
 
 type StoredPosition struct {
