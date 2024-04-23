@@ -43,7 +43,7 @@ func (board Board) InCheck() bool {
 	if board.TurnBlack {
 		return (board.WhiteAttacks() | bitboards.BitBoard(board.BlackKing)) != 0
 	} else {
-		return (board.BlackAttacks() | bitboards.BitBoard(board.BlackKing)) != 0
+		return (board.BlackAttacks() | bitboards.BitBoard(board.WhiteKing)) != 0
 	}
 }
 
