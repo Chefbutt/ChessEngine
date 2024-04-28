@@ -6,7 +6,6 @@ import (
 	"log"
 	"time"
 
-	"engine/evaluation"
 	"engine/evaluation/board"
 	"engine/evaluation/library"
 )
@@ -24,33 +23,6 @@ func main() {
 
 	for _, move := range moves {
 		b.MakeMove(move)
-
-		evaluation.Evaluate(b)
-		// if !b.TurnBlack {
-		// 	// reader := bufio.NewReader(os.Stdin)
-		// 	// userMove, err := reader.ReadString('\n')
-		// 	// if err != nil {
-		// 	// 	fmt.Println("Failed to read move:", err)
-		// 	// 	return
-		// 	// }
-		// 	// userMove = userMove[:len(userMove)-1] // Remove newline character
-		// 	err := b.MakeMove(moves[0])
-		// 	if err != nil {
-		// 		fmt.Println("Invalid move:", err)
-		// 		return
-		// 	}
-		// } else {
-		// 	move, err := evaluation.Evaluate(b)
-		// 	if err != nil {
-		// 		fmt.Println("Error making move:", err)
-		// 		return
-		// 	}
-		// 	err = b.MakeNativeMove(move)
-		// 	if err != nil {
-		// 		fmt.Println("Invalid move:", err)
-		// 		return
-		// 	}
-		// }
 	}
 }
 

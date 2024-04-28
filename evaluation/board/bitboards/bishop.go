@@ -128,8 +128,9 @@ func (b BishopBitboard) diagonalNorthEastMoves(sameColorOccupancy, oppositeColor
 		}
 
 		if pos&sameColorOccupancy != 0 { // Check for blockage
-			// moves |= pos // Include the blocking piece's square
-			break
+			pos = pos & (pos ^ sameColorOccupancy)
+			moves |= pos & (pos ^ sameColorOccupancy)
+			continue
 		}
 		if pos&oppositeColorOccupancy != 0 { // Check for blockage
 			moves |= pos // Include the blocking piece's square
@@ -152,8 +153,9 @@ func (b BishopBitboard) diagonalNorthWestMoves(sameColorOccupancy, oppositeColor
 		}
 
 		if pos&sameColorOccupancy != 0 { // Check for blockage
-			// moves |= pos // Include the blocking piece's square
-			break
+			pos = pos & (pos ^ sameColorOccupancy)
+			moves |= pos & (pos ^ sameColorOccupancy)
+			continue
 		}
 		if pos&oppositeColorOccupancy != 0 { // Check for blockage
 			moves |= pos // Include the blocking piece's square
@@ -176,9 +178,11 @@ func (b BishopBitboard) diagonalSouthEastMoves(sameColorOccupancy, oppositeColor
 		}
 
 		if pos&sameColorOccupancy != 0 { // Check for blockage
-			// moves |= pos // Include the blocking piece's square
-			break
+			pos = pos & (pos ^ sameColorOccupancy)
+			moves |= pos & (pos ^ sameColorOccupancy)
+			continue
 		}
+
 		if pos&oppositeColorOccupancy != 0 { // Check for blockage
 			moves |= pos // Include the blocking piece's square
 			break
@@ -200,8 +204,9 @@ func (b BishopBitboard) diagonalSouthWestMoves(sameColorOccupancy, oppositeColor
 		}
 
 		if pos&sameColorOccupancy != 0 { // Check for blockage
-			// moves |= pos // Include the blocking piece's square
-			break
+			pos = pos & (pos ^ sameColorOccupancy)
+			moves |= pos & (pos ^ sameColorOccupancy)
+			continue
 		}
 		if pos&oppositeColorOccupancy != 0 { // Check for blockage
 			moves |= pos // Include the blocking piece's square

@@ -13,14 +13,14 @@ func (b *KingBitboard) BitBoardPointer() *BitBoard {
 
 func (k KingBitboard) Attacks(oppositeColorOccupancy BitBoard) BitBoard {
 	kingPos := BitBoard(k)
-	moves := kingPos.eastOne() | kingPos.westOne() | kingPos.northOne() | kingPos.southOne()
+	moves := kingPos.eastOne() | kingPos.westOne() | kingPos.northOne() | kingPos.southOne() | kingPos.southEastOne() | kingPos.southWestOne() | kingPos.northEastOne() | kingPos.northWestOne()
 	return moves & oppositeColorOccupancy
 }
 
 // Moves calculates all possible attack positions for a king from a given position.
 func (k KingBitboard) Moves(empty, oppositeColorOccupancy BitBoard) BitBoard {
 	kingPos := BitBoard(k)
-	moves := kingPos.eastOne() | kingPos.westOne() | kingPos.northOne() | kingPos.southOne()
+	moves := kingPos.eastOne() | kingPos.westOne() | kingPos.northOne() | kingPos.southOne() | kingPos.southEastOne() | kingPos.southWestOne() | kingPos.northEastOne() | kingPos.northWestOne()
 	return moves & (oppositeColorOccupancy | empty)
 }
 

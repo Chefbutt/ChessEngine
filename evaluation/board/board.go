@@ -45,8 +45,13 @@ type Board struct {
 
 	EnPassantTarget bitboards.BitBoard // Bitboard for possible en passant capture squares
 
-	CastleBlack bool
-	CastleWhite bool
+	CastleBlackKingside  bool
+	CastleBlackQueenside bool
+	CastleWhiteKingside  bool
+	CastleWhiteQueenside bool
+
+	BlackCastled bool
+	WhiteCastled bool
 
 	TurnBlack bool // Flag to indicate if it's black's turn to move
 
@@ -75,34 +80,36 @@ func New() Board {
 	occupiedSquares := bitboards.BitBoard(0xFFFF00000000FFFF)
 	emptySquares := ^occupiedSquares
 
-	whitePieces := bitboards.BitBoard(0xFFFF000000000000)
-	blackPieces := bitboards.BitBoard(0x000000000000FFFF)
+	whitePieces := bitboards.BitBoard(0x000000000000FFFF)
+	blackPieces := bitboards.BitBoard(0xFFFF000000000000)
 
 	enPassantTarget := bitboards.BitBoard(0)
 
 	turnBlack := false
 
 	return Board{
-		WhitePawns:      whitePawns,
-		BlackPawns:      blackPawns,
-		WhiteKnights:    whiteKnights,
-		BlackKnights:    blackKnights,
-		WhiteBishops:    whiteBishops,
-		BlackBishops:    blackBishops,
-		WhiteRooks:      whiteRooks,
-		BlackRooks:      blackRooks,
-		WhiteQueens:     whiteQueens,
-		BlackQueens:     blackQueens,
-		WhiteKing:       whiteKing,
-		BlackKing:       blackKing,
-		OccupiedSquares: occupiedSquares,
-		EmptySquares:    emptySquares,
-		WhitePieces:     whitePieces,
-		BlackPieces:     blackPieces,
-		EnPassantTarget: enPassantTarget,
-		CastleBlack:     true,
-		CastleWhite:     true,
-		TurnBlack:       turnBlack,
+		WhitePawns:           whitePawns,
+		BlackPawns:           blackPawns,
+		WhiteKnights:         whiteKnights,
+		BlackKnights:         blackKnights,
+		WhiteBishops:         whiteBishops,
+		BlackBishops:         blackBishops,
+		WhiteRooks:           whiteRooks,
+		BlackRooks:           blackRooks,
+		WhiteQueens:          whiteQueens,
+		BlackQueens:          blackQueens,
+		WhiteKing:            whiteKing,
+		BlackKing:            blackKing,
+		OccupiedSquares:      occupiedSquares,
+		EmptySquares:         emptySquares,
+		WhitePieces:          whitePieces,
+		BlackPieces:          blackPieces,
+		EnPassantTarget:      enPassantTarget,
+		CastleBlackKingside:  true,
+		CastleBlackQueenside: true,
+		CastleWhiteKingside:  true,
+		CastleWhiteQueenside: true,
+		TurnBlack:            turnBlack,
 	}
 }
 
@@ -162,29 +169,29 @@ func pieceToFEN(piece int) string {
 func (board *Board) PieceAt(index int) int {
 	indexMask := bitboards.New(index)
 
-	if (board.WhitePawns.BitBoard() & indexMask) != 0 {
+	if (board.WhitePawns.BitBoard() & indexMask) > 0 {
 		return WhitePawn
-	} else if (board.BlackPawns.BitBoard() & indexMask) != 0 {
+	} else if (board.BlackPawns.BitBoard() & indexMask) > 0 {
 		return BlackPawn
-	} else if (board.WhiteKnights.BitBoard() & indexMask) != 0 {
+	} else if (board.WhiteKnights.BitBoard() & indexMask) > 0 {
 		return WhiteKnight
-	} else if (board.BlackKnights.BitBoard() & indexMask) != 0 {
+	} else if (board.BlackKnights.BitBoard() & indexMask) > 0 {
 		return BlackKnight
-	} else if (board.WhiteBishops.BitBoard() & indexMask) != 0 {
+	} else if (board.WhiteBishops.BitBoard() & indexMask) > 0 {
 		return WhiteBishop
-	} else if (board.BlackBishops.BitBoard() & indexMask) != 0 {
+	} else if (board.BlackBishops.BitBoard() & indexMask) > 0 {
 		return BlackBishop
-	} else if (board.WhiteRooks.BitBoard() & indexMask) != 0 {
+	} else if (board.WhiteRooks.BitBoard() & indexMask) > 0 {
 		return WhiteRook
-	} else if (board.BlackRooks.BitBoard() & indexMask) != 0 {
+	} else if (board.BlackRooks.BitBoard() & indexMask) > 0 {
 		return BlackRook
-	} else if (board.WhiteQueens.BitBoard() & indexMask) != 0 {
+	} else if (board.WhiteQueens.BitBoard() & indexMask) > 0 {
 		return WhiteQueen
-	} else if (board.BlackQueens.BitBoard() & indexMask) != 0 {
+	} else if (board.BlackQueens.BitBoard() & indexMask) > 0 {
 		return BlackQueen
-	} else if (board.WhiteKing.BitBoard() & indexMask) != 0 {
+	} else if (board.WhiteKing.BitBoard() & indexMask) > 0 {
 		return WhiteKing
-	} else if (board.BlackKing.BitBoard() & indexMask) != 0 {
+	} else if (board.BlackKing.BitBoard() & indexMask) > 0 {
 		return BlackKing
 	}
 
@@ -267,3 +274,8 @@ func (b *Board) isOccupied(pos int) bool {
 	occupiedMask := bitboards.New(pos)
 	return (b.OccupiedSquares & occupiedMask) != 0
 }
+
+// func (b *Board) IsAttacked(pos int, attackedSquares bitboards.BitBoard) bool {
+// 	occupiedMask := bitboards.New(pos)
+// 	return (attackedSquares & occupiedMask) != 0
+// }

@@ -1,6 +1,10 @@
 package board
 
-import "engine/evaluation/board/bitboards"
+import (
+	"math/bits"
+
+	"engine/evaluation/board/bitboards"
+)
 
 const (
 	WhitePawn = iota
@@ -24,6 +28,8 @@ const (
 
 	CastleQueenside
 	Promotion
+
+	Check
 )
 
 type Move struct {
@@ -32,27 +38,226 @@ type Move struct {
 	Piece          int // Use constants to define pieces
 	CapturedPiece  int
 	MoveType       int // Use constants to define move types
+	IsCheck        bool
 	PromotionPiece int // Added for promotion clarity
 }
 
 func (m Move) IsValid() bool {
-	return m.Source != m.Destination && m.Piece != -1 && m.MoveType != -1
+	return m.Source != m.Destination && m.Piece == -1 && m.MoveType != -1
 }
 
-func (board Board) InCheck() bool {
+func (board Board) KingInPlayAndOpponentAttacks() (bitboards.BitBoard, bitboards.BitBoard) {
 	if board.TurnBlack {
-		return (board.WhiteAttacks() | bitboards.BitBoard(board.BlackKing)) != 0
+		return board.BlackKing.BitBoard(), board.WhiteAttacksMinimal()
 	} else {
-		return (board.BlackAttacks() | bitboards.BitBoard(board.WhiteKing)) != 0
+		return board.WhiteKing.BitBoard(), board.BlackAttacksMinimal()
 	}
 }
 
-func (board Board) WhiteAttacks() bitboards.BitBoard {
-	return board.WhiteBishops.Attacks(board.WhitePieces, board.BlackPieces) | board.WhiteKing.Attacks(board.BlackPieces) | board.WhiteKnights.Attacks(board.BlackPieces) | board.WhitePawns.Attacks(board.BlackPieces, board.EnPassantTarget) | board.WhiteQueens.Attacks(board.WhitePieces, board.BlackPieces) | board.WhiteRooks.Attacks(board.WhitePieces, board.BlackPieces)
+func (board Board) IsAttacked(square, attackedSquares bitboards.BitBoard) bool {
+	if board.TurnBlack {
+		return attackedSquares&square != 0
+	} else {
+		return attackedSquares&square != 0
+	}
 }
 
-func (board Board) BlackAttacks() bitboards.BitBoard {
-	return board.BlackBishops.Attacks(board.BlackPieces, board.WhitePieces) | board.BlackKing.Attacks(board.WhitePieces) | board.BlackKnights.Attacks(board.WhitePieces) | board.BlackPawns.Attacks(board.WhitePieces, board.EnPassantTarget) | board.BlackQueens.Attacks(board.BlackPieces, board.WhitePieces) | board.BlackRooks.Attacks(board.BlackPieces, board.WhitePieces)
+func (board Board) FromToToMove(from, to bitboards.BitBoard) Move {
+	var enemySquares bitboards.BitBoard
+	if board.TurnBlack {
+		enemySquares = board.WhitePieces
+	} else {
+		enemySquares = board.BlackPieces
+	}
+	if enemySquares&to != 0 {
+		return Move{Source: bits.TrailingZeros64(uint64(from)), Destination: bits.TrailingZeros64(uint64(to)), MoveType: Capture, Piece: board.PieceAt(bits.TrailingZeros64(uint64(from))), CapturedPiece: board.PieceAt(bits.TrailingZeros64(uint64(to)))}
+	}
+	return Move{Source: bits.TrailingZeros64(uint64(from)), Destination: bits.TrailingZeros64(uint64(to)), MoveType: NormalMove, Piece: board.PieceAt(bits.TrailingZeros64(uint64(from)))}
+}
+
+func StopCheck(board Board, allMoves map[bitboards.BitBoard][]bitboards.BitBoard) map[bitboards.BitBoard][]bitboards.BitBoard {
+	viableBlocks := make(map[bitboards.BitBoard][]bitboards.BitBoard)
+	if board.TurnBlack {
+		for piecePos, moves := range allMoves {
+			var pieceMoves []bitboards.BitBoard
+			for _, move := range moves {
+				tempBoard := board
+				tempBoard.makeMove(tempBoard.FromToToMove(piecePos, move))
+				attacked, _ := tempBoard.WhiteAttacks()
+				if !tempBoard.IsAttacked(board.BlackKing.BitBoard(), attacked) {
+					pieceMoves = append(pieceMoves, move)
+				}
+			}
+			if len(pieceMoves) > 0 {
+				viableBlocks[piecePos] = pieceMoves
+			}
+		}
+	} else {
+		for piecePos, moves := range allMoves {
+			var pieceMoves []bitboards.BitBoard
+			for _, move := range moves {
+				tempBoard := board
+				tempBoard.makeMove(tempBoard.FromToToMove(piecePos, move))
+				attacked, _ := tempBoard.BlackAttacks()
+				if !tempBoard.IsAttacked(board.WhiteKing.BitBoard(), attacked) {
+					pieceMoves = append(pieceMoves, move)
+				}
+			}
+			if len(pieceMoves) > 0 {
+				viableBlocks[piecePos] = pieceMoves
+			}
+		}
+	}
+	return viableBlocks
+}
+
+func (board Board) BitBoardMapToMove(opposingColor bitboards.BitBoard, moves map[bitboards.BitBoard][]bitboards.BitBoard) []Move {
+	var moveSlice []Move
+	for from, toSlice := range moves {
+		for _, to := range toSlice {
+			moveSlice = append(moveSlice, Move{
+				Source:      int(bits.TrailingZeros64(uint64(from))),
+				Destination: int(bits.TrailingZeros64(uint64(to))),
+			})
+		}
+	}
+	return moveSlice
+}
+
+func (board Board) WhiteAttacks() (bitboards.BitBoard, int) {
+	attacks := bitboards.NewFull()
+	count := 0
+	if bishop := board.WhiteBishops.Moves(board.WhitePieces, board.BlackPieces); bishop != 0 {
+		attacks = attacks | bishop
+		count++
+	}
+	if bishop := board.WhiteKing.Moves(board.WhitePieces, board.BlackPieces); bishop != 0 {
+		attacks = attacks | bishop
+		count++
+	}
+	if bishop := board.WhiteKnights.Moves(board.EmptySquares, board.BlackPieces); bishop != 0 {
+		attacks = attacks | bishop
+		count++
+	}
+	if bishop := board.WhitePawns.Attacks(); bishop != 0 {
+		attacks = attacks | bishop
+		count++
+	}
+	if bishop := board.WhiteQueens.Moves(board.WhitePieces, board.BlackPieces); bishop != 0 {
+		attacks = attacks | bishop
+		count++
+	}
+	if bishop := board.WhiteRooks.Moves(board.WhitePieces, board.BlackPieces); bishop != 0 {
+		attacks = attacks | bishop
+		count++
+	}
+	return attacks, count
+}
+
+func (board Board) WhiteAttacksMinimal() bitboards.BitBoard {
+	attacks := bitboards.NewFull()
+	if bishop := board.WhiteBishops.Moves(board.WhitePieces, board.BlackPieces); bishop != 0 {
+		attacks = attacks | bishop
+	}
+	if bishop := board.WhiteKing.Moves(board.WhitePieces, board.BlackPieces); bishop != 0 {
+		attacks = attacks | bishop
+	}
+	if bishop := board.WhiteKnights.Moves(board.EmptySquares, board.BlackPieces); bishop != 0 {
+		attacks = attacks | bishop
+	}
+	if bishop := board.WhitePawns.Attacks(); bishop != 0 {
+		attacks = attacks | bishop
+	}
+	if bishop := board.WhiteQueens.Moves(board.WhitePieces, board.BlackPieces); bishop != 0 {
+		attacks = attacks | bishop
+	}
+	if bishop := board.WhiteRooks.Moves(board.WhitePieces, board.BlackPieces); bishop != 0 {
+		attacks = attacks | bishop
+	}
+	return attacks
+}
+
+func (board Board) BlackAttacks() (bitboards.BitBoard, int) {
+	attacks := bitboards.New(0)
+	count := 0
+	if bishop := board.BlackBishops.Moves(board.BlackPieces, board.WhitePieces); bishop != 0 {
+		attacks = attacks | bishop
+		count++
+	}
+	if bishop := board.BlackKing.Moves(board.EmptySquares, board.WhitePieces); bishop != 0 {
+		attacks = attacks | bishop
+		count++
+	}
+	if bishop := board.BlackKnights.Moves(board.EmptySquares, board.WhitePieces); bishop != 0 {
+		attacks = attacks | bishop
+		count++
+	}
+	if bishop := board.BlackPawns.Attacks(); bishop != 0 {
+		attacks = attacks | bishop
+		count++
+	}
+	if bishop := board.BlackQueens.Moves(board.BlackPieces, board.WhitePieces); bishop != 0 {
+		attacks = attacks | bishop
+		count++
+	}
+	if bishop := board.BlackRooks.Moves(board.BlackPieces, board.WhitePieces); bishop != 0 {
+		attacks = attacks | bishop
+		count++
+	}
+	return attacks, count
+}
+
+func (board Board) BlackAttacksMinimal() bitboards.BitBoard {
+	attacks := bitboards.New(0)
+	if bishop := board.BlackBishops.Moves(board.BlackPieces, board.WhitePieces); bishop != 0 {
+		attacks = attacks | bishop
+	}
+	if bishop := board.BlackKing.Moves(board.EmptySquares, board.WhitePieces); bishop != 0 {
+		attacks = attacks | bishop
+	}
+	if bishop := board.BlackKnights.Moves(board.EmptySquares, board.WhitePieces); bishop != 0 {
+		attacks = attacks | bishop
+	}
+	if bishop := board.BlackPawns.Attacks(); bishop != 0 {
+		attacks = attacks | bishop
+	}
+	if bishop := board.BlackQueens.Moves(board.BlackPieces, board.WhitePieces); bishop != 0 {
+		attacks = attacks | bishop
+	}
+	if bishop := board.BlackRooks.Moves(board.BlackPieces, board.WhitePieces); bishop != 0 {
+		attacks = attacks | bishop
+	}
+	return attacks
+}
+
+func (board Board) availableCastles() map[bitboards.BitBoard]bitboards.BitBoard {
+	kingMoves := make(map[bitboards.BitBoard]bitboards.BitBoard)
+	if board.TurnBlack {
+		attacked, _ := board.WhiteAttacks()
+		if board.CastleBlackKingside && !board.isOccupied(bits.TrailingZeros64(uint64(board.BlackKing>>1))) && !board.isOccupied(bits.TrailingZeros64(uint64(board.BlackKing>>2))) && !board.IsAttacked((board.BlackKing>>1).BitBoard(), attacked) && !board.IsAttacked((board.BlackKing>>2).BitBoard(), attacked) {
+			kingMoves[board.BlackKing.BitBoard()] = (board.BlackKing >> 2).BitBoard()
+		}
+		if board.CastleBlackKingside && !board.isOccupied(bits.TrailingZeros64(uint64(board.BlackKing<<1))) && !board.isOccupied(bits.TrailingZeros64(uint64(board.BlackKing<<2))) && !board.IsAttacked((board.BlackKing<<1).BitBoard(), attacked) && !board.IsAttacked((board.BlackKing<<2).BitBoard(), attacked) {
+			if _, ok := kingMoves[board.BlackKing.BitBoard()]; ok {
+				kingMoves[board.BlackKing.BitBoard()] = kingMoves[board.BlackKing.BitBoard()] & (board.BlackKing << 2).BitBoard()
+			} else {
+				kingMoves[board.BlackKing.BitBoard()] = (board.BlackKing << 2).BitBoard()
+			}
+		}
+	} else {
+		attacked, _ := board.BlackAttacks()
+		if board.CastleWhiteKingside && !board.isOccupied(bits.TrailingZeros64(uint64(board.WhiteKing>>1))) && !board.isOccupied(bits.TrailingZeros64(uint64(board.WhiteKing>>2))) && !board.IsAttacked((board.WhiteKing>>1).BitBoard(), attacked) && !board.IsAttacked((board.WhiteKing>>2).BitBoard(), attacked) {
+			kingMoves[board.WhiteKing.BitBoard()] = (board.WhiteKing >> 2).BitBoard()
+		}
+		if board.CastleWhiteQueenside && !board.isOccupied(bits.TrailingZeros64(uint64(board.WhiteKing<<1))) && !board.isOccupied(bits.TrailingZeros64(uint64(board.WhiteKing<<2))) && !board.IsAttacked((board.WhiteKing<<1).BitBoard(), attacked) && !board.IsAttacked((board.WhiteKing<<2).BitBoard(), attacked) {
+			if _, ok := kingMoves[board.WhiteKing.BitBoard()]; ok {
+				kingMoves[board.WhiteKing.BitBoard()] = kingMoves[board.WhiteKing.BitBoard()] & (board.WhiteKing << 2).BitBoard()
+			} else {
+				kingMoves[board.WhiteKing.BitBoard()] = (board.WhiteKing << 2).BitBoard()
+			}
+		}
+	}
+	return kingMoves
 }
 
 func (board Board) RegularMoves() map[bitboards.BitBoard][]bitboards.BitBoard {
@@ -94,6 +299,12 @@ func (board Board) RegularMoves() map[bitboards.BitBoard][]bitboards.BitBoard {
 				moveMap[src] = moveBitboards
 			}
 		}
+		for src, kingMoves := range board.availableCastles() {
+			moveBitboards := kingMoves.Split()
+			if len(moveBitboards) != 0 {
+				moveMap[src] = append(moveMap[src], moveBitboards...)
+			}
+		}
 	} else {
 		for src, pawnMoves := range board.WhitePawns.MovesByPiece(board.EmptySquares, board.BlackPieces, board.EnPassantTarget) {
 			moveBitboards := pawnMoves.Split()
@@ -129,6 +340,12 @@ func (board Board) RegularMoves() map[bitboards.BitBoard][]bitboards.BitBoard {
 			moveBitboards := kingMoves.Split()
 			if len(moveBitboards) != 0 {
 				moveMap[src] = moveBitboards
+			}
+		}
+		for src, kingMoves := range board.availableCastles() {
+			moveBitboards := kingMoves.Split()
+			if len(moveBitboards) != 0 {
+				moveMap[src] = append(moveMap[src], moveBitboards...)
 			}
 		}
 	}

@@ -70,6 +70,10 @@ func (b BitBoard) Split() []BitBoard {
 	return bitboards
 }
 
+func NewFull() BitBoard {
+	return BitBoard(0)
+}
+
 func New(mask int) BitBoard {
 	return BitBoard(1) << mask
 }
