@@ -172,7 +172,7 @@ func (board *Board) Evaluate() int {
 	mobilityBonus := 0.2 * float64(mobility)
 	centreBonus := 29 * float64(centre)
 	knightBonus := 5 * float64(misplacedKnights)
-	safety := 4.5 * float64(kingSafety)
+	safety := 2.5 * float64(kingSafety)
 
 	score := float64(material) + pawnPenalties + mobilityBonus + centreBonus + safety + knightBonus
 

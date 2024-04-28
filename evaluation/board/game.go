@@ -13,10 +13,31 @@ func IndexToPosition(bitboard uint64) string {
 	return string('a'+rune(rank)) + string('1'+rune(file))
 }
 
+func (board *Board) MakeHumanMove(move string) error {
+	parsedMove := board.UCItoMove(move)
+
+	// bestMove, eval := board.BestMove(12, OrderedMoves)
+
+	// fmt.Print(PieceSymbols[board.PieceAt(int(bestMove.Source))], "(", IndexToPosition(uint64(bestMove.Source)), "): ", IndexToPosition(uint64(bestMove.Destination)), " ", eval)
+
+	_, err := board.makeMove(parsedMove)
+	if err != nil {
+		return err
+	}
+
+	// board.EvaluationDetails()
+
+	fmt.Println()
+
+	board.Display()
+
+	return nil
+}
+
 func (board *Board) MakeMove(move string) error {
 	// parsedMove := board.UCItoMove(move)
 
-	bestMove, eval := board.BestMove(10, OrderedMoves)
+	bestMove, eval := board.BestMove(12, OrderedMoves)
 
 	fmt.Print(PieceSymbols[board.PieceAt(int(bestMove.Source))], "(", IndexToPosition(uint64(bestMove.Source)), "): ", IndexToPosition(uint64(bestMove.Destination)), " ", eval)
 
