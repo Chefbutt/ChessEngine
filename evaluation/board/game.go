@@ -20,6 +20,10 @@ func (board *Board) MakeHumanMove(move string) error {
 
 	// fmt.Print(PieceSymbols[board.PieceAt(int(bestMove.Source))], "(", IndexToPosition(uint64(bestMove.Source)), "): ", IndexToPosition(uint64(bestMove.Destination)), " ", eval)
 
+	if board.EnPassantTarget&bitboards.BitBoard(parsedMove.Destination) != 0 {
+		parsedMove.MoveType = EnPassant
+	}
+
 	_, err := board.makeMove(parsedMove)
 	if err != nil {
 		return err
@@ -34,23 +38,20 @@ func (board *Board) MakeHumanMove(move string) error {
 	return nil
 }
 
-func (board *Board) MakeMove(move string) error {
+// Create a fixed number of workers
+
+func (board *Board) MakeMove() error {
 	// parsedMove := board.UCItoMove(move)
+	transpositionTable = make(map[uint64]TranspositionEntry)
+	initZobristTable()
+	bestMove, eval := board.BestMove(4, OrderedMoves)
 
-	bestMove, eval := board.BestMove(12, OrderedMoves)
-
-	fmt.Print(PieceSymbols[board.PieceAt(int(bestMove.Source))], "(", IndexToPosition(uint64(bestMove.Source)), "): ", IndexToPosition(uint64(bestMove.Destination)), " ", eval)
+	fmt.Print(PieceSymbols[board.PieceAt(int(bestMove.Source))], "(", IndexToPosition(uint64(bestMove.Source)), "): ", IndexToPosition(uint64(bestMove.Destination)), " ", eval, "\n")
 
 	_, err := board.makeMove(bestMove)
 	if err != nil {
 		return err
 	}
-
-	// board.EvaluationDetails()
-
-	fmt.Println()
-
-	board.Display()
 
 	return nil
 }

@@ -4,50 +4,57 @@ import (
 	"engine/evaluation/board/bitboards"
 )
 
-func (board *Board) materialScore() int {
+func (board *Board) whiteMaterial() int8 {
 	queenWt, rookWt, knightWt, bishopWt, pawnWt := 9, 5, 3, 3, 1
 
 	wQ := board.WhiteQueens.BitBoard().PopCount()
-	bQ := board.BlackQueens.BitBoard().PopCount()
 	wR := board.WhiteRooks.BitBoard().PopCount()
-	bR := board.BlackRooks.BitBoard().PopCount()
 	wN := board.WhiteKnights.BitBoard().PopCount()
-	bN := board.BlackKnights.BitBoard().PopCount()
 	wB := board.WhiteBishops.BitBoard().PopCount()
-	bB := board.BlackBishops.BitBoard().PopCount()
 	wP := board.WhitePawns.BitBoard().PopCount()
-	bP := board.BlackPawns.BitBoard().PopCount()
 
-	return queenWt*(wQ-bQ) + rookWt*(wR-bR) + knightWt*(wN-bN) + bishopWt*(wB-bB) + pawnWt*(wP-bP)
+	return int8(queenWt*wQ + rookWt*wR + knightWt*wN + bishopWt*wB + pawnWt*wP)
 }
 
-func (board *Board) calculateDoubledPawns() int {
-	doubled := 0
+func (board *Board) blackMaterial() int8 {
+	queenWt, rookWt, knightWt, bishopWt, pawnWt := 9, 5, 3, 3, 1
+
+	bQ := board.BlackQueens.BitBoard().PopCount()
+	bR := board.BlackRooks.BitBoard().PopCount()
+	bN := board.BlackKnights.BitBoard().PopCount()
+	bB := board.BlackBishops.BitBoard().PopCount()
+	bP := board.BlackPawns.BitBoard().PopCount()
+
+	return int8(queenWt*bQ + rookWt*bR + knightWt*bN + bishopWt*bB + pawnWt*bP)
+}
+
+func (board *Board) calculateDoubledPawns() int8 {
+	var doubled int8
 	for file := 0; file < 8; file++ {
 		fileMask := bitboards.FileMask(file)
 		pawnsInFile := board.WhitePawns.BitBoard() & fileMask
 		if pawnsInFile.PopCount() > 1 {
-			doubled += pawnsInFile.PopCount()
+			doubled += int8(pawnsInFile.PopCount())
 		}
 
 		pawnsInFile = board.BlackPawns.BitBoard() & fileMask
 		if pawnsInFile.PopCount() > 1 {
-			doubled -= pawnsInFile.PopCount()
+			doubled -= int8(pawnsInFile.PopCount())
 		}
 	}
 
 	return doubled
 }
 
-func (board *Board) calculateBlockedPawns() int {
+func (board *Board) calculateBlockedPawns() int8 {
 	occupied := bitboards.BitBoard(board.WhitePawns) | bitboards.BitBoard(board.BlackPawns)
 	blockedWhite := (bitboards.BitBoard(board.WhitePawns) << 8) & occupied
 	blockedBlack := (bitboards.BitBoard(board.BlackPawns) >> 8) & occupied
 
-	return blockedWhite.PopCount() - blockedBlack.PopCount()
+	return int8(blockedWhite.PopCount() - blockedBlack.PopCount())
 }
 
-func (board *Board) calculateIsolatedPawns() int {
+func (board *Board) calculateIsolatedPawns() int8 {
 	isolatedWhite := board.WhitePawns
 	isolatedBlack := board.BlackPawns
 
@@ -58,53 +65,60 @@ func (board *Board) calculateIsolatedPawns() int {
 	isolatedWhite &= ^neighborFilesWhite
 	isolatedBlack &= ^neighborFilesBlack
 
-	return isolatedWhite.BitBoard().PopCount() - isolatedBlack.BitBoard().PopCount()
+	return int8(isolatedWhite.BitBoard().PopCount() - isolatedBlack.BitBoard().PopCount())
 }
 
 // Calculate mobility score (stub)
-func (board *Board) mobilityScore() int {
+func (board *Board) mobilityScore() int8 {
 	totalMoves := 0
 
 	totalMoves += board.WhitePawns.Moves(board.EmptySquares, board.BlackPieces, board.EnPassantTarget).PopCount()
 	totalMoves += board.WhiteKnights.Moves(board.EmptySquares, board.BlackPieces).PopCount()
 	totalMoves += board.WhiteBishops.Moves(board.WhitePieces, board.BlackPieces).PopCount()
 	totalMoves += board.WhiteRooks.Moves(board.WhitePieces, board.BlackPieces).PopCount()
-	totalMoves += board.WhiteQueens.Moves(board.WhitePieces, board.BlackPieces).PopCount()
+	// totalMoves += board.WhiteQueens.Moves(board.WhitePieces, board.BlackPieces).PopCount()
 	// totalMoves -= board.WhiteKing.Moves(board.EmptySquares, board.BlackPieces).PopCount()
 
 	totalMoves -= board.BlackPawns.Moves(board.EmptySquares, board.WhitePieces, board.EnPassantTarget).PopCount()
 	totalMoves -= board.BlackKnights.Moves(board.EmptySquares, board.WhitePieces).PopCount()
 	totalMoves -= board.BlackBishops.Moves(board.BlackPieces, board.WhitePieces).PopCount()
 	totalMoves -= board.BlackRooks.Moves(board.BlackPieces, board.WhitePieces).PopCount()
-	totalMoves -= board.BlackQueens.Moves(board.BlackPieces, board.WhitePieces).PopCount()
+	// totalMoves -= board.BlackQueens.Moves(board.BlackPieces, board.WhitePieces).PopCount()
 	// totalMoves += board.BlackKing.Moves(board.EmptySquares, board.BlackPieces).PopCount()
 
-	return totalMoves
+	return int8(totalMoves)
 }
 
-func (board *Board) knightsOnRim() int {
+func (board *Board) knightsOnRim() int8 {
 	knightsOnRim := (board.WhiteKnights.BitBoard() & edgesOfBoard).PopCount()
 	knightsOnRim = knightsOnRim - (board.BlackKnights.BitBoard() & edgesOfBoard).PopCount()
-	return -knightsOnRim
+	return int8(-knightsOnRim)
 }
 
-func (board *Board) piecesInCentre() int {
-	pieces := (board.WhitePieces & centralSquares).PopCount()
-	pieces = pieces - (board.BlackPieces & centralSquares).PopCount()
+func (board *Board) piecesInCentre() int8 {
+	pieces := (board.WhitePawns.BitBoard() & centralSquares).PopCount()
+	pieces = pieces - (board.BlackPawns.BitBoard() & centralSquares).PopCount()
 
-	return pieces
+	return int8(pieces)
 }
 
 // IsAttacked
 
 func (board *Board) IsCheckMate() bool {
-	if !board.IsAttacked(board.KingInPlayAndOpponentAttacks()) {
-		return false
+	if board.TurnBlack {
+		attacks := board.WhiteAttacksMinimal()
+		if board.IsAttacked(board.BlackKing.BitBoard(), attacks) {
+			legalMoves := board.LegalMoves()
+			return len(legalMoves) == 0
+		}
+	} else {
+		attacks := board.BlackAttacksMinimal()
+		if board.IsAttacked(board.WhiteKing.BitBoard(), attacks) {
+			legalMoves := board.LegalMoves()
+			return len(legalMoves) == 0
+		}
 	}
-
-	legalMoves := board.LegalMoves()
-
-	return len(legalMoves) == 0 // If in check and no legal moves, it's checkmate
+	return false
 }
 
 func (board *Board) IsStaleMate() bool {
@@ -116,7 +130,7 @@ func (board *Board) IsStaleMate() bool {
 	return false
 }
 
-func (board *Board) KingSafetyBonus() int {
+func (board *Board) KingSafetyBonus() int8 {
 	bonus := 0
 	if board.CastleWhiteKingside || board.CastleWhiteQueenside {
 		bonus += 30 // Add 30 points for white castling
@@ -124,41 +138,52 @@ func (board *Board) KingSafetyBonus() int {
 	if board.CastleBlackKingside || board.CastleBlackQueenside {
 		bonus -= 30 // Subtract 30 points when black castles, as lower is better for black
 	}
-	return bonus
+	return int8(bonus)
 }
 
 func (board *Board) GamePhase() float64 {
-	// Simplistic calculation: count the number of minor and major pieces
 	totalPieces := board.WhitePawns.BitBoard().PopCount() + board.BlackPawns.BitBoard().PopCount() +
 		board.WhiteKnights.BitBoard().PopCount() + board.BlackKnights.BitBoard().PopCount() +
 		board.WhiteBishops.BitBoard().PopCount() + board.BlackBishops.BitBoard().PopCount() +
 		board.WhiteRooks.BitBoard().PopCount() + board.BlackRooks.BitBoard().PopCount() +
 		board.WhiteQueens.BitBoard().PopCount() + board.BlackQueens.BitBoard().PopCount()
 
-	// Assuming a typical game starts with 32 pieces
-	return 1 - float64(totalPieces)/32.0 // This gives us a range from 0 (start) to 1 (few pieces left)
+	return 1 - float64(totalPieces)/32.0
 }
 
-func (board *Board) DynamicKingSafety() int {
+func (board *Board) DynamicKingSafety() int8 {
 	phase := board.GamePhase()
-	// Scale the king safety bonus based on the game phase, increasing as the game progresses
-	return int(float64(board.KingSafetyBonus()) * (0.5 + 0.5*phase)) // Weight more heavily towards the endgame
+	return int8(float64(board.KingSafetyBonus()) * (0.5 + 0.5*phase))
 }
 
-// Evaluation function
-func (board *Board) Evaluate() int {
-	// Check for game-over conditions
+type Evaluation struct {
+	material      int8
+	pawnPenalties int8
+	mobilityBonus int8
+	centreBonus   int8
+	safety        int8
+	knightBonus   int8
+}
+
+func (e Evaluation) Sum() int16 {
+	var sum int16
+	sum = sum + int16(e.material) + int16(e.pawnPenalties) + int16(e.mobilityBonus) + int16(e.centreBonus) + int16(e.safety) + int16(e.knightBonus)
+	return sum
+}
+
+func (board *Board) Evaluate() Evaluation {
 	if board.IsCheckMate() {
 		if board.TurnBlack {
-			return -9999 // Checkmate against black
+			return Evaluation{-128, -128, -128, -128, -128, -128}
 		} else {
-			return 9999 // Checkmate against white
+			return Evaluation{127, 127, 127, 127, 127, 127}
 		}
 	} else if board.IsStaleMate() {
-		return 0 // Stalemate considered a draw
+		return Evaluation{0, 0, 0, 0, 0, 0}
 	}
 
-	material := board.materialScore() * 30
+	material := (board.whiteMaterial() - board.blackMaterial()) * -8
+
 	doubled := board.calculateDoubledPawns()
 	blocked := board.calculateBlockedPawns()
 	isolated := board.calculateIsolatedPawns()
@@ -167,14 +192,15 @@ func (board *Board) Evaluate() int {
 	kingSafety := board.DynamicKingSafety()
 	misplacedKnights := board.knightsOnRim()
 
-	// Additional factors like doubled, blocked, and isolated pawns
-	pawnPenalties := 6 * float64(doubled+blocked+isolated)
-	mobilityBonus := 0.2 * float64(mobility)
-	centreBonus := 29 * float64(centre)
-	knightBonus := 5 * float64(misplacedKnights)
-	safety := 2.5 * float64(kingSafety)
+	pawnPenalties := doubled + blocked + isolated
+	mobilityBonus := -1 * mobility
+	centreBonus := -4 * centre
+	knightBonus := -5 * misplacedKnights
+	safety := -5 * kingSafety
 
-	score := float64(material) + pawnPenalties + mobilityBonus + centreBonus + safety + knightBonus
-
-	return int(score)
+	if board.TurnBlack {
+		return Evaluation{material, pawnPenalties, mobilityBonus, centreBonus, safety, knightBonus}
+	} else {
+		return Evaluation{-material, -pawnPenalties, -mobilityBonus, -centreBonus, -safety, -knightBonus}
+	}
 }

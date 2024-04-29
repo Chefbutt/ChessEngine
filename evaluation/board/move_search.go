@@ -69,70 +69,70 @@ func (board *Board) UndoMove(undo *MoveUndo) {
 	board.updateAggregateBitboards()
 }
 
-func (board *Board) Quiesce(depth int, alpha int, beta int, maximizingPlayer bool) int {
-	standPat := board.Evaluate()
-	if maximizingPlayer {
-		if standPat >= beta {
-			return beta
-		}
-		if alpha < standPat {
-			alpha = standPat
-		}
-	} else {
-		if standPat <= alpha {
-			return alpha
-		}
-		if beta > standPat {
-			beta = standPat
-		}
-	}
+// func (board *Board) Quiesce(depth int, alpha int, beta int, maximizingPlayer bool) Evaluation {
+// 	standPat := toEval(board.Evaluate())
+// 	if maximizingPlayer {
+// 		if standPat.Sum() >= beta {
+// 			return Evaluation{float64(beta), 0, 0, 0, 0, 0}
+// 		}
+// 		if alpha < standPat.Sum() {
+// 			alpha = standPat.Sum()
+// 		}
+// 	} else {
+// 		if standPat.Sum() <= alpha {
+// 			return Evaluation{float64(alpha), 0, 0, 0, 0, 0}
+// 		}
+// 		if beta > standPat.Sum() {
+// 			beta = standPat.Sum()
+// 		}
+// 	}
 
-	if depth == 0 {
-		return board.Evaluate()
-	}
+// 	if depth == 0 {
+// 		return toEval(board.Evaluate())
+// 	}
 
-	legalMoves := Captures(board) // This should be modified to return only capture moves
-	for _, move := range legalMoves {
-		if board.PieceAt(move.Destination) == -1 { // Assuming you have a way to determine if the move is a capture
-			continue
-		}
-		undo, err := board.MakeNativeMove(move)
-		if err != nil {
-			panic(err) // Handle errors appropriately
-		}
-		score := -board.Quiesce(depth-1, -beta, -alpha, !maximizingPlayer)
-		board.UndoMove(undo)
+// 	legalMoves := Captures(board) // This should be modified to return only capture moves
+// 	for _, move := range legalMoves {
+// 		if board.PieceAt(move.Destination) == -1 { // Assuming you have a way to determine if the move is a capture
+// 			continue
+// 		}
+// 		undo, err := board.MakeNativeMove(move)
+// 		if err != nil {
+// 			panic(err) // Handle errors appropriately
+// 		}
+// 		score := -board.Quiesce(depth-1, -beta, -alpha, !maximizingPlayer).Sum()
+// 		board.UndoMove(undo)
 
-		if maximizingPlayer {
-			if score >= beta {
-				return beta
-			}
-			if score > alpha {
-				alpha = score
-			}
-		} else {
-			if score <= alpha {
-				return alpha
-			}
-			if score < beta {
-				beta = score
-			}
-		}
-	}
-	if maximizingPlayer {
-		return alpha
-	}
-	return beta
-}
+// 		if maximizingPlayer {
+// 			if score >= beta {
+// 				return Evaluation{float64(beta), 0, 0, 0, 0, 0}
+// 			}
+// 			if score > alpha {
+// 				alpha = score
+// 			}
+// 		} else {
+// 			if score <= alpha {
+// 				return Evaluation{float64(alpha), 0, 0, 0, 0, 0}
+// 			}
+// 			if score < beta {
+// 				beta = score
+// 			}
+// 		}
+// 	}
+// 	if maximizingPlayer {
+// 		return Evaluation{float64(alpha), 0, 0, 0, 0, 0}
+// 	}
+// 	return Evaluation{float64(beta), 0, 0, 0, 0, 0}
+// }
 
 type MoveEvaluation struct {
 	Move  Move
-	Score int
+	Score Evaluation
 }
 
 type TranspositionEntry struct {
 	Depth    int
-	Score    int
+	Score    Evaluation
 	Flag     int
 	BestMove Move
 }
@@ -181,27 +181,24 @@ func setTranspositionEntry(hashKey uint64, entry TranspositionEntry) {
 	tableLock.Unlock()
 }
 
-func (board *Board) BestMove(depth int, strategy func(*Board) []Move) (Move, int) {
+func (board *Board) BestMove(depth int, strategy func(*Board) []Move) (Move, Evaluation) {
 	initZobristTable()
-
 	legalMoves := strategy(board)
 	if len(legalMoves) == 0 {
-		return Move{}, 0 // or appropriate error handling
+		return Move{}, Evaluation{} // or appropriate error handling
 	}
 
-	// Channel to collect move evaluations
 	results := make(chan MoveEvaluation, len(legalMoves))
 	defer close(results)
 
-	// Spawn a goroutine for each legal move
 	for _, move := range legalMoves {
 		go func(move Move) {
-			tmpBoard := *board // Copy the board to avoid race conditions
+			tmpBoard := *board
 			undo, err := tmpBoard.MakeNativeMove(move)
 			if err != nil {
-				panic(err) // or appropriate error handling
+				panic(err)
 			}
-			score := tmpBoard.MiniMax(depth-1, -9999, 9999, false, strategy)
+			score := tmpBoard.MiniMax(depth, -9999, 9999, true, strategy)
 			tmpBoard.UndoMove(undo)
 			results <- MoveEvaluation{Move: move, Score: score}
 		}(move)
@@ -209,109 +206,100 @@ func (board *Board) BestMove(depth int, strategy func(*Board) []Move) (Move, int
 
 	// Find the best move based on evaluations
 	bestMove := Move{}
-	bestScore := -9999
+	bestScore := Evaluation{-128, -128, -128, -128, -128, -128}
 
 	for range legalMoves {
 		result := <-results
-		if result.Score > bestScore {
+		fmt.Println(PieceSymbols[board.PieceAt(int(result.Move.Source))], "(", IndexToPosition(uint64(result.Move.Destination)), ") material: ", result.Score.material, ", centre bonus: ", result.Score.centreBonus, ", mobility bonus: ", result.Score.mobilityBonus, ", pawn structure bonus: ", result.Score.pawnPenalties, ", knight placement bonus: ", result.Score.knightBonus, ", king safety bonus: ", result.Score.safety)
+		if result.Score.Sum() > bestScore.Sum() {
 			bestScore = result.Score
 			bestMove = result.Move
-		} else {
-			fmt.Println(PieceSymbols[board.PieceAt(int(result.Move.Source))], "(", IndexToPosition(uint64(result.Move.Destination)), ") ", result.Score)
 		}
 	}
-
-	transpositionTable = make(map[uint64]TranspositionEntry)
 
 	return bestMove, bestScore
 }
 
-func max(a, b int) int {
+func max(a, b int16) int16 {
 	if a > b {
 		return a
 	}
 	return b
 }
 
-func min(a, b int) int {
+func min(a, b int16) int16 {
 	if a < b {
 		return a
 	}
 	return b
 }
 
-func (board *Board) MiniMax(depth int, alpha int, beta int, maximizingPlayer bool, strategy func(*Board) []Move) int {
+func (board *Board) MiniMax(depth int, alpha, beta int16, maximizingPlayer bool, strategy func(*Board) []Move) Evaluation {
 	if depth == 0 {
-		return board.Evaluate() // Assuming Evaluate returns a heuristic score of the board
+		return board.Evaluate()
 	}
-
 	hashKey := board.hash()
 	if entry, exists := getTranspositionEntry(hashKey); exists && entry.Depth >= depth {
 		switch entry.Flag {
 		case exact:
 			return entry.Score
 		case lowerBound:
-			alpha = max(alpha, entry.Score)
+			alpha = max(alpha, entry.Score.Sum())
 		case upperBound:
-			beta = min(beta, entry.Score)
+			beta = min(beta, entry.Score.Sum())
 		}
 
 		if alpha >= beta {
 			return entry.Score
 		}
 	}
-
 	legalMoves := strategy(board)
 	if len(legalMoves) == 0 {
-		return board.Evaluate() // Game over or stalemate
+		return board.Evaluate()
 	}
 
 	if maximizingPlayer {
-		maxEval := -9999
+		maxEval := Evaluation{material: -128, pawnPenalties: -128, mobilityBonus: -128, centreBonus: -128, safety: -128, knightBonus: -128}
 		var bestMove Move
 		for _, move := range legalMoves {
 			tmpBoard := *board
 			undo, err := tmpBoard.MakeNativeMove(move)
 			if err != nil {
-				panic(err) // or appropriate error handling
+				panic(err) // Handle the error appropriately.
 			}
 			eval := tmpBoard.MiniMax(depth-1, alpha, beta, false, strategy)
 			tmpBoard.UndoMove(undo)
 
-			if eval > maxEval {
+			if eval.Sum() > maxEval.Sum() {
 				maxEval = eval
-				bestMove = move
 			}
-			alpha = max(alpha, eval)
+			alpha = max(alpha, eval.Sum())
 			if beta <= alpha {
-				break // alpha-beta pruning
+				break // alpha cut-off
 			}
 		}
-
 		setTranspositionEntry(hashKey, TranspositionEntry{Depth: depth, Score: maxEval, Flag: exact, BestMove: bestMove})
 		return maxEval
 	} else {
-		minEval := 9999
+		minEval := Evaluation{material: 127, pawnPenalties: 127, mobilityBonus: 127, centreBonus: 127, safety: 127, knightBonus: 127}
 		var bestMove Move
 		for _, move := range legalMoves {
 			tmpBoard := *board
 			undo, err := tmpBoard.MakeNativeMove(move)
 			if err != nil {
-				panic(err) // or appropriate error handling
+				panic(err) // Handle the error appropriately.
 			}
-			eval := tmpBoard.MiniMax(depth-1, -alpha, -beta, true, strategy)
+			eval := tmpBoard.MiniMax(depth-1, alpha, beta, true, strategy)
 			tmpBoard.UndoMove(undo)
 
-			if eval < minEval {
+			if eval.Sum() < minEval.Sum() {
 				minEval = eval
-				bestMove = move
 			}
-			beta = min(beta, eval)
-			if beta <= alpha {
-				break // alpha-beta pruning
+			beta = min(beta, eval.Sum())
+			if alpha >= beta {
+				break // beta cut-off
 			}
 		}
-
 		setTranspositionEntry(hashKey, TranspositionEntry{Depth: depth, Score: minEval, Flag: exact, BestMove: bestMove})
 		return minEval
 	}

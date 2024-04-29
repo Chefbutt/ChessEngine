@@ -132,7 +132,7 @@ func (board *Board) Display() {
 		fmt.Println()
 	}
 	fmt.Println("-------------------")
-	fmt.Println("a  b  c  d  e  f  g  h")
+	fmt.Println("a b c d e f g h")
 }
 
 func pieceToFEN(piece int) string {

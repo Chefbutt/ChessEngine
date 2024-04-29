@@ -14,23 +14,36 @@ import (
 )
 
 func main() {
-	// position.EncodeAllPositions("./position/sources/lichess_db_eval.jsonl", "./position/library/lichess_db_eval")
-
-	// position.DecodeFile("./position/library/lichess_db_eval.dat")
-	// getPos()
-
 	b := board.New()
 	reader := bufio.NewReader(os.Stdin)
-	// 1. e4 e5 2. Nf3 Nc6 3. Bb5 Nf6 4. O-O Bc5 5. Re1 O-O 6. c3 a6 7. Ba4 b5 8. Bc2 Re8 9. d4 exd4 10. cxd4 Bb6 11. e5
-	// moves := []string{"e2e4", "e7e5", "g1f3", "b8c6", "f1b5", "g8f6", "e1g1", "f8c5", "f1e1", "e8g8", "c2c3", "c5f2"}
+
+	fmt.Println("Enter moves in standard chess notation (e.g., 'e2e4'), type 'exit' to quit:")
 
 	for {
-		text, _ := reader.ReadString('\n')
-		// convert CRLF to LF
-		text = strings.Replace(text, "\n", "", -1)
+		fmt.Print("Enter move: ")
+		text, err := reader.ReadString('\n')
+		if err != nil {
+			fmt.Println("Error reading input, please try again.")
+			continue
+		}
 
+		// Convert CRLF to LF and trim any surrounding whitespace
+		text = strings.TrimSpace(strings.Replace(text, "\r\n", "", -1))
+
+		if text == "exit" {
+			fmt.Println("Exiting program.")
+			break
+		}
+
+		// Validate move before making it
+
+		// Make the move
 		b.MakeHumanMove(text)
-		b.MakeMove(text)
+		fmt.Println("Move made:", text)
+		b.Display() // Assuming there's a function to display the board state
+
+		b.MakeMove()
+		b.Display()
 	}
 }
 
