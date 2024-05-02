@@ -60,6 +60,24 @@ func (b BitBoard) PopCount() int {
 	return count
 }
 
+func (b *BitBoard) PopLSB() uint8 {
+	if *b == 0 {
+		return 65
+	}
+
+	lsb := *b & -*b
+
+	*b &= *b - 1
+
+	var index uint8
+	for lsb != 1 {
+		lsb >>= 1
+		index++
+	}
+
+	return index
+}
+
 func (b BitBoard) Split() []BitBoard {
 	var bitboards []BitBoard
 	for i := 0; i < 64; i++ {

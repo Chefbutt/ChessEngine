@@ -89,15 +89,16 @@ func (board *Board) mobilityScore() int8 {
 	return int8(totalMoves)
 }
 
+var edgesOfBoard = bitboards.BitBoard(0x8181818181818181)
+
 func (board *Board) knightsOnRim() int8 {
-	knightsOnRim := (board.WhiteKnights.BitBoard() & edgesOfBoard).PopCount()
-	knightsOnRim = knightsOnRim - (board.BlackKnights.BitBoard() & edgesOfBoard).PopCount()
-	return int8(-knightsOnRim)
+	knightsOnRim := (board.WhiteKnights.BitBoard() & edgesOfBoard).PopCount() - (board.BlackKnights.BitBoard() & edgesOfBoard).PopCount()
+	return int8(knightsOnRim)
 }
 
 func (board *Board) piecesInCentre() int8 {
-	pieces := (board.WhitePawns.BitBoard() & centralSquares).PopCount()
-	pieces = pieces - (board.BlackPawns.BitBoard() & centralSquares).PopCount()
+	pieces := (board.WhitePieces & centralSquares).PopCount()
+	pieces = pieces - (board.BlackPieces & centralSquares).PopCount()
 
 	return int8(pieces)
 }
@@ -132,11 +133,11 @@ func (board *Board) IsStaleMate() bool {
 
 func (board *Board) KingSafetyBonus() int8 {
 	bonus := 0
-	if board.CastleWhiteKingside || board.CastleWhiteQueenside {
-		bonus += 30 // Add 30 points for white castling
+	if board.WhiteCastled {
+		bonus += 15 // Add 30 points for white castling
 	}
-	if board.CastleBlackKingside || board.CastleBlackQueenside {
-		bonus -= 30 // Subtract 30 points when black castles, as lower is better for black
+	if board.BlackCastled {
+		bonus -= 15 // Subtract 30 points when black castles, as lower is better for black
 	}
 	return int8(bonus)
 }
@@ -172,17 +173,17 @@ func (e Evaluation) Sum() int16 {
 }
 
 func (board *Board) Evaluate() Evaluation {
-	if board.IsCheckMate() {
-		if board.TurnBlack {
-			return Evaluation{-128, -128, -128, -128, -128, -128}
-		} else {
-			return Evaluation{127, 127, 127, 127, 127, 127}
-		}
-	} else if board.IsStaleMate() {
+	if board.BlackKing == 0 && board.TurnBlack {
+		return Evaluation{-128, -128, -128, -128, -128, -128}
+	} else if board.WhiteKing == 0 && !board.TurnBlack {
+		return Evaluation{127, 127, 127, 127, 127, 127}
+	}
+
+	if board.IsStaleMate() {
 		return Evaluation{0, 0, 0, 0, 0, 0}
 	}
 
-	material := (board.whiteMaterial() - board.blackMaterial()) * -8
+	material := (board.whiteMaterial() - board.blackMaterial()) * 8
 
 	doubled := board.calculateDoubledPawns()
 	blocked := board.calculateBlockedPawns()
@@ -190,17 +191,16 @@ func (board *Board) Evaluate() Evaluation {
 	mobility := board.mobilityScore()
 	centre := board.piecesInCentre()
 	kingSafety := board.DynamicKingSafety()
-	misplacedKnights := board.knightsOnRim()
+	// misplacedKnights := board.knightsOnRim()
 
 	pawnPenalties := doubled + blocked + isolated
 	mobilityBonus := -1 * mobility
 	centreBonus := -4 * centre
-	knightBonus := -5 * misplacedKnights
-	safety := -5 * kingSafety
+	// knightBonus := 0
 
 	if board.TurnBlack {
-		return Evaluation{material, pawnPenalties, mobilityBonus, centreBonus, safety, knightBonus}
+		return Evaluation{material, pawnPenalties, mobilityBonus, -centreBonus, kingSafety, 0}
 	} else {
-		return Evaluation{-material, -pawnPenalties, -mobilityBonus, -centreBonus, -safety, -knightBonus}
+		return Evaluation{-material, -pawnPenalties, -mobilityBonus, centreBonus, -kingSafety, 0}
 	}
 }

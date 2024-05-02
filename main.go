@@ -21,6 +21,7 @@ func main() {
 
 	for {
 		fmt.Print("Enter move: ")
+
 		text, err := reader.ReadString('\n')
 		if err != nil {
 			fmt.Println("Error reading input, please try again.")
@@ -38,7 +39,12 @@ func main() {
 		// Validate move before making it
 
 		// Make the move
-		b.MakeHumanMove(text)
+		err = b.MakeHumanMove(text)
+		if err != nil {
+			fmt.Println("Illegal move, please try again.")
+			continue
+		}
+
 		fmt.Println("Move made:", text)
 		b.Display() // Assuming there's a function to display the board state
 

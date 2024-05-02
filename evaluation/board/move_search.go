@@ -2,6 +2,7 @@ package board
 
 import (
 	"fmt"
+	"math"
 	"math/rand"
 	"sync"
 
@@ -39,7 +40,6 @@ func (board *Board) UndoMove(undo *MoveUndo) {
 	*board.pieceBitboard(undo.Piece) |= bitboards.New(undo.Source)
 
 	if undo.CapturedPiece != -1 {
-		// board.Display()
 		*board.pieceBitboard(undo.CapturedPiece) |= bitboards.New(undo.Destination)
 	}
 
@@ -198,7 +198,7 @@ func (board *Board) BestMove(depth int, strategy func(*Board) []Move) (Move, Eva
 			if err != nil {
 				panic(err)
 			}
-			score := tmpBoard.MiniMax(depth, -9999, 9999, true, strategy)
+			score := tmpBoard.MiniMax(depth, -9999, 9999, false, strategy)
 			tmpBoard.UndoMove(undo)
 			results <- MoveEvaluation{Move: move, Score: score}
 		}(move)
@@ -234,6 +234,63 @@ func min(a, b int16) int16 {
 	return b
 }
 
+func (board *Board) IterativeDeepeningMiniMax(maxDepth int, maximizingPlayer bool, strategy func(*Board) []Move) Evaluation {
+	var bestEval Evaluation
+	var bestMove Move
+	alpha := int16(math.MinInt16)
+	beta := int16(math.MaxInt16)
+
+	for depth := 1; depth <= maxDepth; depth++ {
+		if maximizingPlayer {
+			maxEval := Evaluation{material: -128, pawnPenalties: -128, mobilityBonus: -128, centreBonus: -128, safety: -128, knightBonus: -128}
+			for _, move := range strategy(board) {
+				tmpBoard := *board
+				undo, err := tmpBoard.MakeNativeMove(move)
+				if err != nil {
+					panic(err) // Ideally, handle the error more gracefully
+				}
+				eval := tmpBoard.MiniMax(depth, alpha, beta, false, strategy)
+				tmpBoard.UndoMove(undo)
+
+				if eval.Sum() > maxEval.Sum() {
+					maxEval = eval
+					bestMove = move
+				}
+				alpha = max(alpha, eval.Sum())
+				if beta <= alpha {
+					break // alpha cut-off
+				}
+			}
+			bestEval = maxEval
+		} else {
+			minEval := Evaluation{material: 127, pawnPenalties: 127, mobilityBonus: 127, centreBonus: 127, safety: 127, knightBonus: 127}
+			for _, move := range strategy(board) {
+				tmpBoard := *board
+				undo, err := tmpBoard.MakeNativeMove(move)
+				if err != nil {
+					panic(err) // Ideally, handle the error more gracefully
+				}
+				eval := tmpBoard.MiniMax(depth, alpha, beta, true, strategy)
+				tmpBoard.UndoMove(undo)
+
+				if eval.Sum() < minEval.Sum() {
+					minEval = eval
+					bestMove = move
+				}
+				beta = min(beta, eval.Sum())
+				if alpha >= beta {
+					break // beta cut-off
+				}
+			}
+			bestEval = minEval
+		}
+		// Optionally, add transposition table updates or other heuristics here.
+	}
+
+	setTranspositionEntry(board.hash(), TranspositionEntry{Depth: maxDepth, Score: bestEval, Flag: exact, BestMove: bestMove})
+	return bestEval
+}
+
 func (board *Board) MiniMax(depth int, alpha, beta int16, maximizingPlayer bool, strategy func(*Board) []Move) Evaluation {
 	if depth == 0 {
 		return board.Evaluate()
@@ -267,7 +324,7 @@ func (board *Board) MiniMax(depth int, alpha, beta int16, maximizingPlayer bool,
 			if err != nil {
 				panic(err) // Handle the error appropriately.
 			}
-			eval := tmpBoard.MiniMax(depth-1, alpha, beta, false, strategy)
+			eval := tmpBoard.MiniMax(depth-1, -beta, -alpha, false, strategy)
 			tmpBoard.UndoMove(undo)
 
 			if eval.Sum() > maxEval.Sum() {
@@ -289,7 +346,7 @@ func (board *Board) MiniMax(depth int, alpha, beta int16, maximizingPlayer bool,
 			if err != nil {
 				panic(err) // Handle the error appropriately.
 			}
-			eval := tmpBoard.MiniMax(depth-1, alpha, beta, true, strategy)
+			eval := tmpBoard.MiniMax(depth-1, -beta, -alpha, true, strategy)
 			tmpBoard.UndoMove(undo)
 
 			if eval.Sum() < minEval.Sum() {

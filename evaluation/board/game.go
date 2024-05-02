@@ -16,6 +16,17 @@ func IndexToPosition(bitboard uint64) string {
 func (board *Board) MakeHumanMove(move string) error {
 	parsedMove := board.UCItoMove(move)
 
+	moves := board.AvailableWhiteMoves()
+
+	canMake := false
+	for _, move := range moves {
+		if parsedMove.Source == move.Source && parsedMove.Destination == move.Destination {
+			canMake = true
+		}
+	}
+	if !canMake {
+		return errors.New("illegal move")
+	}
 	// bestMove, eval := board.BestMove(12, OrderedMoves)
 
 	// fmt.Print(PieceSymbols[board.PieceAt(int(bestMove.Source))], "(", IndexToPosition(uint64(bestMove.Source)), "): ", IndexToPosition(uint64(bestMove.Destination)), " ", eval)
@@ -42,11 +53,34 @@ func (board *Board) MakeHumanMove(move string) error {
 
 func (board *Board) MakeMove() error {
 	// parsedMove := board.UCItoMove(move)
+
+	// f, err := os.Create("cpu.prof")
+	// if err != nil {
+	// 	log.Fatal("could not create CPU profile: ", err)
+	// }
+	// defer f.Close() // error handling omitted for example
+	// if err := pprof.StartCPUProfile(f); err != nil {
+	// 	log.Fatal("could not start CPU profile: ", err)
+	// }
+	// defer pprof.StopCPUProfile()
+
+	// fM, err := os.Create("mem.prof")
+	// if err != nil {
+	// 	log.Fatal("could not create memory profile: ", err)
+	// }
+	// defer fM.Close() // error handling omitted for example
+	// runtime.GC()     // get up-to-date statistics
+	// if err := pprof.WriteHeapProfile(fM); err != nil {
+	// 	log.Fatal("could not write memory profile: ", err)
+	// }
+
 	transpositionTable = make(map[uint64]TranspositionEntry)
 	initZobristTable()
 	bestMove, eval := board.BestMove(4, OrderedMoves)
 
-	fmt.Print(PieceSymbols[board.PieceAt(int(bestMove.Source))], "(", IndexToPosition(uint64(bestMove.Source)), "): ", IndexToPosition(uint64(bestMove.Destination)), " ", eval, "\n")
+	fmt.Println(PieceSymbols[board.PieceAt(int(bestMove.Source))], "(", IndexToPosition(uint64(bestMove.Destination)), ") material: ", eval.material, ", centre bonus: ", eval.centreBonus, ", mobility bonus: ", eval.mobilityBonus, ", pawn structure bonus: ", eval.pawnPenalties, ", knight placement bonus: ", eval.knightBonus, ", king safety bonus: ", eval.safety)
+
+	// fmt.Print(PieceSymbols[board.PieceAt(int(bestMove.Source))], "(", IndexToPosition(uint64(bestMove.Source)), "): ", IndexToPosition(uint64(bestMove.Destination)), " ", eval, "\n")
 
 	_, err := board.makeMove(bestMove)
 	if err != nil {
@@ -83,10 +117,12 @@ func (board *Board) makeMove(move Move) (*MoveUndo, error) {
 		panic("invalid board state")
 	}
 
-	// board.Display()
-
 	move.CapturedPiece = board.PieceAt(move.Destination)
-	move.Piece = board.PieceAt(move.Source)
+
+	if move.Piece == -1 {
+		move.Piece = board.PieceAt(move.Source)
+	}
+
 	if move.MoveType == 0 && move.CapturedPiece != -1 {
 		move.MoveType = Capture
 	}
@@ -184,6 +220,16 @@ func (board *Board) makeMove(move Move) (*MoveUndo, error) {
 	case NormalMove:
 	default:
 		panic("")
+	}
+
+	if move.Piece == BlackKing {
+		board.CastleBlackKingside = false
+		board.CastleBlackQueenside = false
+	}
+
+	if move.Piece == WhiteKing {
+		board.CastleWhiteKingside = false
+		board.CastleWhiteQueenside = false
 	}
 
 	board.updateAggregateBitboards()

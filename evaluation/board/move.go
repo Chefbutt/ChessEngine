@@ -62,6 +62,212 @@ func (board Board) IsAttacked(square, attackedSquares bitboards.BitBoard) bool {
 	}
 }
 
+func (board Board) AvailableBlackMoves() []Move {
+	var moves []Move
+
+	attacks := board.WhiteAttacksMinimal()
+	if board.CastleBlackKingside && !board.isOccupied(bits.TrailingZeros64(uint64(board.BlackKing>>1))) && !board.isOccupied(bits.TrailingZeros64(uint64(board.BlackKing>>2))) && !board.IsAttacked((board.BlackKing>>1).BitBoard(), attacks) && !board.IsAttacked((board.BlackKing>>2).BitBoard(), attacks) {
+		moves = append(moves, Move{Source: bits.TrailingZeros64(uint64(board.BlackKing)), Destination: bits.TrailingZeros64(uint64(board.BlackKing >> 2)), MoveType: CastleKingside, Piece: BlackKing})
+	}
+	if board.CastleBlackQueenside && !board.isOccupied(bits.TrailingZeros64(uint64(board.BlackKing<<1))) && !board.isOccupied(bits.TrailingZeros64(uint64(board.BlackKing<<2))) && !board.IsAttacked((board.BlackKing<<1).BitBoard(), attacks) && !board.IsAttacked((board.BlackKing<<2).BitBoard(), attacks) {
+		moves = append(moves, Move{Source: bits.TrailingZeros64(uint64(board.BlackKing)), Destination: bits.TrailingZeros64(uint64(board.BlackKing << 2)), MoveType: CastleQueenside, Piece: BlackKing})
+	}
+
+	knights := board.BlackKnights
+	for knights != 0 {
+		from := knights.BitBoardPointer().PopLSB()
+		if from == 65 {
+			break
+		}
+		movesList := bitboards.KnightBitboard(bitboards.New(int(from))).Moves(board.EmptySquares, board.WhitePieces)
+		for movesList != 0 {
+			to := movesList.PopLSB()
+			if to == 65 {
+				break
+			}
+			moves = append(moves, Move{Source: int(from), Destination: int(to), Piece: BlackKnight})
+		}
+	}
+
+	bishops := board.BlackBishops
+	for bishops != 0 {
+		from := bishops.BitBoardPointer().PopLSB()
+		if from == 65 {
+			break
+		}
+		movesList := bitboards.BishopBitboard(bitboards.New(int(from))).Moves(board.BlackPieces, board.WhitePieces)
+		for movesList != 0 {
+			to := movesList.PopLSB()
+			if to == 65 {
+				break
+			}
+			moves = append(moves, Move{Source: int(from), Destination: int(to), Piece: BlackBishop})
+		}
+	}
+
+	rooks := board.BlackRooks
+	for rooks != 0 {
+		from := rooks.BitBoardPointer().PopLSB()
+		if from == 65 {
+			break
+		}
+		movesList := bitboards.RookBitboard(bitboards.New(int(from))).Moves(board.BlackPieces, board.WhitePieces)
+		for movesList != 0 {
+			to := movesList.PopLSB()
+			if to == 65 {
+				break
+			}
+			moves = append(moves, Move{Source: int(from), Destination: int(to), Piece: BlackRook})
+		}
+	}
+
+	queens := board.BlackQueens
+	for queens != 0 {
+		from := queens.BitBoardPointer().PopLSB()
+		if from == 65 {
+			break
+		}
+		movesList := bitboards.QueenBitboard(bitboards.New(int(from))).Moves(board.BlackPieces, board.WhitePieces)
+		for movesList != 0 {
+			to := movesList.PopLSB()
+			if to == 65 {
+				break
+			}
+			moves = append(moves, Move{Source: int(from), Destination: int(to), Piece: BlackQueen})
+		}
+	}
+
+	pawns := board.BlackPawns
+	for pawns != 0 {
+		from := pawns.BitBoardPointer().PopLSB()
+		if from == 65 {
+			break
+		}
+		movesList := bitboards.BlackPawnBitboard(bitboards.New(int(from))).Moves(board.EmptySquares, board.WhitePieces, board.EnPassantTarget)
+		for movesList != 0 {
+			to := movesList.PopLSB()
+			if to == 65 {
+				break
+			}
+			moves = append(moves, Move{Source: int(from), Destination: int(to), Piece: BlackPawn})
+		}
+	}
+
+	kingMoves := board.BlackKing.Moves(board.EmptySquares, board.WhitePieces)
+	for kingMoves != 0 {
+		to := kingMoves.PopLSB()
+		if to == 65 {
+			break
+		}
+		moves = append(moves, Move{Source: bits.TrailingZeros64(uint64(board.BlackKing)), Destination: int(to), Piece: BlackKing})
+	}
+
+	return moves
+}
+
+func (board Board) AvailableWhiteMoves() []Move {
+	var moves []Move
+
+	attacks := board.BlackAttacksMinimal()
+	if board.CastleWhiteKingside && !board.isOccupied(bits.TrailingZeros64(uint64(board.WhiteKing>>1))) && !board.isOccupied(bits.TrailingZeros64(uint64(board.WhiteKing>>2))) && !board.IsAttacked((board.WhiteKing>>1).BitBoard(), attacks) && !board.IsAttacked((board.WhiteKing>>2).BitBoard(), attacks) {
+		moves = append(moves, Move{Source: bits.TrailingZeros64(uint64(board.WhiteKing)), Destination: bits.TrailingZeros64(uint64(board.WhiteKing >> 2)), MoveType: CastleKingside, Piece: WhiteKing})
+	}
+	if board.CastleWhiteQueenside && !board.isOccupied(bits.TrailingZeros64(uint64(board.WhiteKing<<1))) && !board.isOccupied(bits.TrailingZeros64(uint64(board.WhiteKing<<2))) && !board.IsAttacked((board.WhiteKing<<1).BitBoard(), attacks) && !board.IsAttacked((board.WhiteKing<<2).BitBoard(), attacks) {
+		moves = append(moves, Move{Source: bits.TrailingZeros64(uint64(board.WhiteKing)), Destination: bits.TrailingZeros64(uint64(board.WhiteKing << 2)), MoveType: CastleQueenside, Piece: WhiteKing})
+	}
+
+	knights := board.WhiteKnights
+	for knights != 0 {
+		from := knights.BitBoardPointer().PopLSB()
+		if from == 65 {
+			break
+		}
+		movesList := bitboards.KnightBitboard(bitboards.New(int(from))).Moves(board.EmptySquares, board.BlackPieces)
+		for movesList != 0 {
+			to := movesList.PopLSB()
+			if to == 65 {
+				break
+			}
+			moves = append(moves, Move{Source: int(from), Destination: int(to), Piece: WhiteKnight})
+		}
+	}
+
+	bishops := board.WhiteBishops
+	for bishops != 0 {
+		from := bishops.BitBoardPointer().PopLSB()
+		if from == 65 {
+			break
+		}
+		movesList := bitboards.BishopBitboard(bitboards.New(int(from))).Moves(board.WhitePieces, board.BlackPieces)
+		for movesList != 0 {
+			to := movesList.PopLSB()
+			if to == 65 {
+				break
+			}
+			moves = append(moves, Move{Source: int(from), Destination: int(to), Piece: WhiteBishop})
+		}
+	}
+
+	rooks := board.WhiteRooks
+	for rooks != 0 {
+		from := rooks.BitBoardPointer().PopLSB()
+		if from == 65 {
+			break
+		}
+		movesList := bitboards.RookBitboard(bitboards.New(int(from))).Moves(board.WhitePieces, board.BlackPieces)
+		for movesList != 0 {
+			to := movesList.PopLSB()
+			if to == 65 {
+				break
+			}
+			moves = append(moves, Move{Source: int(from), Destination: int(to), Piece: WhiteRook})
+		}
+	}
+
+	queens := board.WhiteQueens
+	for queens != 0 {
+		from := queens.BitBoardPointer().PopLSB()
+		if from == 65 {
+			break
+		}
+		movesList := bitboards.QueenBitboard(bitboards.New(int(from))).Moves(board.WhitePieces, board.BlackPieces)
+		for movesList != 0 {
+			to := movesList.PopLSB()
+			if to == 65 {
+				break
+			}
+			moves = append(moves, Move{Source: int(from), Destination: int(to), Piece: WhiteQueen})
+		}
+	}
+
+	pawns := board.WhitePawns
+	for pawns != 0 {
+		from := pawns.BitBoardPointer().PopLSB()
+		if from == 65 {
+			break
+		}
+		movesList := bitboards.WhitePawnBitboard(bitboards.New(int(from))).Moves(board.EmptySquares, board.BlackPieces, board.EnPassantTarget)
+		for movesList != 0 {
+			to := movesList.PopLSB()
+			if to == 65 {
+				break
+			}
+			moves = append(moves, Move{Source: int(from), Destination: int(to), Piece: WhitePawn})
+		}
+	}
+
+	kingMoves := board.WhiteKing.Moves(board.EmptySquares, board.BlackPieces)
+	for kingMoves != 0 {
+		to := kingMoves.PopLSB()
+		if to == 65 {
+			break
+		}
+		moves = append(moves, Move{Source: bits.TrailingZeros64(uint64(board.WhiteKing)), Destination: int(to), Piece: WhiteKing})
+	}
+
+	return moves
+}
+
 func (board Board) FromToToMove(from, to bitboards.BitBoard) Move {
 	var enemySquares bitboards.BitBoard
 	if board.TurnBlack {
