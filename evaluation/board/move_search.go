@@ -2,7 +2,6 @@ package board
 
 import (
 	"fmt"
-	"math"
 	"math/rand"
 	"sync"
 
@@ -145,7 +144,7 @@ const (
 
 var zobristTable [64][12]uint64 // 64 squares, 12 possible pieces (6 white, 6 black)
 
-func initZobristTable() {
+func InitZobristTable() {
 	for i := 0; i < 64; i++ {
 		for j := 0; j < 12; j++ {
 			zobristTable[i][j] = uint64(rand.Uint32())<<32 + uint64(rand.Uint32()) // Assume randUint64() generates a random 64-bit number
@@ -164,26 +163,26 @@ func (board *Board) hash() uint64 {
 }
 
 var (
-	transpositionTable = make(map[uint64]TranspositionEntry)
+	TranspositionTable = make(map[uint64]TranspositionEntry)
 	tableLock          = sync.RWMutex{} // Mutex to protect map access
 )
 
 func getTranspositionEntry(hashKey uint64) (TranspositionEntry, bool) {
 	tableLock.RLock()
-	entry, exists := transpositionTable[hashKey]
+	entry, exists := TranspositionTable[hashKey]
 	tableLock.RUnlock()
 	return entry, exists
 }
 
 func setTranspositionEntry(hashKey uint64, entry TranspositionEntry) {
 	tableLock.Lock()
-	transpositionTable[hashKey] = entry
+	TranspositionTable[hashKey] = entry
 	tableLock.Unlock()
 }
 
-func (board *Board) BestMove(depth int, strategy func(*Board) []Move) (Move, Evaluation) {
-	initZobristTable()
-	legalMoves := strategy(board)
+func (board *Board) BestMove(depth int, strategy func(Board) []Move) (Move, Evaluation) {
+	InitZobristTable()
+	legalMoves := strategy(*board)
 	if len(legalMoves) == 0 {
 		return Move{}, Evaluation{} // or appropriate error handling
 	}
@@ -234,64 +233,7 @@ func min(a, b int16) int16 {
 	return b
 }
 
-func (board *Board) IterativeDeepeningMiniMax(maxDepth int, maximizingPlayer bool, strategy func(*Board) []Move) Evaluation {
-	var bestEval Evaluation
-	var bestMove Move
-	alpha := int16(math.MinInt16)
-	beta := int16(math.MaxInt16)
-
-	for depth := 1; depth <= maxDepth; depth++ {
-		if maximizingPlayer {
-			maxEval := Evaluation{material: -128, pawnPenalties: -128, mobilityBonus: -128, centreBonus: -128, safety: -128, knightBonus: -128}
-			for _, move := range strategy(board) {
-				tmpBoard := *board
-				undo, err := tmpBoard.MakeNativeMove(move)
-				if err != nil {
-					panic(err) // Ideally, handle the error more gracefully
-				}
-				eval := tmpBoard.MiniMax(depth, alpha, beta, false, strategy)
-				tmpBoard.UndoMove(undo)
-
-				if eval.Sum() > maxEval.Sum() {
-					maxEval = eval
-					bestMove = move
-				}
-				alpha = max(alpha, eval.Sum())
-				if beta <= alpha {
-					break // alpha cut-off
-				}
-			}
-			bestEval = maxEval
-		} else {
-			minEval := Evaluation{material: 127, pawnPenalties: 127, mobilityBonus: 127, centreBonus: 127, safety: 127, knightBonus: 127}
-			for _, move := range strategy(board) {
-				tmpBoard := *board
-				undo, err := tmpBoard.MakeNativeMove(move)
-				if err != nil {
-					panic(err) // Ideally, handle the error more gracefully
-				}
-				eval := tmpBoard.MiniMax(depth, alpha, beta, true, strategy)
-				tmpBoard.UndoMove(undo)
-
-				if eval.Sum() < minEval.Sum() {
-					minEval = eval
-					bestMove = move
-				}
-				beta = min(beta, eval.Sum())
-				if alpha >= beta {
-					break // beta cut-off
-				}
-			}
-			bestEval = minEval
-		}
-		// Optionally, add transposition table updates or other heuristics here.
-	}
-
-	setTranspositionEntry(board.hash(), TranspositionEntry{Depth: maxDepth, Score: bestEval, Flag: exact, BestMove: bestMove})
-	return bestEval
-}
-
-func (board *Board) MiniMax(depth int, alpha, beta int16, maximizingPlayer bool, strategy func(*Board) []Move) Evaluation {
+func (board *Board) MiniMax(depth int, alpha, beta int16, maximizingPlayer bool, strategy func(Board) []Move) Evaluation {
 	if depth == 0 {
 		return board.Evaluate()
 	}
@@ -310,7 +252,7 @@ func (board *Board) MiniMax(depth int, alpha, beta int16, maximizingPlayer bool,
 			return entry.Score
 		}
 	}
-	legalMoves := strategy(board)
+	legalMoves := strategy(*board)
 	if len(legalMoves) == 0 {
 		return board.Evaluate()
 	}

@@ -113,7 +113,7 @@ func New() Board {
 	}
 }
 
-func (board *Board) Display() {
+func (board Board) Display() {
 	fmt.Println("-------------------")
 	for row := 0; row < 8; row++ {
 		for col := 0; col < 9; col++ {
@@ -166,7 +166,7 @@ func pieceToFEN(piece int) string {
 	}
 }
 
-func (board *Board) PieceAt(index int) int {
+func (board Board) PieceAt(index int) int {
 	indexMask := bitboards.New(index)
 
 	if (board.WhitePawns.BitBoard() & indexMask) > 0 {
@@ -198,7 +198,7 @@ func (board *Board) PieceAt(index int) int {
 	return -1
 }
 
-func (board *Board) ToFEN() string {
+func (board Board) ToFEN() string {
 	rankStrings := []string{}
 	for rank := 7; rank >= 0; rank-- {
 		emptyCount := 0
@@ -270,12 +270,7 @@ func (b *Board) pieceBitboard(piece int) *bitboards.BitBoard {
 	}
 }
 
-func (b *Board) isOccupied(pos int) bool {
+func (b Board) isOccupied(pos int) bool {
 	occupiedMask := bitboards.New(pos)
 	return (b.OccupiedSquares & occupiedMask) != 0
 }
-
-// func (b *Board) IsAttacked(pos int, attackedSquares bitboards.BitBoard) bool {
-// 	occupiedMask := bitboards.New(pos)
-// 	return (attackedSquares & occupiedMask) != 0
-// }

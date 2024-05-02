@@ -62,15 +62,62 @@ func (board Board) IsAttacked(square, attackedSquares bitboards.BitBoard) bool {
 	}
 }
 
-func (board Board) AvailableBlackMoves() []Move {
+func (originalBoard Board) AvailableBlackAttacks() bitboards.BitBoard {
+	board := originalBoard
+
+	var attack bitboards.BitBoard
+
+	movesList := board.BlackKnights.Moves(board.EmptySquares, board.WhitePieces)
+	attack = attack | movesList
+
+	movesList = board.BlackBishops.Moves(board.BlackPieces, board.WhitePieces)
+	attack = attack | movesList
+
+	movesList = board.BlackRooks.Moves(board.BlackPieces, board.WhitePieces)
+	attack = attack | movesList
+
+	movesList = board.BlackQueens.Moves(board.BlackPieces, board.WhitePieces)
+	attack = attack | movesList
+
+	movesList = board.BlackPawns.Moves(board.EmptySquares, board.WhitePieces, board.EnPassantTarget)
+	attack = attack | movesList
+
+	return attack
+}
+
+func (originalBoard Board) AvailableWhiteAttacks() bitboards.BitBoard {
+	board := originalBoard
+
+	var attack bitboards.BitBoard
+
+	movesList := board.WhiteKnights.Moves(board.EmptySquares, board.BlackPieces)
+	attack = attack | movesList
+
+	movesList = board.WhiteBishops.Moves(board.WhitePieces, board.BlackPieces)
+	attack = attack | movesList
+
+	movesList = board.WhiteRooks.Moves(board.WhitePieces, board.BlackPieces)
+	attack = attack | movesList
+
+	movesList = board.WhiteQueens.Moves(board.WhitePieces, board.BlackPieces)
+	attack = attack | movesList
+
+	movesList = board.WhitePawns.Moves(board.EmptySquares, board.BlackPieces, board.EnPassantTarget)
+	attack = attack | movesList
+
+	return attack
+}
+
+func (originalBoard Board) AvailableBlackMoves() []Move {
+	board := originalBoard
 	var moves []Move
 
 	attacks := board.WhiteAttacksMinimal()
-	if board.CastleBlackKingside && !board.isOccupied(bits.TrailingZeros64(uint64(board.BlackKing>>1))) && !board.isOccupied(bits.TrailingZeros64(uint64(board.BlackKing>>2))) && !board.IsAttacked((board.BlackKing>>1).BitBoard(), attacks) && !board.IsAttacked((board.BlackKing>>2).BitBoard(), attacks) {
-		moves = append(moves, Move{Source: bits.TrailingZeros64(uint64(board.BlackKing)), Destination: bits.TrailingZeros64(uint64(board.BlackKing >> 2)), MoveType: CastleKingside, Piece: BlackKing})
+	if board.CastleBlackQueenside && !board.isOccupied(58) && !board.isOccupied(59) && !board.isOccupied(57) && board.PieceAt(56) == BlackRook && !board.IsAttacked((board.BlackKing>>1).BitBoard(), attacks) && !board.IsAttacked((board.BlackKing>>2).BitBoard(), attacks) {
+		moves = append(moves, Move{Source: 60, Destination: 58, MoveType: CastleQueenside, Piece: BlackKing})
 	}
-	if board.CastleBlackQueenside && !board.isOccupied(bits.TrailingZeros64(uint64(board.BlackKing<<1))) && !board.isOccupied(bits.TrailingZeros64(uint64(board.BlackKing<<2))) && !board.IsAttacked((board.BlackKing<<1).BitBoard(), attacks) && !board.IsAttacked((board.BlackKing<<2).BitBoard(), attacks) {
-		moves = append(moves, Move{Source: bits.TrailingZeros64(uint64(board.BlackKing)), Destination: bits.TrailingZeros64(uint64(board.BlackKing << 2)), MoveType: CastleQueenside, Piece: BlackKing})
+	if board.CastleBlackKingside && !board.isOccupied(61) && !board.isOccupied(62) && !board.IsAttacked((board.BlackKing<<1).BitBoard(), attacks) && board.PieceAt(63) == BlackRook && !board.IsAttacked((board.BlackKing<<2).BitBoard(), attacks) {
+		moves = append(moves, Move{Source: 60, Destination: 62, MoveType: CastleKingside, Piece: BlackKing})
 	}
 
 	knights := board.BlackKnights
@@ -153,27 +200,56 @@ func (board Board) AvailableBlackMoves() []Move {
 		}
 	}
 
-	kingMoves := board.BlackKing.Moves(board.EmptySquares, board.WhitePieces)
-	for kingMoves != 0 {
-		to := kingMoves.PopLSB()
-		if to == 65 {
+	kings := board.BlackKing
+	for kings != 0 {
+		from := kings.BitBoardPointer().PopLSB()
+		if from == 65 {
 			break
 		}
-		moves = append(moves, Move{Source: bits.TrailingZeros64(uint64(board.BlackKing)), Destination: int(to), Piece: BlackKing})
+		movesList := bitboards.KingBitboard(bitboards.New(int(from))).Moves(board.EmptySquares, board.WhitePieces)
+		for movesList != 0 {
+			board := board
+			to := movesList.PopLSB()
+			if to == 65 {
+				break
+			}
+			move := Move{Source: bits.TrailingZeros64(uint64(board.BlackKing)), Destination: int(to), Piece: BlackKing}
+			board.makeMove(move)
+			if !board.isKingInCheck(board.BlackKing, false) && move.Source != move.Destination {
+				moves = append(moves, move)
+			}
+		}
+	}
+	// Remove attacked
+
+	if board.isKingInCheck(board.BlackKing, false) {
+		var legalMoves []Move
+		for _, move := range moves {
+			board := board
+			_, err := board.makeMove(move)
+			if err != nil {
+				panic(err)
+			}
+			if !board.isKingInCheck(board.BlackKing, false) {
+				legalMoves = append(legalMoves, move)
+			}
+		}
+		return legalMoves
 	}
 
 	return moves
 }
 
-func (board Board) AvailableWhiteMoves() []Move {
+func (originalBoard Board) AvailableWhiteMoves() []Move {
+	board := originalBoard
 	var moves []Move
 
 	attacks := board.BlackAttacksMinimal()
-	if board.CastleWhiteKingside && !board.isOccupied(bits.TrailingZeros64(uint64(board.WhiteKing>>1))) && !board.isOccupied(bits.TrailingZeros64(uint64(board.WhiteKing>>2))) && !board.IsAttacked((board.WhiteKing>>1).BitBoard(), attacks) && !board.IsAttacked((board.WhiteKing>>2).BitBoard(), attacks) {
-		moves = append(moves, Move{Source: bits.TrailingZeros64(uint64(board.WhiteKing)), Destination: bits.TrailingZeros64(uint64(board.WhiteKing >> 2)), MoveType: CastleKingside, Piece: WhiteKing})
+	if board.CastleWhiteQueenside && board.isOccupied(1) && !board.isOccupied(2) && !board.isOccupied(3) && board.PieceAt(4) == WhiteRook && !board.IsAttacked((board.WhiteKing>>1).BitBoard(), attacks) && !board.IsAttacked((board.WhiteKing>>2).BitBoard(), attacks) {
+		moves = append(moves, Move{Source: 4, Destination: 1, MoveType: CastleQueenside, Piece: WhiteKing})
 	}
-	if board.CastleWhiteQueenside && !board.isOccupied(bits.TrailingZeros64(uint64(board.WhiteKing<<1))) && !board.isOccupied(bits.TrailingZeros64(uint64(board.WhiteKing<<2))) && !board.IsAttacked((board.WhiteKing<<1).BitBoard(), attacks) && !board.IsAttacked((board.WhiteKing<<2).BitBoard(), attacks) {
-		moves = append(moves, Move{Source: bits.TrailingZeros64(uint64(board.WhiteKing)), Destination: bits.TrailingZeros64(uint64(board.WhiteKing << 2)), MoveType: CastleQueenside, Piece: WhiteKing})
+	if board.CastleWhiteKingside && !board.isOccupied(5) && !board.isOccupied(6) && !board.IsAttacked((board.WhiteKing<<1).BitBoard(), attacks) && !board.IsAttacked((board.WhiteKing<<2).BitBoard(), attacks) {
+		moves = append(moves, Move{Source: 4, Destination: 6, MoveType: CastleKingside, Piece: WhiteKing})
 	}
 
 	knights := board.WhiteKnights
@@ -256,13 +332,41 @@ func (board Board) AvailableWhiteMoves() []Move {
 		}
 	}
 
-	kingMoves := board.WhiteKing.Moves(board.EmptySquares, board.BlackPieces)
-	for kingMoves != 0 {
-		to := kingMoves.PopLSB()
-		if to == 65 {
+	// Remove attacked
+	kings := board.WhiteKing
+	for kings != 0 {
+		from := kings.BitBoardPointer().PopLSB()
+		if from == 65 {
 			break
 		}
-		moves = append(moves, Move{Source: bits.TrailingZeros64(uint64(board.WhiteKing)), Destination: int(to), Piece: WhiteKing})
+		movesList := bitboards.KingBitboard(bitboards.New(int(from))).Moves(board.EmptySquares, board.BlackPieces)
+		for movesList != 0 {
+			board := board
+			to := movesList.PopLSB()
+			if to == 65 {
+				break
+			}
+			move := Move{Source: bits.TrailingZeros64(uint64(board.WhiteKing)), Destination: int(to), Piece: WhiteKing}
+			board.makeMove(move)
+			if !board.isKingInCheck(board.WhiteKing, true) && move.Source != move.Destination {
+				moves = append(moves, move)
+			}
+		}
+	}
+
+	if board.isKingInCheck(board.WhiteKing, true) {
+		var legalMoves []Move
+		for _, move := range moves {
+			board := board
+			_, err := board.makeMove(move)
+			if err != nil {
+				panic(err)
+			}
+			if !board.isKingInCheck(board.WhiteKing, true) {
+				legalMoves = append(legalMoves, move)
+			}
+		}
+		return legalMoves
 	}
 
 	return moves
@@ -279,42 +383,6 @@ func (board Board) FromToToMove(from, to bitboards.BitBoard) Move {
 		return Move{Source: bits.TrailingZeros64(uint64(from)), Destination: bits.TrailingZeros64(uint64(to)), MoveType: Capture, Piece: board.PieceAt(bits.TrailingZeros64(uint64(from))), CapturedPiece: board.PieceAt(bits.TrailingZeros64(uint64(to)))}
 	}
 	return Move{Source: bits.TrailingZeros64(uint64(from)), Destination: bits.TrailingZeros64(uint64(to)), MoveType: NormalMove, Piece: board.PieceAt(bits.TrailingZeros64(uint64(from)))}
-}
-
-func StopCheck(board Board, allMoves map[bitboards.BitBoard][]bitboards.BitBoard) map[bitboards.BitBoard][]bitboards.BitBoard {
-	viableBlocks := make(map[bitboards.BitBoard][]bitboards.BitBoard)
-	if board.TurnBlack {
-		for piecePos, moves := range allMoves {
-			var pieceMoves []bitboards.BitBoard
-			for _, move := range moves {
-				tempBoard := board
-				tempBoard.makeMove(tempBoard.FromToToMove(piecePos, move))
-				attacked, _ := tempBoard.WhiteAttacks()
-				if !tempBoard.IsAttacked(board.BlackKing.BitBoard(), attacked) {
-					pieceMoves = append(pieceMoves, move)
-				}
-			}
-			if len(pieceMoves) > 0 {
-				viableBlocks[piecePos] = pieceMoves
-			}
-		}
-	} else {
-		for piecePos, moves := range allMoves {
-			var pieceMoves []bitboards.BitBoard
-			for _, move := range moves {
-				tempBoard := board
-				tempBoard.makeMove(tempBoard.FromToToMove(piecePos, move))
-				attacked, _ := tempBoard.BlackAttacks()
-				if !tempBoard.IsAttacked(board.WhiteKing.BitBoard(), attacked) {
-					pieceMoves = append(pieceMoves, move)
-				}
-			}
-			if len(pieceMoves) > 0 {
-				viableBlocks[piecePos] = pieceMoves
-			}
-		}
-	}
-	return viableBlocks
 }
 
 func (board Board) BitBoardMapToMove(opposingColor bitboards.BitBoard, moves map[bitboards.BitBoard][]bitboards.BitBoard) []Move {
@@ -558,9 +626,9 @@ func (board Board) RegularMoves() map[bitboards.BitBoard][]bitboards.BitBoard {
 	return moveMap
 }
 
-func (board *Board) UCItoMove(uci string) Move {
+func (board Board) UCItoMove(uci string) Move {
 	if len(uci) < 4 || len(uci) > 5 {
-		panic("Invalid UCI string")
+		return Move{}
 	}
 
 	source := positionToIndex(uci[0:2])

@@ -10,6 +10,7 @@ import (
 	"time"
 
 	"engine/evaluation/board"
+	"engine/evaluation/board/bitboards"
 	"engine/evaluation/library"
 )
 
@@ -18,6 +19,9 @@ func main() {
 	reader := bufio.NewReader(os.Stdin)
 
 	fmt.Println("Enter moves in standard chess notation (e.g., 'e2e4'), type 'exit' to quit:")
+	bitboards.InitBitboards()
+	board.TranspositionTable = make(map[uint64]board.TranspositionEntry)
+	board.InitZobristTable()
 
 	for {
 		fmt.Print("Enter move: ")

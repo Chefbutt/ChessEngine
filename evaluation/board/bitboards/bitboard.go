@@ -1,8 +1,20 @@
 package bitboards
 
-import "fmt"
+import (
+	"fmt"
+	"math/bits"
+)
 
 type BitBoard uint64
+
+var SquareBB [65]BitBoard
+
+func InitBitboards() {
+	var sq uint8
+	for sq = 0; sq < 65; sq++ {
+		SquareBB[sq] = 0x8000000000000000 << sq
+	}
+}
 
 func (s BitBoard) eastOne() BitBoard {
 	return (s >> 1) & 0x7f7f7f7f7f7f7f7f
@@ -60,22 +72,50 @@ func (b BitBoard) PopCount() int {
 	return count
 }
 
+func (bitboard *BitBoard) SetBit(sq uint8) {
+	*bitboard |= SquareBB[sq]
+}
+
+// Clear the bit at given square.
+func (bitboard *BitBoard) ClearBit(sq uint8) {
+	*bitboard &= ^SquareBB[sq]
+}
+
+// Test whether the bit of the given bitbord at the given
+// position is set.
+func (bb BitBoard) BitSet(sq uint8) bool {
+	return (bb & SquareBB[sq]) != 0
+}
+
+// Get the position of the MSB of the given bitboard.
+func (bitboard BitBoard) Lsb() uint8 {
+	return uint8(bits.TrailingZeros64(uint64(bitboard)))
+}
+
+// Get the position of the MSB of the given bitboard,
+// and clear the MSB.
+func (bitboard *BitBoard) PopBit() uint8 {
+	sq := bitboard.Lsb()
+	bitboard.ClearBit(sq)
+	return sq
+}
+
+// Count the bits in a given bitboard using the SWAR-popcount
+// algorithm for 64-bit integers.
+func (bitboard BitBoard) CountBits() int {
+	return bits.OnesCount64(uint64(bitboard))
+}
+
 func (b *BitBoard) PopLSB() uint8 {
 	if *b == 0 {
 		return 65
 	}
 
-	lsb := *b & -*b
+	lsb := b.Lsb()
 
 	*b &= *b - 1
 
-	var index uint8
-	for lsb != 1 {
-		lsb >>= 1
-		index++
-	}
-
-	return index
+	return lsb
 }
 
 func (b BitBoard) Split() []BitBoard {

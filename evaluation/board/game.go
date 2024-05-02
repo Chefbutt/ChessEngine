@@ -3,6 +3,10 @@ package board
 import (
 	"errors"
 	"fmt"
+	"log"
+	"os"
+	"runtime"
+	"runtime/pprof"
 
 	"engine/evaluation/board/bitboards"
 )
@@ -15,6 +19,9 @@ func IndexToPosition(bitboard uint64) string {
 
 func (board *Board) MakeHumanMove(move string) error {
 	parsedMove := board.UCItoMove(move)
+	if parsedMove.Source == parsedMove.Destination {
+		return errors.New("illegal move")
+	}
 
 	moves := board.AvailableWhiteMoves()
 
@@ -22,6 +29,7 @@ func (board *Board) MakeHumanMove(move string) error {
 	for _, move := range moves {
 		if parsedMove.Source == move.Source && parsedMove.Destination == move.Destination {
 			canMake = true
+			break
 		}
 	}
 	if !canMake {
@@ -54,35 +62,35 @@ func (board *Board) MakeHumanMove(move string) error {
 func (board *Board) MakeMove() error {
 	// parsedMove := board.UCItoMove(move)
 
-	// f, err := os.Create("cpu.prof")
-	// if err != nil {
-	// 	log.Fatal("could not create CPU profile: ", err)
-	// }
-	// defer f.Close() // error handling omitted for example
-	// if err := pprof.StartCPUProfile(f); err != nil {
-	// 	log.Fatal("could not start CPU profile: ", err)
-	// }
-	// defer pprof.StopCPUProfile()
+	f, err := os.Create("cpu.prof")
+	if err != nil {
+		log.Fatal("could not create CPU profile: ", err)
+	}
+	defer f.Close() // error handling omitted for example
+	if err := pprof.StartCPUProfile(f); err != nil {
+		log.Fatal("could not start CPU profile: ", err)
+	}
+	defer pprof.StopCPUProfile()
 
-	// fM, err := os.Create("mem.prof")
-	// if err != nil {
-	// 	log.Fatal("could not create memory profile: ", err)
-	// }
-	// defer fM.Close() // error handling omitted for example
-	// runtime.GC()     // get up-to-date statistics
-	// if err := pprof.WriteHeapProfile(fM); err != nil {
-	// 	log.Fatal("could not write memory profile: ", err)
-	// }
+	fM, err := os.Create("mem.prof")
+	if err != nil {
+		log.Fatal("could not create memory profile: ", err)
+	}
+	defer fM.Close() // error handling omitted for example
+	runtime.GC()     // get up-to-date statistics
+	if err := pprof.WriteHeapProfile(fM); err != nil {
+		log.Fatal("could not write memory profile: ", err)
+	}
 
-	transpositionTable = make(map[uint64]TranspositionEntry)
-	initZobristTable()
-	bestMove, eval := board.BestMove(4, OrderedMoves)
+	bestMove, eval := board.BestMove(6, OrderedMoves)
 
 	fmt.Println(PieceSymbols[board.PieceAt(int(bestMove.Source))], "(", IndexToPosition(uint64(bestMove.Destination)), ") material: ", eval.material, ", centre bonus: ", eval.centreBonus, ", mobility bonus: ", eval.mobilityBonus, ", pawn structure bonus: ", eval.pawnPenalties, ", knight placement bonus: ", eval.knightBonus, ", king safety bonus: ", eval.safety)
 
-	// fmt.Print(PieceSymbols[board.PieceAt(int(bestMove.Source))], "(", IndexToPosition(uint64(bestMove.Source)), "): ", IndexToPosition(uint64(bestMove.Destination)), " ", eval, "\n")
+	if bestMove.Source == bestMove.Destination {
+		fmt.Println("Resign")
+	}
 
-	_, err := board.makeMove(bestMove)
+	_, err = board.makeMove(bestMove)
 	if err != nil {
 		return err
 	}
@@ -117,6 +125,10 @@ func (board *Board) makeMove(move Move) (*MoveUndo, error) {
 		panic("invalid board state")
 	}
 
+	if move.Source == move.Destination {
+		panic("")
+	}
+
 	move.CapturedPiece = board.PieceAt(move.Destination)
 
 	if move.Piece == -1 {
@@ -147,22 +159,6 @@ func (board *Board) makeMove(move Move) (*MoveUndo, error) {
 		PreviousAggregateBitboards:   board.AggregateBitboards(), // Example, assume this captures all necessary board pieces
 	}
 
-	if move.Source == 7 {
-		board.CastleWhiteKingside = false
-	}
-
-	if move.Source == 0 {
-		board.CastleWhiteQueenside = false
-	}
-
-	if move.Source == 63 {
-		board.CastleBlackKingside = false
-	}
-
-	if move.Source == 56 {
-		board.CastleBlackQueenside = false
-	}
-
 	sourceBit := bitboards.New(move.Source)
 	destBit := bitboards.New(move.Destination)
 
@@ -185,6 +181,9 @@ func (board *Board) makeMove(move Move) (*MoveUndo, error) {
 			*board.pieceBitboard(BlackPawn) &= ^capturedPawnBit    // or WhitePawn
 		}
 	case CastleKingside:
+		if !board.CastleWhiteKingside && !board.CastleBlackKingside {
+			panic("")
+		}
 		if move.Piece == WhiteKing && board.CastleWhiteKingside {
 			board.WhiteCastled = true
 			*board.pieceBitboard(WhiteRook) &= ^bitboards.New(7) // original rook position for kingside
@@ -195,11 +194,14 @@ func (board *Board) makeMove(move Move) (*MoveUndo, error) {
 		if move.Piece == BlackKing && board.CastleBlackKingside {
 			board.BlackCastled = true
 			*board.pieceBitboard(BlackRook) &= ^bitboards.New(63) // original rook position for kingside
-			*board.pieceBitboard(BlackRook) |= bitboards.New(61)  // new rook position for kingside
+			*board.pieceBitboard(BlackRook) |= bitboards.New(60)  // new rook position for kingside
 			board.CastleBlackKingside = false
 			board.CastleBlackQueenside = false
 		}
 	case CastleQueenside:
+		if !board.CastleWhiteQueenside && !board.CastleBlackQueenside {
+			panic("?")
+		}
 		if move.Piece == WhiteKing && board.CastleWhiteQueenside {
 			board.BlackCastled = true
 			*board.pieceBitboard(WhiteRook) &= ^bitboards.New(0) // original rook position for kingside
@@ -209,8 +211,8 @@ func (board *Board) makeMove(move Move) (*MoveUndo, error) {
 		}
 		if move.Piece == BlackKing && board.CastleBlackQueenside {
 			board.WhiteCastled = true
-			*board.pieceBitboard(BlackRook) &= ^bitboards.New(55) // original rook position for kingside
-			*board.pieceBitboard(BlackRook) |= bitboards.New(58)  // new rook position for kingside
+			*board.pieceBitboard(BlackRook) &= ^bitboards.New(56) // original rook position for kingside
+			*board.pieceBitboard(BlackRook) |= bitboards.New(59)  // new rook position for kingside
 			board.CastleBlackKingside = false
 			board.CastleBlackQueenside = false
 		}
@@ -230,6 +232,22 @@ func (board *Board) makeMove(move Move) (*MoveUndo, error) {
 	if move.Piece == WhiteKing {
 		board.CastleWhiteKingside = false
 		board.CastleWhiteQueenside = false
+	}
+
+	if move.Source == 7 {
+		board.CastleWhiteKingside = false
+	}
+
+	if move.Source == 0 {
+		board.CastleWhiteQueenside = false
+	}
+
+	if move.Source == 63 {
+		board.CastleBlackKingside = false
+	}
+
+	if move.Source == 55 {
+		board.CastleBlackQueenside = false
 	}
 
 	board.updateAggregateBitboards()

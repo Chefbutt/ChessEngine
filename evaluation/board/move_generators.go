@@ -21,7 +21,7 @@ func Captures(board *Board) []Move {
 	return filtered
 }
 
-func OrderedMoves(board *Board) []Move {
+func OrderedMoves(board Board) []Move {
 	moves := board.LegalMoves()
 
 	for id, move := range moves {
@@ -73,8 +73,14 @@ func ControlCentre(board *Board) []Move {
 
 func (board Board) LegalMoves() []Move {
 	if board.TurnBlack {
+		if board.BlackKing == 0 {
+			return nil
+		}
 		return board.AvailableBlackMoves()
 	} else {
+		if board.WhiteKing == 0 {
+			return nil
+		}
 		return board.AvailableWhiteMoves()
 	}
 }
