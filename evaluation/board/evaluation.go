@@ -191,7 +191,7 @@ func (board Board) generateAttacks(opponentBlack bool) bitboards.BitBoard {
 	return board.AvailableWhiteAttacks()
 }
 
-func (board Board) Evaluate() Evaluation {
+func (board Board) Evaluate(materialModifier, mobilityModifier, centreModifier, penaltyModifier int8) Evaluation {
 	if board.IsCheckMate() {
 		// Checkmate detection
 		if board.TurnBlack {
@@ -206,7 +206,7 @@ func (board Board) Evaluate() Evaluation {
 		return Evaluation{0, 0, 0, 0, 0, 0}
 	}
 
-	material := (board.whiteMaterial() - board.blackMaterial()) * 8
+	material := (board.whiteMaterial() - board.blackMaterial()) * materialModifier // 8
 
 	doubled := board.calculateDoubledPawns()
 	blocked := board.calculateBlockedPawns()
@@ -214,16 +214,16 @@ func (board Board) Evaluate() Evaluation {
 	mobility := board.mobilityScore()
 	centre := board.piecesInCentre()
 	kingSafety := board.DynamicKingSafety()
-	// misplacedKnights := board.knightsOnRim()
+	misplacedKnights := board.knightsOnRim()
 
 	pawnPenalties := doubled + blocked + isolated
-	mobilityBonus := -1 * mobility
-	centreBonus := -4 * centre
+	mobilityBonus := mobilityModifier * mobility //-1
+	centreBonus := centreModifier * centre       //-4
 	// knightBonus := 0
 
 	if board.TurnBlack {
-		return Evaluation{material, pawnPenalties, mobilityBonus, -centreBonus, kingSafety, 0}
+		return Evaluation{-material, penaltyModifier * pawnPenalties, -mobilityBonus, -centreBonus, kingSafety, misplacedKnights}
 	} else {
-		return Evaluation{-material, -pawnPenalties, -mobilityBonus, centreBonus, -kingSafety, 0}
+		return Evaluation{material, penaltyModifier * -pawnPenalties, -mobilityBonus, centreBonus, -kingSafety, misplacedKnights}
 	}
 }
