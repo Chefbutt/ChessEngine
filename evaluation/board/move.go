@@ -123,15 +123,11 @@ func (originalBoard Board) AvailableBlackMoves() []Move {
 	knights := board.BlackKnights
 	for knights != 0 {
 		from := knights.BitBoardPointer().PopLSB()
-		if from == 65 {
-			break
-		}
+
 		movesList := bitboards.KnightBitboard(bitboards.New(int(from))).Moves(board.EmptySquares, board.WhitePieces)
 		for movesList != 0 {
 			to := movesList.PopLSB()
-			if to == 65 {
-				break
-			}
+
 			moves = append(moves, Move{Source: int(from), Destination: int(to), Piece: BlackKnight})
 		}
 	}
@@ -139,15 +135,11 @@ func (originalBoard Board) AvailableBlackMoves() []Move {
 	bishops := board.BlackBishops
 	for bishops != 0 {
 		from := bishops.BitBoardPointer().PopLSB()
-		if from == 65 {
-			break
-		}
+
 		movesList := bitboards.BishopBitboard(bitboards.New(int(from))).Moves(board.BlackPieces, board.WhitePieces)
 		for movesList != 0 {
 			to := movesList.PopLSB()
-			if to == 65 {
-				break
-			}
+
 			moves = append(moves, Move{Source: int(from), Destination: int(to), Piece: BlackBishop})
 		}
 	}
@@ -155,15 +147,11 @@ func (originalBoard Board) AvailableBlackMoves() []Move {
 	rooks := board.BlackRooks
 	for rooks != 0 {
 		from := rooks.BitBoardPointer().PopLSB()
-		if from == 65 {
-			break
-		}
+
 		movesList := bitboards.RookBitboard(bitboards.New(int(from))).Moves(board.BlackPieces, board.WhitePieces)
 		for movesList != 0 {
 			to := movesList.PopLSB()
-			if to == 65 {
-				break
-			}
+
 			moves = append(moves, Move{Source: int(from), Destination: int(to), Piece: BlackRook})
 		}
 	}
@@ -171,15 +159,11 @@ func (originalBoard Board) AvailableBlackMoves() []Move {
 	queens := board.BlackQueens
 	for queens != 0 {
 		from := queens.BitBoardPointer().PopLSB()
-		if from == 65 {
-			break
-		}
+
 		movesList := bitboards.QueenBitboard(bitboards.New(int(from))).Moves(board.BlackPieces, board.WhitePieces)
 		for movesList != 0 {
 			to := movesList.PopLSB()
-			if to == 65 {
-				break
-			}
+
 			moves = append(moves, Move{Source: int(from), Destination: int(to), Piece: BlackQueen})
 		}
 	}
@@ -187,15 +171,11 @@ func (originalBoard Board) AvailableBlackMoves() []Move {
 	pawns := board.BlackPawns
 	for pawns != 0 {
 		from := pawns.BitBoardPointer().PopLSB()
-		if from == 65 {
-			break
-		}
+
 		movesList := bitboards.BlackPawnBitboard(bitboards.New(int(from))).Moves(board.EmptySquares, board.WhitePieces, board.EnPassantTarget)
 		for movesList != 0 {
 			to := movesList.PopLSB()
-			if to == 65 {
-				break
-			}
+
 			moves = append(moves, Move{Source: int(from), Destination: int(to), Piece: BlackPawn})
 		}
 	}
@@ -203,16 +183,12 @@ func (originalBoard Board) AvailableBlackMoves() []Move {
 	kings := board.BlackKing
 	for kings != 0 {
 		from := kings.BitBoardPointer().PopLSB()
-		if from == 65 {
-			break
-		}
+
 		movesList := bitboards.KingBitboard(bitboards.New(int(from))).Moves(board.EmptySquares, board.WhitePieces)
 		for movesList != 0 {
 			board := board
 			to := movesList.PopLSB()
-			if to == 65 {
-				break
-			}
+
 			move := Move{Source: bits.TrailingZeros64(uint64(board.BlackKing)), Destination: int(to), Piece: BlackKing}
 			board.makeMove(move)
 			if !board.isKingInCheck(board.BlackKing, false) && move.Source != move.Destination {
@@ -255,15 +231,10 @@ func (originalBoard Board) AvailableWhiteMoves() []Move {
 	knights := board.WhiteKnights
 	for knights != 0 {
 		from := knights.BitBoardPointer().PopLSB()
-		if from == 65 {
-			break
-		}
+
 		movesList := bitboards.KnightBitboard(bitboards.New(int(from))).Moves(board.EmptySquares, board.BlackPieces)
 		for movesList != 0 {
 			to := movesList.PopLSB()
-			if to == 65 {
-				break
-			}
 			moves = append(moves, Move{Source: int(from), Destination: int(to), Piece: WhiteKnight})
 		}
 	}
@@ -271,15 +242,11 @@ func (originalBoard Board) AvailableWhiteMoves() []Move {
 	bishops := board.WhiteBishops
 	for bishops != 0 {
 		from := bishops.BitBoardPointer().PopLSB()
-		if from == 65 {
-			break
-		}
+
 		movesList := bitboards.BishopBitboard(bitboards.New(int(from))).Moves(board.WhitePieces, board.BlackPieces)
 		for movesList != 0 {
 			to := movesList.PopLSB()
-			if to == 65 {
-				break
-			}
+
 			moves = append(moves, Move{Source: int(from), Destination: int(to), Piece: WhiteBishop})
 		}
 	}
@@ -287,15 +254,11 @@ func (originalBoard Board) AvailableWhiteMoves() []Move {
 	rooks := board.WhiteRooks
 	for rooks != 0 {
 		from := rooks.BitBoardPointer().PopLSB()
-		if from == 65 {
-			break
-		}
+
 		movesList := bitboards.RookBitboard(bitboards.New(int(from))).Moves(board.WhitePieces, board.BlackPieces)
 		for movesList != 0 {
 			to := movesList.PopLSB()
-			if to == 65 {
-				break
-			}
+
 			moves = append(moves, Move{Source: int(from), Destination: int(to), Piece: WhiteRook})
 		}
 	}
@@ -303,15 +266,11 @@ func (originalBoard Board) AvailableWhiteMoves() []Move {
 	queens := board.WhiteQueens
 	for queens != 0 {
 		from := queens.BitBoardPointer().PopLSB()
-		if from == 65 {
-			break
-		}
+
 		movesList := bitboards.QueenBitboard(bitboards.New(int(from))).Moves(board.WhitePieces, board.BlackPieces)
 		for movesList != 0 {
 			to := movesList.PopLSB()
-			if to == 65 {
-				break
-			}
+
 			moves = append(moves, Move{Source: int(from), Destination: int(to), Piece: WhiteQueen})
 		}
 	}
@@ -319,15 +278,11 @@ func (originalBoard Board) AvailableWhiteMoves() []Move {
 	pawns := board.WhitePawns
 	for pawns != 0 {
 		from := pawns.BitBoardPointer().PopLSB()
-		if from == 65 {
-			break
-		}
+
 		movesList := bitboards.WhitePawnBitboard(bitboards.New(int(from))).Moves(board.EmptySquares, board.BlackPieces, board.EnPassantTarget)
 		for movesList != 0 {
 			to := movesList.PopLSB()
-			if to == 65 {
-				break
-			}
+
 			moves = append(moves, Move{Source: int(from), Destination: int(to), Piece: WhitePawn})
 		}
 	}
@@ -336,16 +291,12 @@ func (originalBoard Board) AvailableWhiteMoves() []Move {
 	kings := board.WhiteKing
 	for kings != 0 {
 		from := kings.BitBoardPointer().PopLSB()
-		if from == 65 {
-			break
-		}
+
 		movesList := bitboards.KingBitboard(bitboards.New(int(from))).Moves(board.EmptySquares, board.BlackPieces)
 		for movesList != 0 {
 			board := board
 			to := movesList.PopLSB()
-			if to == 65 {
-				break
-			}
+
 			move := Move{Source: bits.TrailingZeros64(uint64(board.WhiteKing)), Destination: int(to), Piece: WhiteKing}
 			board.makeMove(move)
 			if !board.isKingInCheck(board.WhiteKing, true) && move.Source != move.Destination {

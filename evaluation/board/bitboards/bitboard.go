@@ -107,10 +107,6 @@ func (bitboard BitBoard) CountBits() int {
 }
 
 func (b *BitBoard) PopLSB() uint8 {
-	if *b == 0 {
-		return 65
-	}
-
 	lsb := b.Lsb()
 
 	*b &= *b - 1
