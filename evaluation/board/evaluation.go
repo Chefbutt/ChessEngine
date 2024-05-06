@@ -222,8 +222,8 @@ func (board Board) Evaluate(materialModifier, mobilityModifier, centreModifier, 
 	// knightBonus := 0
 
 	if board.TurnBlack {
-		return Evaluation{-material, penaltyModifier * pawnPenalties, -mobilityBonus, -centreBonus, kingSafety, misplacedKnights}
+		return Evaluation{material, penaltyModifier * pawnPenalties, -mobilityBonus, -centreBonus, kingSafety * 2, misplacedKnights}
 	} else {
-		return Evaluation{material, penaltyModifier * -pawnPenalties, -mobilityBonus, centreBonus, -kingSafety, misplacedKnights}
+		return Evaluation{-material, penaltyModifier * -pawnPenalties, mobilityBonus, centreBonus, -kingSafety * 2, misplacedKnights}
 	}
 }

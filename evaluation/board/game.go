@@ -78,7 +78,7 @@ func (board *Board) MakeMove() error {
 	// 	log.Fatal("could not write memory profile: ", err)
 	// }
 
-	bestMove, eval := board.BestMove(5, OrderedMoves, 8, -3, -8, 1)
+	bestMove, eval := board.BestMove(4, OrderedMoves, 8, -3, -8, 1)
 
 	fmt.Println(PieceSymbols[board.PieceAt(int(bestMove.Source))], "(", IndexToPosition(uint64(bestMove.Destination)), ") material: ", eval.material, ", centre bonus: ", eval.centreBonus, ", mobility bonus: ", eval.mobilityBonus, ", pawn structure bonus: ", eval.pawnPenalties, ", knight placement bonus: ", eval.knightBonus, ", king safety bonus: ", eval.safety)
 
