@@ -1,0 +1,160 @@
+@startuml
+
+class ChessEngine {
+    + EvaluationFunction
+    + MoveLibraryCompressionScheme
+    + QuickSearchLibrary
+}
+
+class EvaluationFunction {
+    + iterativeMinimaxSearch()
+    + quiescentSearch()
+}
+
+class MoveLibraryCompressionScheme {
+    + compressLibrary()
+    + decompressLibrary()
+}
+
+class QuickSearchLibrary {
+    + searchLibrary()
+}
+
+ChessEngine --> EvaluationFunction
+ChessEngine --> MoveLibraryCompressionScheme
+ChessEngine --> QuickSearchLibrary
+
+@enduml
+
+@startuml
+
+class Stockfish {
+    + Search
+    + Evaluation
+    + TranspositionTable
+    + MoveGeneration
+    + MoveOrdering
+    + EvaluationFunction
+}
+
+class Search {
+    + alphaBetaSearch()
+    + iterativeDeepening()
+    + quiescenceSearch()
+}
+
+class Evaluation {
+    + evaluatePosition()
+}
+
+class TranspositionTable {
+    + store()
+    + lookup()
+}
+
+class MoveGeneration {
+    + generateLegalMoves()
+}
+
+class MoveOrdering {
+    + sortMoves()
+}
+
+class EvaluationFunction {
+    + calculateMaterial()
+    + calculatePositionalFactors()
+    + calculateKingSafety()
+    + calculatePawnStructure()
+}
+
+Stockfish --> Search
+Stockfish --> Evaluation
+Stockfish --> TranspositionTable
+Stockfish --> MoveGeneration
+Stockfish --> MoveOrdering
+Stockfish --> EvaluationFunction
+
+
+@enduml
+
+
+@startuml
+
+class WeakerChessEngine {
+    + EvaluationFunction
+    + MoveLibraryCompressionScheme
+    + QuickSearchLibrary
+}
+
+class EvaluationFunction {
+    + iterativeMinimaxSearch()
+    + quiescentSearch()
+}
+
+class MoveLibraryCompressionScheme {
+    + compressLibrary()
+    + decompressLibrary()
+}
+
+class QuickSearchLibrary {
+    + searchLibrary()
+}
+
+class TranspositionTable {
+    + store()
+    + lookup()
+}
+
+WeakerChessEngine --> EvaluationFunction
+WeakerChessEngine --> MoveLibraryCompressionScheme
+WeakerChessEngine --> QuickSearchLibrary
+WeakerChessEngine --> TranspositionTable
+
+@enduml
+
+
+@startuml
+
+class VariklioĮverčiai {
+    + calculateAggressiveness()
+    + calculateMaterial()
+    + calculateActivity()
+    + calculatePawnStructure()
+    + calculateDynamicKingSafety()
+    + calculatePiecePlacement()
+    + calculateCentreControl()
+}
+
+VariklioĮverčiai --> calculateAggressiveness
+VariklioĮverčiai --> calculateMaterial
+VariklioĮverčiai --> calculateActivity
+VariklioĮverčiai --> calculatePawnStructure
+VariklioĮverčiai --> calculateDynamicKingSafety
+VariklioĮverčiai --> calculatePiecePlacement
+VariklioĮverčiai --> calculateCentreControl
+
+@enduml
+
+
+@startuml
+
+class StockfishEvaluation {
+    + calculateMaterial()
+    + calculatePawnStructure()
+    + calculatePieceActivity()
+    + calculateKingSafety()
+    + calculateMobility()
+    + calculatePositionalFactors()
+    + calculateControl()
+}
+
+StockfishEvaluation --> calculateMaterial
+StockfishEvaluation --> calculatePawnStructure
+StockfishEvaluation --> calculatePieceActivity
+StockfishEvaluation --> calculateKingSafety
+StockfishEvaluation --> calculateMobility
+StockfishEvaluation --> calculatePositionalFactors
+StockfishEvaluation --> calculateControl
+
+@enduml
+

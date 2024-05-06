@@ -3,10 +3,6 @@ package board
 import (
 	"errors"
 	"fmt"
-	"log"
-	"os"
-	"runtime"
-	"runtime/pprof"
 
 	"engine/evaluation/board/bitboards"
 )
@@ -62,27 +58,27 @@ func (board *Board) MakeHumanMove(move string) error {
 func (board *Board) MakeMove() error {
 	// parsedMove := board.UCItoMove(move)
 
-	f, err := os.Create("cpu.prof")
-	if err != nil {
-		log.Fatal("could not create CPU profile: ", err)
-	}
-	defer f.Close() // error handling omitted for example
-	if err := pprof.StartCPUProfile(f); err != nil {
-		log.Fatal("could not start CPU profile: ", err)
-	}
-	defer pprof.StopCPUProfile()
+	// f, err := os.Create("cpu.prof")
+	// if err != nil {
+	// 	log.Fatal("could not create CPU profile: ", err)
+	// }
+	// defer f.Close() // error handling omitted for example
+	// if err := pprof.StartCPUProfile(f); err != nil {
+	// 	log.Fatal("could not start CPU profile: ", err)
+	// }
+	// defer pprof.StopCPUProfile()
 
-	fM, err := os.Create("mem.prof")
-	if err != nil {
-		log.Fatal("could not create memory profile: ", err)
-	}
-	defer fM.Close() // error handling omitted for example
-	runtime.GC()     // get up-to-date statistics
-	if err := pprof.WriteHeapProfile(fM); err != nil {
-		log.Fatal("could not write memory profile: ", err)
-	}
+	// fM, err := os.Create("mem.prof")
+	// if err != nil {
+	// 	log.Fatal("could not create memory profile: ", err)
+	// }
+	// defer fM.Close() // error handling omitted for example
+	// runtime.GC()     // get up-to-date statistics
+	// if err := pprof.WriteHeapProfile(fM); err != nil {
+	// 	log.Fatal("could not write memory profile: ", err)
+	// }
 
-	bestMove, eval := board.BestMove(6, OrderedMoves)
+	bestMove, eval := board.BestMove(4, OrderedMoves)
 
 	fmt.Println(PieceSymbols[board.PieceAt(int(bestMove.Source))], "(", IndexToPosition(uint64(bestMove.Destination)), ") material: ", eval.material, ", centre bonus: ", eval.centreBonus, ", mobility bonus: ", eval.mobilityBonus, ", pawn structure bonus: ", eval.pawnPenalties, ", knight placement bonus: ", eval.knightBonus, ", king safety bonus: ", eval.safety)
 
@@ -90,7 +86,7 @@ func (board *Board) MakeMove() error {
 		fmt.Println("Resign")
 	}
 
-	_, err = board.makeMove(bestMove)
+	_, err := board.makeMove(bestMove)
 	if err != nil {
 		return err
 	}
