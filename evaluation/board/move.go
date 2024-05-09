@@ -113,10 +113,10 @@ func (originalBoard Board) AvailableBlackMoves() []Move {
 	var moves []Move
 
 	attacks := board.WhiteAttacksMinimal()
-	if board.CastleBlackQueenside && !board.isOccupied(58) && !board.isOccupied(59) && !board.isOccupied(57) && board.PieceAt(56) == BlackRook && !board.IsAttacked((board.BlackKing>>1).BitBoard(), attacks) && !board.IsAttacked((board.BlackKing>>2).BitBoard(), attacks) {
+	if board.CastleBlackQueenside && !board.isOccupied(58) && !board.isOccupied(59) && !board.isOccupied(57) && board.PieceAt(56) == BlackRook && !board.IsAttacked((board.BlackKing>>1).BitBoard(), attacks) && !board.IsAttacked((board.BlackKing>>2).BitBoard(), attacks) && !board.IsAttacked((board.BlackKing).BitBoard(), attacks) {
 		moves = append(moves, Move{Source: 60, Destination: 58, MoveType: CastleQueenside, Piece: BlackKing})
 	}
-	if board.CastleBlackKingside && !board.isOccupied(61) && !board.isOccupied(62) && !board.IsAttacked((board.BlackKing<<1).BitBoard(), attacks) && board.PieceAt(63) == BlackRook && !board.IsAttacked((board.BlackKing<<2).BitBoard(), attacks) {
+	if board.CastleBlackKingside && !board.isOccupied(61) && !board.isOccupied(62) && !board.IsAttacked((board.BlackKing<<1).BitBoard(), attacks) && board.PieceAt(63) == BlackRook && !board.IsAttacked((board.BlackKing<<2).BitBoard(), attacks) && !board.IsAttacked((board.BlackKing).BitBoard(), attacks) {
 		moves = append(moves, Move{Source: 60, Destination: 62, MoveType: CastleKingside, Piece: BlackKing})
 	}
 
@@ -201,12 +201,13 @@ func (originalBoard Board) AvailableBlackMoves() []Move {
 	if board.isKingInCheck(board.BlackKing, false) {
 		var legalMoves []Move
 		for _, move := range moves {
-			board := board
-			_, err := board.makeMove(move)
+			tempBoard := board
+			_, err := tempBoard.makeMove(move)
 			if err != nil {
 				panic(err)
 			}
-			if !board.isKingInCheck(board.BlackKing, false) {
+			// tempBoard.Display()
+			if !board.isKingInCheck(tempBoard.BlackKing, false) {
 				legalMoves = append(legalMoves, move)
 			}
 		}

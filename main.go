@@ -15,6 +15,48 @@ import (
 )
 
 func main() {
+	if len(os.Args) < 2 {
+		fmt.Println("No mode specified")
+		fmt.Println("Usage: go run main.go [engine-vs-engine | engine-vs-human]")
+		os.Exit(1)
+	}
+
+	mode := os.Args[1]
+
+	debug := os.Args[2]
+
+	switch mode {
+	case "engine-vs-engine":
+		playEngineVsEngine(debug)
+	case "engine-vs-human":
+		playEngineVsHuman(debug)
+	default:
+		fmt.Println("Invalid mode specified")
+		fmt.Println("Usage: go run main.go [engine-vs-engine | engine-vs-human]")
+		os.Exit(1)
+	}
+}
+
+func playEngineVsEngine(debug string) {
+	bitboards.InitBitboards()
+	board.TranspositionTable = make(map[uint64]board.TranspositionEntry)
+	board.InitZobristTable()
+	b := board.New()
+
+	if debug == "debug" {
+		b.Debug = true
+	}
+
+	for {
+		err := b.MakeMove()
+		if err != nil {
+			break
+		}
+		b.Display()
+	}
+}
+
+func playEngineVsHuman(debug string) {
 	b := board.New()
 	reader := bufio.NewReader(os.Stdin)
 
@@ -22,6 +64,10 @@ func main() {
 	bitboards.InitBitboards()
 	board.TranspositionTable = make(map[uint64]board.TranspositionEntry)
 	board.InitZobristTable()
+
+	if debug == "debug" {
+		b.Debug = true
+	}
 
 	for {
 		fmt.Print("Enter move: ")
@@ -50,7 +96,7 @@ func main() {
 		}
 
 		fmt.Println("Move made:", text)
-		b.Display() // Assuming there's a function to display the board state
+		// b.Display() // Assuming there's a function to display the board state
 
 		b.MakeMove()
 		b.Display()

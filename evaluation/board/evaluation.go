@@ -1,6 +1,7 @@
 package board
 
 import (
+	"fmt"
 	"math/bits"
 
 	"engine/evaluation/board/bitboards"
@@ -215,6 +216,8 @@ func (board Board) Evaluate(materialModifier, mobilityModifier, centreModifier, 
 	centre := board.piecesInCentre()
 	kingSafety := board.DynamicKingSafety()
 	misplacedKnights := board.knightsOnRim()
+	aggression := board.GamePhase()
+	fmt.Sprint(aggression)
 
 	pawnPenalties := doubled + blocked + isolated
 	mobilityBonus := mobilityModifier * mobility //-1
@@ -222,8 +225,8 @@ func (board Board) Evaluate(materialModifier, mobilityModifier, centreModifier, 
 	// knightBonus := 0
 
 	if board.TurnBlack {
-		return Evaluation{material, penaltyModifier * pawnPenalties, -mobilityBonus, -centreBonus, kingSafety * 2, misplacedKnights}
+		return Evaluation{material, penaltyModifier * pawnPenalties, -mobilityBonus, -centreBonus, kingSafety * 3, misplacedKnights}
 	} else {
-		return Evaluation{-material, penaltyModifier * -pawnPenalties, mobilityBonus, centreBonus, -kingSafety * 2, misplacedKnights}
+		return Evaluation{-material, penaltyModifier * -pawnPenalties, mobilityBonus, centreBonus, -kingSafety * 3, misplacedKnights}
 	}
 }

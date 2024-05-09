@@ -209,7 +209,9 @@ func (board *Board) BestMove(depth int, strategy func(Board) []Move, materialMod
 
 	for range legalMoves {
 		result := <-results
-		fmt.Println(PieceSymbols[board.PieceAt(int(result.Move.Source))], "(", IndexToPosition(uint64(result.Move.Destination)), ") material: ", result.Score.material, ", centre bonus: ", result.Score.centreBonus, ", mobility bonus: ", result.Score.mobilityBonus, ", pawn structure bonus: ", result.Score.pawnPenalties, ", knight placement bonus: ", result.Score.knightBonus, ", king safety bonus: ", result.Score.safety)
+		if board.Debug {
+			fmt.Println(PieceSymbols[board.PieceAt(int(result.Move.Source))], "(", IndexToPosition(uint64(result.Move.Destination)), ") material: ", result.Score.material, ", centre bonus: ", result.Score.centreBonus, ", mobility bonus: ", result.Score.mobilityBonus, ", pawn structure bonus: ", result.Score.pawnPenalties, ", knight placement bonus: ", result.Score.knightBonus, ", king safety bonus: ", result.Score.safety)
+		}
 		if result.Score.Sum() > bestScore.Sum() {
 			bestScore = result.Score
 			bestMove = result.Move

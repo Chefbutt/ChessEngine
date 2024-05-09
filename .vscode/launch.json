@@ -5,12 +5,40 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Launch file",
+            "name": "Engine vs Engine",
             "type": "go",
             "request": "launch",
-            "mode": "debug",
             "program": "./main.go",
-            "console": "integratedTerminal"
+            "args": ["engine-vs-engine", "debug"],
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}"
         },
+        {
+            "name": "Engine vs Human",
+            "type": "go",
+            "request": "launch",
+            "program": "./main.go",
+            "args": ["engine-vs-human", "debug"],
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "name": "Engine vs Engine Sans Output",
+            "type": "go",
+            "request": "launch",
+            "program": "./main.go",
+            "args": ["engine-vs-engine", "no-debug"],
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "name": "Engine vs Human Sans Output",
+            "type": "go",
+            "request": "launch",
+            "program": "./main.go",
+            "args": ["engine-vs-human", "no-debug"],
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}"
+        }
     ]
 }
