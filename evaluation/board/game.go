@@ -78,9 +78,11 @@ func (board *Board) MakeMove() error {
 	// 	log.Fatal("could not write memory profile: ", err)
 	// }
 
-	bestMove, eval := board.BestMove(4, OrderedMoves)
+	bestMove, eval := board.BestMove(4, OrderedMoves, 8, -3, -8, 1)
 
-	fmt.Println(PieceSymbols[board.PieceAt(int(bestMove.Source))], "(", IndexToPosition(uint64(bestMove.Destination)), ") material: ", eval.material, ", centre bonus: ", eval.centreBonus, ", mobility bonus: ", eval.mobilityBonus, ", pawn structure bonus: ", eval.pawnPenalties, ", knight placement bonus: ", eval.knightBonus, ", king safety bonus: ", eval.safety)
+	if board.Debug {
+		fmt.Println(PieceSymbols[board.PieceAt(int(bestMove.Source))], "(", IndexToPosition(uint64(bestMove.Destination)), ") material: ", eval.material, ", centre bonus: ", eval.centreBonus, ", mobility bonus: ", eval.mobilityBonus, ", pawn structure bonus: ", eval.pawnPenalties, ", knight placement bonus: ", eval.knightBonus, ", king safety bonus: ", eval.safety)
+	}
 
 	if bestMove.Source == bestMove.Destination {
 		fmt.Println("Resign")
@@ -190,7 +192,7 @@ func (board *Board) makeMove(move Move) (*MoveUndo, error) {
 		if move.Piece == BlackKing && board.CastleBlackKingside {
 			board.BlackCastled = true
 			*board.pieceBitboard(BlackRook) &= ^bitboards.New(63) // original rook position for kingside
-			*board.pieceBitboard(BlackRook) |= bitboards.New(60)  // new rook position for kingside
+			*board.pieceBitboard(BlackRook) |= bitboards.New(61)  // new rook position for kingside
 			board.CastleBlackKingside = false
 			board.CastleBlackQueenside = false
 		}

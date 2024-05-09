@@ -1,0 +1,1228 @@
+[yoo@Yooleus engine]$  /usr/bin/env GOPATH=/home/yoo/go /usr/bin/dlv dap --client-addr=:36265 
+Enter moves in standard chess notation (e.g., 'e2e4'), type 'exit' to quit:
+Enter move: e2e4
+
+-------------------
+♜ ♞ ♝ ♛ ♚ ♝ ♞ ♜ |8
+♟︎ ♟︎ ♟︎ ♟︎ ♟︎ ♟︎ ♟︎ ♟︎ |7
+▢ ▢ ▢ ▢ ▢ ▢ ▢ ▢ |6
+▢ ▢ ▢ ▢ ▢ ▢ ▢ ▢ |5
+▢ ▢ ▢ ▢ ♙ ▢ ▢ ▢ |4
+▢ ▢ ▢ ▢ ▢ ▢ ▢ ▢ |3
+♙ ♙ ♙ ♙ ▢ ♙ ♙ ♙ |2
+♖ ♘ ♗ ♕ ♔ ♗ ♘ ♖ |1
+-------------------
+a b c d e f g h
+Move made: e2e4
+-------------------
+♜ ♞ ♝ ♛ ♚ ♝ ♞ ♜ |8
+♟︎ ♟︎ ♟︎ ♟︎ ♟︎ ♟︎ ♟︎ ♟︎ |7
+▢ ▢ ▢ ▢ ▢ ▢ ▢ ▢ |6
+▢ ▢ ▢ ▢ ▢ ▢ ▢ ▢ |5
+▢ ▢ ▢ ▢ ♙ ▢ ▢ ▢ |4
+▢ ▢ ▢ ▢ ▢ ▢ ▢ ▢ |3
+♙ ♙ ♙ ♙ ▢ ♙ ♙ ♙ |2
+♖ ♘ ♗ ♕ ♔ ♗ ♘ ♖ |1
+-------------------
+a b c d e f g h
+♞ ( a6 ) material:  0 , centre bonus:  -8 , mobility bonus:  -9 , pawn structure bonus:  1 , knight placement bonus:  0 , king safety bonus:  0
+♞ ( h6 ) material:  0 , centre bonus:  -8 , mobility bonus:  -9 , pawn structure bonus:  1 , knight placement bonus:  -1 , king safety bonus:  0
+♞ ( f6 ) material:  0 , centre bonus:  0 , mobility bonus:  3 , pawn structure bonus:  -1 , knight placement bonus:  0 , king safety bonus:  0
+♞ ( c6 ) material:  0 , centre bonus:  0 , mobility bonus:  3 , pawn structure bonus:  -1 , knight placement bonus:  0 , king safety bonus:  0
+♟︎ ( a6 ) material:  0 , centre bonus:  0 , mobility bonus:  -18 , pawn structure bonus:  0 , knight placement bonus:  0 , king safety bonus:  0
+♟︎ ( a5 ) material:  0 , centre bonus:  -8 , mobility bonus:  -12 , pawn structure bonus:  2 , knight placement bonus:  0 , king safety bonus:  0
+♟︎ ( b6 ) material:  8 , centre bonus:  -16 , mobility bonus:  3 , pawn structure bonus:  -2 , knight placement bonus:  0 , king safety bonus:  0
+♟︎ ( b5 ) material:  -8 , centre bonus:  -8 , mobility bonus:  6 , pawn structure bonus:  1 , knight placement bonus:  0 , king safety bonus:  0
+♟︎ ( c5 ) material:  0 , centre bonus:  0 , mobility bonus:  -18 , pawn structure bonus:  0 , knight placement bonus:  0 , king safety bonus:  0
+♟︎ ( c6 ) material:  0 , centre bonus:  0 , mobility bonus:  -18 , pawn structure bonus:  0 , knight placement bonus:  0 , king safety bonus:  0
+♟︎ ( h5 ) material:  0 , centre bonus:  -8 , mobility bonus:  -12 , pawn structure bonus:  2 , knight placement bonus:  0 , king safety bonus:  0
+♟︎ ( f5 ) material:  0 , centre bonus:  8 , mobility bonus:  -30 , pawn structure bonus:  2 , knight placement bonus:  0 , king safety bonus:  0
+♟︎ ( f6 ) material:  0 , centre bonus:  0 , mobility bonus:  -30 , pawn structure bonus:  2 , knight placement bonus:  0 , king safety bonus:  0
+♟︎ ( g6 ) material:  8 , centre bonus:  -16 , mobility bonus:  3 , pawn structure bonus:  -2 , knight placement bonus:  0 , king safety bonus:  0
+♟︎ ( g5 ) material:  0 , centre bonus:  0 , mobility bonus:  -6 , pawn structure bonus:  0 , knight placement bonus:  0 , king safety bonus:  0
+♟︎ ( h6 ) material:  0 , centre bonus:  -8 , mobility bonus:  -15 , pawn structure bonus:  1 , knight placement bonus:  0 , king safety bonus:  0
+♟︎ ( d6 ) material:  0 , centre bonus:  0 , mobility bonus:  -9 , pawn structure bonus:  0 , knight placement bonus:  0 , king safety bonus:  0
+♟︎ ( e5 ) material:  8 , centre bonus:  0 , mobility bonus:  0 , pawn structure bonus:  0 , knight placement bonus:  0 , king safety bonus:  0
+♟︎ ( e6 ) material:  8 , centre bonus:  0 , mobility bonus:  0 , pawn structure bonus:  0 , knight placement bonus:  0 , king safety bonus:  0
+♟︎ ( d5 ) material:  0 , centre bonus:  8 , mobility bonus:  -3 , pawn structure bonus:  -1 , knight placement bonus:  0 , king safety bonus:  0
+♟︎ ( e5 ) material:  8 , centre bonus:  0 , mobility bonus:  0 , pawn structure bonus:  0 , knight placement bonus:  0 , king safety bonus:  0
+-------------------
+♜ ♞ ♝ ♛ ♚ ♝ ♞ ♜ |8
+♟︎ ♟︎ ♟︎ ♟︎ ▢ ♟︎ ♟︎ ♟︎ |7
+▢ ▢ ▢ ▢ ▢ ▢ ▢ ▢ |6
+▢ ▢ ▢ ▢ ♟︎ ▢ ▢ ▢ |5
+▢ ▢ ▢ ▢ ♙ ▢ ▢ ▢ |4
+▢ ▢ ▢ ▢ ▢ ▢ ▢ ▢ |3
+♙ ♙ ♙ ♙ ▢ ♙ ♙ ♙ |2
+♖ ♘ ♗ ♕ ♔ ♗ ♘ ♖ |1
+-------------------
+a b c d e f g h
+Enter move: g1f3
+
+-------------------
+♜ ♞ ♝ ♛ ♚ ♝ ♞ ♜ |8
+♟︎ ♟︎ ♟︎ ♟︎ ▢ ♟︎ ♟︎ ♟︎ |7
+▢ ▢ ▢ ▢ ▢ ▢ ▢ ▢ |6
+▢ ▢ ▢ ▢ ♟︎ ▢ ▢ ▢ |5
+▢ ▢ ▢ ▢ ♙ ▢ ▢ ▢ |4
+▢ ▢ ▢ ▢ ▢ ♘ ▢ ▢ |3
+♙ ♙ ♙ ♙ ▢ ♙ ♙ ♙ |2
+♖ ♘ ♗ ♕ ♔ ♗ ▢ ♖ |1
+-------------------
+a b c d e f g h
+Move made: g1f3
+-------------------
+♜ ♞ ♝ ♛ ♚ ♝ ♞ ♜ |8
+♟︎ ♟︎ ♟︎ ♟︎ ▢ ♟︎ ♟︎ ♟︎ |7
+▢ ▢ ▢ ▢ ▢ ▢ ▢ ▢ |6
+▢ ▢ ▢ ▢ ♟︎ ▢ ▢ ▢ |5
+▢ ▢ ▢ ▢ ♙ ▢ ▢ ▢ |4
+▢ ▢ ▢ ▢ ▢ ♘ ▢ ▢ |3
+♙ ♙ ♙ ♙ ▢ ♙ ♙ ♙ |2
+♖ ♘ ♗ ♕ ♔ ♗ ▢ ♖ |1
+-------------------
+a b c d e f g h
+[yoo@Yooleus engine]$ ^C
+
+ cd /home/yoo/Desktop/Bakalauras/engine ; /usr/bin[yoo@Yooleus engine]$  cd /home/yoo/Desktop/Bakalauras/engine ; /usr/bin/env GOPATH=/home/yoo/go /usr/bin/dlv dap --client-addr=:33483 
+Enter moves in standard chess notation (e.g., 'e2e4'), type 'exit' to quit:
+Enter move: e2e4
+
+-------------------
+♜ ♞ ♝ ♛ ♚ ♝ ♞ ♜ |8
+♟︎ ♟︎ ♟︎ ♟︎ ♟︎ ♟︎ ♟︎ ♟︎ |7
+▢ ▢ ▢ ▢ ▢ ▢ ▢ ▢ |6
+▢ ▢ ▢ ▢ ▢ ▢ ▢ ▢ |5
+▢ ▢ ▢ ▢ ♙ ▢ ▢ ▢ |4
+▢ ▢ ▢ ▢ ▢ ▢ ▢ ▢ |3
+♙ ♙ ♙ ♙ ▢ ♙ ♙ ♙ |2
+♖ ♘ ♗ ♕ ♔ ♗ ♘ ♖ |1
+-------------------
+a b c d e f g h
+Move made: e2e4
+♞ ( a6 ) material:  0 , centre bonus:  -8 , mobility bonus:  -9 , pawn structure bonus:  1 , knight placement bonus:  0 , king safety bonus:  0
+♞ ( c6 ) material:  0 , centre bonus:  0 , mobility bonus:  3 , pawn structure bonus:  -1 , knight placement bonus:  0 , king safety bonus:  0
+♞ ( h6 ) material:  0 , centre bonus:  -8 , mobility bonus:  -9 , pawn structure bonus:  1 , knight placement bonus:  -1 , king safety bonus:  0
+♞ ( f6 ) material:  0 , centre bonus:  0 , mobility bonus:  3 , pawn structure bonus:  -1 , knight placement bonus:  0 , king safety bonus:  0
+♟︎ ( a6 ) material:  0 , centre bonus:  0 , mobility bonus:  -18 , pawn structure bonus:  0 , knight placement bonus:  0 , king safety bonus:  0
+♟︎ ( a5 ) material:  0 , centre bonus:  -8 , mobility bonus:  -12 , pawn structure bonus:  2 , knight placement bonus:  0 , king safety bonus:  0
+♟︎ ( b5 ) material:  -8 , centre bonus:  -8 , mobility bonus:  6 , pawn structure bonus:  1 , knight placement bonus:  0 , king safety bonus:  0
+♟︎ ( b6 ) material:  8 , centre bonus:  -16 , mobility bonus:  3 , pawn structure bonus:  -2 , knight placement bonus:  0 , king safety bonus:  0
+♟︎ ( c5 ) material:  0 , centre bonus:  0 , mobility bonus:  -18 , pawn structure bonus:  0 , knight placement bonus:  0 , king safety bonus:  0
+♟︎ ( c6 ) material:  0 , centre bonus:  0 , mobility bonus:  -18 , pawn structure bonus:  0 , knight placement bonus:  0 , king safety bonus:  0
+♟︎ ( f5 ) material:  0 , centre bonus:  8 , mobility bonus:  -30 , pawn structure bonus:  2 , knight placement bonus:  0 , king safety bonus:  0
+♟︎ ( f6 ) material:  0 , centre bonus:  0 , mobility bonus:  -30 , pawn structure bonus:  2 , knight placement bonus:  0 , king safety bonus:  0
+♟︎ ( h6 ) material:  0 , centre bonus:  -8 , mobility bonus:  -15 , pawn structure bonus:  1 , knight placement bonus:  0 , king safety bonus:  0
+♟︎ ( g6 ) material:  8 , centre bonus:  -16 , mobility bonus:  3 , pawn structure bonus:  -2 , knight placement bonus:  0 , king safety bonus:  0
+♟︎ ( g5 ) material:  0 , centre bonus:  0 , mobility bonus:  -6 , pawn structure bonus:  0 , knight placement bonus:  0 , king safety bonus:  0
+♟︎ ( h5 ) material:  0 , centre bonus:  -8 , mobility bonus:  -12 , pawn structure bonus:  2 , knight placement bonus:  0 , king safety bonus:  0
+♟︎ ( d6 ) material:  0 , centre bonus:  0 , mobility bonus:  -9 , pawn structure bonus:  0 , knight placement bonus:  0 , king safety bonus:  0
+♟︎ ( e5 ) material:  8 , centre bonus:  0 , mobility bonus:  0 , pawn structure bonus:  0 , knight placement bonus:  0 , king safety bonus:  0
+♟︎ ( d5 ) material:  0 , centre bonus:  8 , mobility bonus:  -3 , pawn structure bonus:  -1 , knight placement bonus:  0 , king safety bonus:  0
+♟︎ ( e6 ) material:  8 , centre bonus:  0 , mobility bonus:  0 , pawn structure bonus:  0 , knight placement bonus:  0 , king safety bonus:  0
+♟︎ ( e5 ) material:  8 , centre bonus:  0 , mobility bonus:  0 , pawn structure bonus:  0 , knight placement bonus:  0 , king safety bonus:  0
+-------------------
+♜ ♞ ♝ ♛ ♚ ♝ ♞ ♜ |8
+♟︎ ♟︎ ♟︎ ♟︎ ▢ ♟︎ ♟︎ ♟︎ |7
+▢ ▢ ▢ ▢ ▢ ▢ ▢ ▢ |6
+▢ ▢ ▢ ▢ ♟︎ ▢ ▢ ▢ |5
+▢ ▢ ▢ ▢ ♙ ▢ ▢ ▢ |4
+▢ ▢ ▢ ▢ ▢ ▢ ▢ ▢ |3
+♙ ♙ ♙ ♙ ▢ ♙ ♙ ♙ |2
+♖ ♘ ♗ ♕ ♔ ♗ ♘ ♖ |1
+-------------------
+a b c d e f g h
+Enter move: g1f3
+
+-------------------
+♜ ♞ ♝ ♛ ♚ ♝ ♞ ♜ |8
+♟︎ ♟︎ ♟︎ ♟︎ ▢ ♟︎ ♟︎ ♟︎ |7
+▢ ▢ ▢ ▢ ▢ ▢ ▢ ▢ |6
+▢ ▢ ▢ ▢ ♟︎ ▢ ▢ ▢ |5
+▢ ▢ ▢ ▢ ♙ ▢ ▢ ▢ |4
+▢ ▢ ▢ ▢ ▢ ♘ ▢ ▢ |3
+♙ ♙ ♙ ♙ ▢ ♙ ♙ ♙ |2
+♖ ♘ ♗ ♕ ♔ ♗ ▢ ♖ |1
+-------------------
+a b c d e f g h
+Move made: g1f3
+♞ ( e7 ) material:  -8 , centre bonus:  -8 , mobility bonus:  3 , pawn structure bonus:  3 , knight placement bonus:  0 , king safety bonus:  0
+♞ ( f6 ) material:  16 , centre bonus:  -8 , mobility bonus:  0 , pawn structure bonus:  0 , knight placement bonus:  0 , king safety bonus:  0
+♞ ( h6 ) material:  0 , centre bonus:  0 , mobility bonus:  -3 , pawn structure bonus:  0 , knight placement bonus:  0 , king safety bonus:  0
+♞ ( a6 ) material:  0 , centre bonus:  -8 , mobility bonus:  -9 , pawn structure bonus:  0 , knight placement bonus:  0 , king safety bonus:  0
+♞ ( c6 ) material:  0 , centre bonus:  0 , mobility bonus:  27 , pawn structure bonus:  0 , knight placement bonus:  0 , king safety bonus:  -14
+♝ ( a3 ) material:  -16 , centre bonus:  0 , mobility bonus:  -9 , pawn structure bonus:  0 , knight placement bonus:  1 , king safety bonus:  0
+♝ ( e7 ) material:  -8 , centre bonus:  -8 , mobility bonus:  12 , pawn structure bonus:  3 , knight placement bonus:  0 , king safety bonus:  0
+♝ ( c5 ) material:  8 , centre bonus:  -8 , mobility bonus:  -6 , pawn structure bonus:  -1 , knight placement bonus:  0 , king safety bonus:  0
+♝ ( d6 ) material:  8 , centre bonus:  0 , mobility bonus:  -9 , pawn structure bonus:  0 , knight placement bonus:  0 , king safety bonus:  0
+♛ ( e7 ) material:  24 , centre bonus:  -16 , mobility bonus:  -12 , pawn structure bonus:  1 , knight placement bonus:  0 , king safety bonus:  0
+♛ ( g5 ) material:  -48 , centre bonus:  -8 , mobility bonus:  0 , pawn structure bonus:  0 , knight placement bonus:  0 , king safety bonus:  0
+♝ ( b4 ) material:  -16 , centre bonus:  16 , mobility bonus:  9 , pawn structure bonus:  -3 , knight placement bonus:  0 , king safety bonus:  0
+♛ ( h4 ) material:  -64 , centre bonus:  8 , mobility bonus:  -3 , pawn structure bonus:  1 , knight placement bonus:  0 , king safety bonus:  0
+♟︎ ( b5 ) material:  -8 , centre bonus:  8 , mobility bonus:  15 , pawn structure bonus:  1 , knight placement bonus:  0 , king safety bonus:  -16
+♟︎ ( a5 ) material:  8 , centre bonus:  -8 , mobility bonus:  -6 , pawn structure bonus:  0 , knight placement bonus:  0 , king safety bonus:  0
+♟︎ ( a6 ) material:  8 , centre bonus:  -8 , mobility bonus:  -6 , pawn structure bonus:  1 , knight placement bonus:  0 , king safety bonus:  0
+♟︎ ( c6 ) material:  24 , centre bonus:  -16 , mobility bonus:  -18 , pawn structure bonus:  3 , knight placement bonus:  0 , king safety bonus:  0
+♛ ( f6 ) material:  24 , centre bonus:  -8 , mobility bonus:  -6 , pawn structure bonus:  1 , knight placement bonus:  0 , king safety bonus:  0
+♟︎ ( b6 ) material:  -8 , centre bonus:  -8 , mobility bonus:  15 , pawn structure bonus:  1 , knight placement bonus:  0 , king safety bonus:  0
+♟︎ ( c5 ) material:  0 , centre bonus:  8 , mobility bonus:  -15 , pawn structure bonus:  2 , knight placement bonus:  0 , king safety bonus:  0
+♟︎ ( g5 ) material:  8 , centre bonus:  -8 , mobility bonus:  0 , pawn structure bonus:  1 , knight placement bonus:  0 , king safety bonus:  0
+♟︎ ( h5 ) material:  -8 , centre bonus:  -8 , mobility bonus:  9 , pawn structure bonus:  0 , knight placement bonus:  0 , king safety bonus:  0
+♟︎ ( d6 ) material:  0 , centre bonus:  0 , mobility bonus:  -6 , pawn structure bonus:  1 , knight placement bonus:  0 , king safety bonus:  0
+♟︎ ( f5 ) material:  0 , centre bonus:  0 , mobility bonus:  -21 , pawn structure bonus:  1 , knight placement bonus:  0 , king safety bonus:  0
+♟︎ ( g6 ) material:  8 , centre bonus:  -8 , mobility bonus:  0 , pawn structure bonus:  1 , knight placement bonus:  0 , king safety bonus:  0
+♟︎ ( h6 ) material:  -8 , centre bonus:  -8 , mobility bonus:  6 , pawn structure bonus:  -1 , knight placement bonus:  0 , king safety bonus:  0
+♟︎ ( f6 ) material:  0 , centre bonus:  0 , mobility bonus:  -9 , pawn structure bonus:  1 , knight placement bonus:  0 , king safety bonus:  0
+♚ ( e7 ) material:  0 , centre bonus:  0 , mobility bonus:  -24 , pawn structure bonus:  0 , knight placement bonus:  0 , king safety bonus:  0
+♟︎ ( d5 ) material:  -8 , centre bonus:  0 , mobility bonus:  15 , pawn structure bonus:  0 , knight placement bonus:  0 , king safety bonus:  0
+♞ ( c6 ) material:  0 , centre bonus:  0 , mobility bonus:  27 , pawn structure bonus:  0 , knight placement bonus:  0 , king safety bonus:  -14
+-------------------
+♜ ▢ ♝ ♛ ♚ ♝ ♞ ♜ |8
+♟︎ ♟︎ ♟︎ ♟︎ ▢ ♟︎ ♟︎ ♟︎ |7
+▢ ▢ ♞ ▢ ▢ ▢ ▢ ▢ |6
+▢ ▢ ▢ ▢ ♟︎ ▢ ▢ ▢ |5
+▢ ▢ ▢ ▢ ♙ ▢ ▢ ▢ |4
+▢ ▢ ▢ ▢ ▢ ♘ ▢ ▢ |3
+♙ ♙ ♙ ♙ ▢ ♙ ♙ ♙ |2
+♖ ♘ ♗ ♕ ♔ ♗ ▢ ♖ |1
+-------------------
+a b c d e f g h
+Enter move: f1b5
+
+-------------------
+♜ ▢ ♝ ♛ ♚ ♝ ♞ ♜ |8
+♟︎ ♟︎ ♟︎ ♟︎ ▢ ♟︎ ♟︎ ♟︎ |7
+▢ ▢ ♞ ▢ ▢ ▢ ▢ ▢ |6
+▢ ♗ ▢ ▢ ♟︎ ▢ ▢ ▢ |5
+▢ ▢ ▢ ▢ ♙ ▢ ▢ ▢ |4
+▢ ▢ ▢ ▢ ▢ ♘ ▢ ▢ |3
+♙ ♙ ♙ ♙ ▢ ♙ ♙ ♙ |2
+♖ ♘ ♗ ♕ ♔ ▢ ▢ ♖ |1
+-------------------
+a b c d e f g h
+Move made: f1b5
+♟︎ ( d6 ) material:  -8 , centre bonus:  -16 , mobility bonus:  -12 , pawn structure bonus:  4 , knight placement bonus:  0 , king safety bonus:  0
+♟︎ ( d5 ) material:  -24 , centre bonus:  8 , mobility bonus:  -9 , pawn structure bonus:  7 , knight placement bonus:  0 , king safety bonus:  0
+♞ ( e7 ) material:  0 , centre bonus:  0 , mobility bonus:  -9 , pawn structure bonus:  3 , knight placement bonus:  0 , king safety bonus:  0
+♞ ( e7 ) material:  -8 , centre bonus:  -16 , mobility bonus:  -3 , pawn structure bonus:  3 , knight placement bonus:  0 , king safety bonus:  0
+♚ ( e7 ) material:  -8 , centre bonus:  -16 , mobility bonus:  -3 , pawn structure bonus:  3 , knight placement bonus:  0 , king safety bonus:  0
+♞ ( d4 ) material:  0 , centre bonus:  8 , mobility bonus:  3 , pawn structure bonus:  4 , knight placement bonus:  0 , king safety bonus:  -16
+♞ ( f6 ) material:  0 , centre bonus:  0 , mobility bonus:  15 , pawn structure bonus:  4 , knight placement bonus:  0 , king safety bonus:  0
+♞ ( b4 ) material:  8 , centre bonus:  0 , mobility bonus:  3 , pawn structure bonus:  2 , knight placement bonus:  0 , king safety bonus:  -16
+♞ ( a5 ) material:  8 , centre bonus:  -8 , mobility bonus:  -9 , pawn structure bonus:  -1 , knight placement bonus:  -1 , king safety bonus:  0
+♞ ( b8 ) material:  24 , centre bonus:  -8 , mobility bonus:  -30 , pawn structure bonus:  0 , knight placement bonus:  0 , king safety bonus:  0
+♞ ( h6 ) material:  -8 , centre bonus:  -8 , mobility bonus:  -3 , pawn structure bonus:  6 , knight placement bonus:  -1 , king safety bonus:  0
+♝ ( d6 ) material:  8 , centre bonus:  8 , mobility bonus:  -9 , pawn structure bonus:  1 , knight placement bonus:  0 , king safety bonus:  0
+♝ ( b4 ) material:  -8 , centre bonus:  -16 , mobility bonus:  27 , pawn structure bonus:  3 , knight placement bonus:  0 , king safety bonus:  0
+♝ ( e7 ) material:  -8 , centre bonus:  -16 , mobility bonus:  18 , pawn structure bonus:  3 , knight placement bonus:  0 , king safety bonus:  0
+♝ ( a3 ) material:  -24 , centre bonus:  0 , mobility bonus:  6 , pawn structure bonus:  4 , knight placement bonus:  1 , king safety bonus:  0
+♜ ( b8 ) material:  -8 , centre bonus:  -16 , mobility bonus:  21 , pawn structure bonus:  4 , knight placement bonus:  0 , king safety bonus:  0
+♝ ( c5 ) material:  -8 , centre bonus:  -8 , mobility bonus:  24 , pawn structure bonus:  3 , knight placement bonus:  0 , king safety bonus:  0
+♛ ( e7 ) material:  0 , centre bonus:  -8 , mobility bonus:  3 , pawn structure bonus:  5 , knight placement bonus:  0 , king safety bonus:  0
+♛ ( f6 ) material:  24 , centre bonus:  0 , mobility bonus:  0 , pawn structure bonus:  0 , knight placement bonus:  0 , king safety bonus:  -16
+♟︎ ( a5 ) material:  -8 , centre bonus:  -8 , mobility bonus:  0 , pawn structure bonus:  4 , knight placement bonus:  0 , king safety bonus:  0
+♛ ( g5 ) material:  -48 , centre bonus:  0 , mobility bonus:  9 , pawn structure bonus:  0 , knight placement bonus:  0 , king safety bonus:  -16
+♟︎ ( a6 ) material:  -8 , centre bonus:  -8 , mobility bonus:  0 , pawn structure bonus:  4 , knight placement bonus:  0 , king safety bonus:  0
+♟︎ ( b6 ) material:  -8 , centre bonus:  -8 , mobility bonus:  3 , pawn structure bonus:  4 , knight placement bonus:  0 , king safety bonus:  0
+♟︎ ( g5 ) material:  -8 , centre bonus:  -8 , mobility bonus:  3 , pawn structure bonus:  9 , knight placement bonus:  0 , king safety bonus:  0
+♟︎ ( f6 ) material:  0 , centre bonus:  0 , mobility bonus:  -9 , pawn structure bonus:  0 , knight placement bonus:  0 , king safety bonus:  0
+♟︎ ( h5 ) material:  -8 , centre bonus:  -16 , mobility bonus:  9 , pawn structure bonus:  4 , knight placement bonus:  0 , king safety bonus:  0
+♛ ( h4 ) material:  -48 , centre bonus:  8 , mobility bonus:  -3 , pawn structure bonus:  0 , knight placement bonus:  0 , king safety bonus:  0
+♟︎ ( h6 ) material:  -8 , centre bonus:  -8 , mobility bonus:  -6 , pawn structure bonus:  5 , knight placement bonus:  0 , king safety bonus:  0
+♟︎ ( g6 ) material:  -8 , centre bonus:  -8 , mobility bonus:  3 , pawn structure bonus:  9 , knight placement bonus:  0 , king safety bonus:  0
+♟︎ ( f5 ) material:  0 , centre bonus:  0 , mobility bonus:  -6 , pawn structure bonus:  5 , knight placement bonus:  0 , king safety bonus:  0
+♞ ( f6 ) material:  0 , centre bonus:  0 , mobility bonus:  15 , pawn structure bonus:  4 , knight placement bonus:  0 , king safety bonus:  0
+-------------------
+♜ ▢ ♝ ♛ ♚ ♝ ▢ ♜ |8
+♟︎ ♟︎ ♟︎ ♟︎ ▢ ♟︎ ♟︎ ♟︎ |7
+▢ ▢ ♞ ▢ ▢ ♞ ▢ ▢ |6
+▢ ♗ ▢ ▢ ♟︎ ▢ ▢ ▢ |5
+▢ ▢ ▢ ▢ ♙ ▢ ▢ ▢ |4
+▢ ▢ ▢ ▢ ▢ ♘ ▢ ▢ |3
+♙ ♙ ♙ ♙ ▢ ♙ ♙ ♙ |2
+♖ ♘ ♗ ♕ ♔ ▢ ▢ ♖ |1
+-------------------
+a b c d e f g h
+Enter move: e1g1
+
+-------------------
+♜ ▢ ♝ ♛ ♚ ♝ ▢ ♜ |8
+♟︎ ♟︎ ♟︎ ♟︎ ▢ ♟︎ ♟︎ ♟︎ |7
+▢ ▢ ♞ ▢ ▢ ♞ ▢ ▢ |6
+▢ ♗ ▢ ▢ ♟︎ ▢ ▢ ▢ |5
+▢ ▢ ▢ ▢ ♙ ▢ ▢ ▢ |4
+▢ ▢ ▢ ▢ ▢ ♘ ▢ ▢ |3
+♙ ♙ ♙ ♙ ▢ ♙ ♙ ♙ |2
+♖ ♘ ♗ ♕ ▢ ♖ ♔ ▢ |1
+-------------------
+a b c d e f g h
+Move made: e1g1
+♟︎ ( d6 ) material:  -8 , centre bonus:  -8 , mobility bonus:  -3 , pawn structure bonus:  4 , knight placement bonus:  0 , king safety bonus:  -16
+♟︎ ( d5 ) material:  -8 , centre bonus:  -8 , mobility bonus:  0 , pawn structure bonus:  6 , knight placement bonus:  0 , king safety bonus:  -16
+♞ ( e7 ) material:  0 , centre bonus:  0 , mobility bonus:  -3 , pawn structure bonus:  -1 , knight placement bonus:  0 , king safety bonus:  -16
+♞ ( g4 ) material:  0 , centre bonus:  0 , mobility bonus:  21 , pawn structure bonus:  0 , knight placement bonus:  0 , king safety bonus:  -14
+♞ ( b4 ) material:  8 , centre bonus:  0 , mobility bonus:  6 , pawn structure bonus:  0 , knight placement bonus:  0 , king safety bonus:  -16
+♞ ( e4 ) material:  24 , centre bonus:  16 , mobility bonus:  -12 , pawn structure bonus:  5 , knight placement bonus:  0 , king safety bonus:  -16
+♞ ( a5 ) material:  0 , centre bonus:  0 , mobility bonus:  9 , pawn structure bonus:  -1 , knight placement bonus:  0 , king safety bonus:  -16
+♞ ( d4 ) material:  0 , centre bonus:  8 , mobility bonus:  15 , pawn structure bonus:  2 , knight placement bonus:  0 , king safety bonus:  -16
+♞ ( d5 ) material:  -40 , centre bonus:  16 , mobility bonus:  -3 , pawn structure bonus:  6 , knight placement bonus:  0 , king safety bonus:  -16
+♞ ( b8 ) material:  0 , centre bonus:  -8 , mobility bonus:  9 , pawn structure bonus:  5 , knight placement bonus:  0 , king safety bonus:  -16
+♞ ( h5 ) material:  -8 , centre bonus:  -8 , mobility bonus:  21 , pawn structure bonus:  3 , knight placement bonus:  0 , king safety bonus:  -16
+♞ ( g8 ) material:  -8 , centre bonus:  -8 , mobility bonus:  3 , pawn structure bonus:  6 , knight placement bonus:  0 , king safety bonus:  -16
+♜ ( b8 ) material:  0 , centre bonus:  0 , mobility bonus:  18 , pawn structure bonus:  4 , knight placement bonus:  0 , king safety bonus:  -16
+♝ ( d6 ) material:  0 , centre bonus:  0 , mobility bonus:  24 , pawn structure bonus:  3 , knight placement bonus:  0 , king safety bonus:  -16
+♝ ( a3 ) material:  -16 , centre bonus:  16 , mobility bonus:  15 , pawn structure bonus:  6 , knight placement bonus:  1 , king safety bonus:  -16
+♛ ( e7 ) material:  8 , centre bonus:  16 , mobility bonus:  -12 , pawn structure bonus:  0 , knight placement bonus:  0 , king safety bonus:  -16
+♝ ( b4 ) material:  0 , centre bonus:  0 , mobility bonus:  24 , pawn structure bonus:  5 , knight placement bonus:  0 , king safety bonus:  -16
+♝ ( e7 ) material:  0 , centre bonus:  0 , mobility bonus:  24 , pawn structure bonus:  3 , knight placement bonus:  0 , king safety bonus:  -16
+♝ ( c5 ) material:  8 , centre bonus:  8 , mobility bonus:  12 , pawn structure bonus:  4 , knight placement bonus:  0 , king safety bonus:  -16
+♜ ( g8 ) material:  0 , centre bonus:  0 , mobility bonus:  18 , pawn structure bonus:  4 , knight placement bonus:  0 , king safety bonus:  -16
+♟︎ ( a5 ) material:  0 , centre bonus:  0 , mobility bonus:  15 , pawn structure bonus:  5 , knight placement bonus:  0 , king safety bonus:  -16
+♟︎ ( b6 ) material:  0 , centre bonus:  0 , mobility bonus:  21 , pawn structure bonus:  5 , knight placement bonus:  0 , king safety bonus:  -16
+♟︎ ( a6 ) material:  0 , centre bonus:  0 , mobility bonus:  15 , pawn structure bonus:  5 , knight placement bonus:  0 , king safety bonus:  -16
+♟︎ ( g5 ) material:  0 , centre bonus:  0 , mobility bonus:  18 , pawn structure bonus:  7 , knight placement bonus:  0 , king safety bonus:  -16
+♟︎ ( h5 ) material:  0 , centre bonus:  0 , mobility bonus:  15 , pawn structure bonus:  5 , knight placement bonus:  0 , king safety bonus:  -16
+♟︎ ( g6 ) material:  0 , centre bonus:  0 , mobility bonus:  21 , pawn structure bonus:  6 , knight placement bonus:  0 , king safety bonus:  -16
+♟︎ ( h6 ) material:  0 , centre bonus:  0 , mobility bonus:  15 , pawn structure bonus:  4 , knight placement bonus:  0 , king safety bonus:  -16
+♚ ( e7 ) material:  0 , centre bonus:  0 , mobility bonus:  3 , pawn structure bonus:  4 , knight placement bonus:  0 , king safety bonus:  -16
+♞ ( e4 ) material:  24 , centre bonus:  16 , mobility bonus:  -12 , pawn structure bonus:  5 , knight placement bonus:  0 , king safety bonus:  -16
+-------------------
+♜ ▢ ♝ ♛ ♚ ♝ ▢ ♜ |8
+♟︎ ♟︎ ♟︎ ♟︎ ▢ ♟︎ ♟︎ ♟︎ |7
+▢ ▢ ♞ ▢ ▢ ▢ ▢ ▢ |6
+▢ ♗ ▢ ▢ ♟︎ ▢ ▢ ▢ |5
+▢ ▢ ▢ ▢ ♞ ▢ ▢ ▢ |4
+▢ ▢ ▢ ▢ ▢ ♘ ▢ ▢ |3
+♙ ♙ ♙ ♙ ▢ ♙ ♙ ♙ |2
+♖ ♘ ♗ ♕ ▢ ♖ ♔ ▢ |1
+-------------------
+a b c d e f g h
+Enter move: d2d4
+
+-------------------
+♜ ▢ ♝ ♛ ♚ ♝ ▢ ♜ |8
+♟︎ ♟︎ ♟︎ ♟︎ ▢ ♟︎ ♟︎ ♟︎ |7
+▢ ▢ ♞ ▢ ▢ ▢ ▢ ▢ |6
+▢ ♗ ▢ ▢ ♟︎ ▢ ▢ ▢ |5
+▢ ▢ ▢ ♙ ♞ ▢ ▢ ▢ |4
+▢ ▢ ▢ ▢ ▢ ♘ ▢ ▢ |3
+♙ ♙ ♙ ▢ ▢ ♙ ♙ ♙ |2
+♖ ♘ ♗ ♕ ▢ ♖ ♔ ▢ |1
+-------------------
+a b c d e f g h
+Move made: d2d4
+♞ ( d2 ) material:  -16 , centre bonus:  8 , mobility bonus:  -15 , pawn structure bonus:  3 , knight placement bonus:  0 , king safety bonus:  -16
+♞ ( g3 ) material:  -16 , centre bonus:  8 , mobility bonus:  15 , pawn structure bonus:  -4 , knight placement bonus:  0 , king safety bonus:  -16
+♞ ( g5 ) material:  0 , centre bonus:  0 , mobility bonus:  -18 , pawn structure bonus:  0 , knight placement bonus:  0 , king safety bonus:  -16
+♞ ( d6 ) material:  0 , centre bonus:  -8 , mobility bonus:  6 , pawn structure bonus:  3 , knight placement bonus:  0 , king safety bonus:  -16
+♞ ( c3 ) material:  -16 , centre bonus:  0 , mobility bonus:  6 , pawn structure bonus:  4 , knight placement bonus:  0 , king safety bonus:  -16
+♟︎ ( d4 ) material:  8 , centre bonus:  8 , mobility bonus:  21 , pawn structure bonus:  7 , knight placement bonus:  0 , king safety bonus:  -18
+♞ ( f2 ) material:  -8 , centre bonus:  8 , mobility bonus:  3 , pawn structure bonus:  0 , knight placement bonus:  0 , king safety bonus:  -18
+♞ ( e7 ) material:  0 , centre bonus:  8 , mobility bonus:  -6 , pawn structure bonus:  0 , knight placement bonus:  0 , king safety bonus:  -16
+♞ ( d4 ) material:  8 , centre bonus:  0 , mobility bonus:  24 , pawn structure bonus:  0 , knight placement bonus:  0 , king safety bonus:  -18
+♞ ( f6 ) material:  8 , centre bonus:  0 , mobility bonus:  -6 , pawn structure bonus:  4 , knight placement bonus:  0 , king safety bonus:  -18
+♞ ( c5 ) material:  -8 , centre bonus:  16 , mobility bonus:  -6 , pawn structure bonus:  1 , knight placement bonus:  0 , king safety bonus:  -16
+♞ ( b4 ) material:  8 , centre bonus:  0 , mobility bonus:  3 , pawn structure bonus:  0 , knight placement bonus:  0 , king safety bonus:  -16
+♞ ( b8 ) material:  0 , centre bonus:  0 , mobility bonus:  0 , pawn structure bonus:  0 , knight placement bonus:  0 , king safety bonus:  -16
+♞ ( a5 ) material:  -8 , centre bonus:  8 , mobility bonus:  9 , pawn structure bonus:  3 , knight placement bonus:  0 , king safety bonus:  -16
+♝ ( e7 ) material:  0 , centre bonus:  8 , mobility bonus:  24 , pawn structure bonus:  0 , knight placement bonus:  0 , king safety bonus:  -16
+♝ ( d6 ) material:  8 , centre bonus:  8 , mobility bonus:  6 , pawn structure bonus:  0 , knight placement bonus:  0 , king safety bonus:  -16
+♝ ( a3 ) material:  -16 , centre bonus:  8 , mobility bonus:  9 , pawn structure bonus:  4 , knight placement bonus:  1 , king safety bonus:  0
+♝ ( c5 ) material:  -16 , centre bonus:  16 , mobility bonus:  9 , pawn structure bonus:  3 , knight placement bonus:  0 , king safety bonus:  -16
+♜ ( b8 ) material:  0 , centre bonus:  8 , mobility bonus:  18 , pawn structure bonus:  -1 , knight placement bonus:  0 , king safety bonus:  -16
+♜ ( g8 ) material:  8 , centre bonus:  8 , mobility bonus:  6 , pawn structure bonus:  4 , knight placement bonus:  0 , king safety bonus:  -18
+♟︎ ( d5 ) material:  0 , centre bonus:  0 , mobility bonus:  24 , pawn structure bonus:  6 , knight placement bonus:  0 , king safety bonus:  -16
+♝ ( b4 ) material:  8 , centre bonus:  8 , mobility bonus:  24 , pawn structure bonus:  4 , knight placement bonus:  0 , king safety bonus:  -18
+♛ ( e7 ) material:  32 , centre bonus:  0 , mobility bonus:  -6 , pawn structure bonus:  0 , knight placement bonus:  0 , king safety bonus:  -16
+♟︎ ( b6 ) material:  0 , centre bonus:  0 , mobility bonus:  27 , pawn structure bonus:  1 , knight placement bonus:  0 , king safety bonus:  -16
+♟︎ ( a6 ) material:  8 , centre bonus:  8 , mobility bonus:  3 , pawn structure bonus:  5 , knight placement bonus:  0 , king safety bonus:  -18
+♛ ( f6 ) material:  32 , centre bonus:  0 , mobility bonus:  -3 , pawn structure bonus:  0 , knight placement bonus:  0 , king safety bonus:  -16
+♟︎ ( a5 ) material:  8 , centre bonus:  8 , mobility bonus:  3 , pawn structure bonus:  5 , knight placement bonus:  0 , king safety bonus:  -18
+♟︎ ( g5 ) material:  0 , centre bonus:  8 , mobility bonus:  15 , pawn structure bonus:  2 , knight placement bonus:  0 , king safety bonus:  -16
+♛ ( g5 ) material:  -64 , centre bonus:  8 , mobility bonus:  12 , pawn structure bonus:  4 , knight placement bonus:  0 , king safety bonus:  -16
+♟︎ ( h5 ) material:  8 , centre bonus:  8 , mobility bonus:  3 , pawn structure bonus:  5 , knight placement bonus:  0 , king safety bonus:  -18
+♟︎ ( f6 ) material:  8 , centre bonus:  8 , mobility bonus:  9 , pawn structure bonus:  5 , knight placement bonus:  0 , king safety bonus:  -16
+♟︎ ( d6 ) material:  8 , centre bonus:  0 , mobility bonus:  -3 , pawn structure bonus:  1 , knight placement bonus:  0 , king safety bonus:  -16
+♟︎ ( g6 ) material:  0 , centre bonus:  8 , mobility bonus:  18 , pawn structure bonus:  2 , knight placement bonus:  0 , king safety bonus:  -16
+♛ ( h4 ) material:  -32 , centre bonus:  16 , mobility bonus:  15 , pawn structure bonus:  1 , knight placement bonus:  1 , king safety bonus:  -16
+♟︎ ( f5 ) material:  8 , centre bonus:  16 , mobility bonus:  -6 , pawn structure bonus:  5 , knight placement bonus:  0 , king safety bonus:  -18
+♟︎ ( h6 ) material:  0 , centre bonus:  8 , mobility bonus:  15 , pawn structure bonus:  -1 , knight placement bonus:  0 , king safety bonus:  -16
+♚ ( e7 ) material:  0 , centre bonus:  0 , mobility bonus:  9 , pawn structure bonus:  -1 , knight placement bonus:  0 , king safety bonus:  -16
+♟︎ ( d4 ) material:  8 , centre bonus:  8 , mobility bonus:  21 , pawn structure bonus:  7 , knight placement bonus:  0 , king safety bonus:  -18
+-------------------
+♜ ▢ ♝ ♛ ♚ ♝ ▢ ♜ |8
+♟︎ ♟︎ ♟︎ ♟︎ ▢ ♟︎ ♟︎ ♟︎ |7
+▢ ▢ ♞ ▢ ▢ ▢ ▢ ▢ |6
+▢ ♗ ▢ ▢ ▢ ▢ ▢ ▢ |5
+▢ ▢ ▢ ♟︎ ♞ ▢ ▢ ▢ |4
+▢ ▢ ▢ ▢ ▢ ♘ ▢ ▢ |3
+♙ ♙ ♙ ▢ ▢ ♙ ♙ ♙ |2
+♖ ♘ ♗ ♕ ▢ ♖ ♔ ▢ |1
+-------------------
+a b c d e f g h
+Enter move: f1e1
+
+-------------------
+♜ ▢ ♝ ♛ ♚ ♝ ▢ ♜ |8
+♟︎ ♟︎ ♟︎ ♟︎ ▢ ♟︎ ♟︎ ♟︎ |7
+▢ ▢ ♞ ▢ ▢ ▢ ▢ ▢ |6
+▢ ♗ ▢ ▢ ▢ ▢ ▢ ▢ |5
+▢ ▢ ▢ ♟︎ ♞ ▢ ▢ ▢ |4
+▢ ▢ ▢ ▢ ▢ ♘ ▢ ▢ |3
+♙ ♙ ♙ ▢ ▢ ♙ ♙ ♙ |2
+♖ ♘ ♗ ♕ ♖ ▢ ♔ ▢ |1
+-------------------
+a b c d e f g h
+Move made: f1e1
+♞ ( g3 ) material:  -32 , centre bonus:  8 , mobility bonus:  30 , pawn structure bonus:  6 , knight placement bonus:  0 , king safety bonus:  -16
+♞ ( e7 ) material:  -8 , centre bonus:  0 , mobility bonus:  -21 , pawn structure bonus:  3 , knight placement bonus:  0 , king safety bonus:  -16
+♞ ( d6 ) material:  32 , centre bonus:  0 , mobility bonus:  -18 , pawn structure bonus:  1 , knight placement bonus:  0 , king safety bonus:  -16
+♞ ( d2 ) material:  -8 , centre bonus:  8 , mobility bonus:  -15 , pawn structure bonus:  8 , knight placement bonus:  0 , king safety bonus:  -16
+♞ ( g5 ) material:  -8 , centre bonus:  8 , mobility bonus:  -15 , pawn structure bonus:  4 , knight placement bonus:  0 , king safety bonus:  -16
+♞ ( f2 ) material:  -24 , centre bonus:  -8 , mobility bonus:  12 , pawn structure bonus:  -3 , knight placement bonus:  0 , king safety bonus:  16
+♞ ( f6 ) material:  8 , centre bonus:  0 , mobility bonus:  9 , pawn structure bonus:  0 , knight placement bonus:  0 , king safety bonus:  -16
+♞ ( c5 ) material:  -16 , centre bonus:  -16 , mobility bonus:  21 , pawn structure bonus:  -3 , knight placement bonus:  0 , king safety bonus:  16
+♞ ( c3 ) material:  -16 , centre bonus:  -8 , mobility bonus:  3 , pawn structure bonus:  -3 , knight placement bonus:  0 , king safety bonus:  16
+♞ ( a5 ) material:  24 , centre bonus:  0 , mobility bonus:  -30 , pawn structure bonus:  1 , knight placement bonus:  -1 , king safety bonus:  -18
+♞ ( e5 ) material:  -8 , centre bonus:  8 , mobility bonus:  -21 , pawn structure bonus:  3 , knight placement bonus:  0 , king safety bonus:  -18
+♞ ( b4 ) material:  8 , centre bonus:  0 , mobility bonus:  -12 , pawn structure bonus:  0 , knight placement bonus:  0 , king safety bonus:  -18
+♞ ( b8 ) material:  8 , centre bonus:  0 , mobility bonus:  -24 , pawn structure bonus:  0 , knight placement bonus:  0 , king safety bonus:  -18
+♝ ( a3 ) material:  -8 , centre bonus:  8 , mobility bonus:  3 , pawn structure bonus:  3 , knight placement bonus:  0 , king safety bonus:  0
+♜ ( b8 ) material:  -8 , centre bonus:  16 , mobility bonus:  -12 , pawn structure bonus:  4 , knight placement bonus:  0 , king safety bonus:  -16
+♝ ( e7 ) material:  -8 , centre bonus:  8 , mobility bonus:  -12 , pawn structure bonus:  5 , knight placement bonus:  0 , king safety bonus:  0
+♜ ( g8 ) material:  -8 , centre bonus:  8 , mobility bonus:  -3 , pawn structure bonus:  4 , knight placement bonus:  0 , king safety bonus:  -16
+♝ ( c5 ) material:  -8 , centre bonus:  16 , mobility bonus:  -3 , pawn structure bonus:  3 , knight placement bonus:  0 , king safety bonus:  0
+♝ ( b4 ) material:  -8 , centre bonus:  8 , mobility bonus:  6 , pawn structure bonus:  3 , knight placement bonus:  0 , king safety bonus:  0
+♝ ( d6 ) material:  -8 , centre bonus:  8 , mobility bonus:  0 , pawn structure bonus:  3 , knight placement bonus:  0 , king safety bonus:  0
+♟︎ ( d3 ) material:  -8 , centre bonus:  8 , mobility bonus:  -3 , pawn structure bonus:  4 , knight placement bonus:  0 , king safety bonus:  -16
+♛ ( e7 ) material:  8 , centre bonus:  8 , mobility bonus:  6 , pawn structure bonus:  0 , knight placement bonus:  0 , king safety bonus:  -18
+♛ ( f6 ) material:  24 , centre bonus:  0 , mobility bonus:  -12 , pawn structure bonus:  0 , knight placement bonus:  0 , king safety bonus:  -18
+♛ ( h4 ) material:  -40 , centre bonus:  16 , mobility bonus:  12 , pawn structure bonus:  0 , knight placement bonus:  1 , king safety bonus:  -18
+♟︎ ( a6 ) material:  0 , centre bonus:  8 , mobility bonus:  0 , pawn structure bonus:  6 , knight placement bonus:  0 , king safety bonus:  -18
+♟︎ ( f6 ) material:  -8 , centre bonus:  8 , mobility bonus:  -3 , pawn structure bonus:  4 , knight placement bonus:  0 , king safety bonus:  -16
+♟︎ ( b6 ) material:  -8 , centre bonus:  8 , mobility bonus:  0 , pawn structure bonus:  6 , knight placement bonus:  0 , king safety bonus:  -16
+♟︎ ( a5 ) material:  -8 , centre bonus:  16 , mobility bonus:  -12 , pawn structure bonus:  5 , knight placement bonus:  0 , king safety bonus:  -16
+♛ ( g5 ) material:  -40 , centre bonus:  16 , mobility bonus:  -12 , pawn structure bonus:  0 , knight placement bonus:  0 , king safety bonus:  -18
+♟︎ ( g5 ) material:  -8 , centre bonus:  8 , mobility bonus:  3 , pawn structure bonus:  8 , knight placement bonus:  0 , king safety bonus:  -16
+♟︎ ( h5 ) material:  -8 , centre bonus:  8 , mobility bonus:  -6 , pawn structure bonus:  6 , knight placement bonus:  0 , king safety bonus:  -16
+♟︎ ( h6 ) material:  -8 , centre bonus:  8 , mobility bonus:  -6 , pawn structure bonus:  6 , knight placement bonus:  0 , king safety bonus:  -16
+♟︎ ( g6 ) material:  -8 , centre bonus:  16 , mobility bonus:  -12 , pawn structure bonus:  6 , knight placement bonus:  0 , king safety bonus:  -16
+♟︎ ( f5 ) material:  16 , centre bonus:  16 , mobility bonus:  -18 , pawn structure bonus:  9 , knight placement bonus:  0 , king safety bonus:  -16
+♚ ( e7 ) material:  -8 , centre bonus:  8 , mobility bonus:  -30 , pawn structure bonus:  5 , knight placement bonus:  0 , king safety bonus:  -16
+♟︎ ( d6 ) material:  -16 , centre bonus:  0 , mobility bonus:  6 , pawn structure bonus:  1 , knight placement bonus:  0 , king safety bonus:  -16
+♟︎ ( d5 ) material:  -8 , centre bonus:  8 , mobility bonus:  12 , pawn structure bonus:  11 , knight placement bonus:  0 , king safety bonus:  -18
+♝ ( b4 ) material:  -8 , centre bonus:  8 , mobility bonus:  6 , pawn structure bonus:  3 , knight placement bonus:  0 , king safety bonus:  0
+-------------------
+♜ ▢ ♝ ♛ ♚ ▢ ▢ ♜ |8
+♟︎ ♟︎ ♟︎ ♟︎ ▢ ♟︎ ♟︎ ♟︎ |7
+▢ ▢ ♞ ▢ ▢ ▢ ▢ ▢ |6
+▢ ♗ ▢ ▢ ▢ ▢ ▢ ▢ |5
+▢ ♝ ▢ ♟︎ ♞ ▢ ▢ ▢ |4
+▢ ▢ ▢ ▢ ▢ ♘ ▢ ▢ |3
+♙ ♙ ♙ ▢ ▢ ♙ ♙ ♙ |2
+♖ ♘ ♗ ♕ ♖ ▢ ♔ ▢ |1
+-------------------
+a b c d e f g h
+Enter move: e1e4
+
+-------------------
+♜ ▢ ♝ ♛ ♚ ▢ ▢ ♜ |8
+♟︎ ♟︎ ♟︎ ♟︎ ▢ ♟︎ ♟︎ ♟︎ |7
+▢ ▢ ♞ ▢ ▢ ▢ ▢ ▢ |6
+▢ ♗ ▢ ▢ ▢ ▢ ▢ ▢ |5
+▢ ♝ ▢ ♟︎ ♖ ▢ ▢ ▢ |4
+▢ ▢ ▢ ▢ ▢ ♘ ▢ ▢ |3
+♙ ♙ ♙ ▢ ▢ ♙ ♙ ♙ |2
+♖ ♘ ♗ ♕ ▢ ▢ ♔ ▢ |1
+-------------------
+a b c d e f g h
+Move made: e1e4
+♚ ( g8 ) material:  -8 , centre bonus:  8 , mobility bonus:  -6 , pawn structure bonus:  5 , knight placement bonus:  0 , king safety bonus:  0
+♞ ( e7 ) material:  8 , centre bonus:  -24 , mobility bonus:  -18 , pawn structure bonus:  3 , knight placement bonus:  0 , king safety bonus:  -18
+♞ ( a5 ) material:  -16 , centre bonus:  -8 , mobility bonus:  -18 , pawn structure bonus:  0 , knight placement bonus:  -1 , king safety bonus:  0
+♝ ( e1 ) material:  -32 , centre bonus:  8 , mobility bonus:  -21 , pawn structure bonus:  3 , knight placement bonus:  0 , king safety bonus:  0
+♞ ( b8 ) material:  -16 , centre bonus:  -8 , mobility bonus:  -18 , pawn structure bonus:  0 , knight placement bonus:  0 , king safety bonus:  0
+♞ ( e5 ) material:  -16 , centre bonus:  -16 , mobility bonus:  0 , pawn structure bonus:  -6 , knight placement bonus:  0 , king safety bonus:  0
+♝ ( d2 ) material:  -32 , centre bonus:  8 , mobility bonus:  -33 , pawn structure bonus:  3 , knight placement bonus:  0 , king safety bonus:  0
+♝ ( c3 ) material:  -32 , centre bonus:  8 , mobility bonus:  -24 , pawn structure bonus:  3 , knight placement bonus:  0 , king safety bonus:  0
+♝ ( a5 ) material:  -32 , centre bonus:  8 , mobility bonus:  -21 , pawn structure bonus:  0 , knight placement bonus:  0 , king safety bonus:  0
+♝ ( f8 ) material:  -16 , centre bonus:  -8 , mobility bonus:  -12 , pawn structure bonus:  0 , knight placement bonus:  0 , king safety bonus:  -16
+♝ ( a3 ) material:  -32 , centre bonus:  8 , mobility bonus:  -18 , pawn structure bonus:  3 , knight placement bonus:  1 , king safety bonus:  0
+♝ ( d6 ) material:  -16 , centre bonus:  -8 , mobility bonus:  -9 , pawn structure bonus:  0 , knight placement bonus:  0 , king safety bonus:  0
+♝ ( c5 ) material:  -8 , centre bonus:  0 , mobility bonus:  -3 , pawn structure bonus:  5 , knight placement bonus:  0 , king safety bonus:  -18
+♜ ( b8 ) material:  -32 , centre bonus:  8 , mobility bonus:  -3 , pawn structure bonus:  0 , knight placement bonus:  0 , king safety bonus:  0
+♜ ( g8 ) material:  -16 , centre bonus:  -8 , mobility bonus:  0 , pawn structure bonus:  7 , knight placement bonus:  0 , king safety bonus:  -18
+♝ ( e7 ) material:  -16 , centre bonus:  -8 , mobility bonus:  -6 , pawn structure bonus:  7 , knight placement bonus:  0 , king safety bonus:  -18
+♜ ( f8 ) material:  -16 , centre bonus:  -8 , mobility bonus:  -6 , pawn structure bonus:  7 , knight placement bonus:  0 , king safety bonus:  -18
+♛ ( e7 ) material:  -40 , centre bonus:  8 , mobility bonus:  -3 , pawn structure bonus:  5 , knight placement bonus:  0 , king safety bonus:  -18
+♛ ( f6 ) material:  -8 , centre bonus:  8 , mobility bonus:  -6 , pawn structure bonus:  3 , knight placement bonus:  0 , king safety bonus:  -16
+♛ ( h4 ) material:  -80 , centre bonus:  8 , mobility bonus:  15 , pawn structure bonus:  11 , knight placement bonus:  1 , king safety bonus:  -18
+♟︎ ( d3 ) material:  8 , centre bonus:  -8 , mobility bonus:  -39 , pawn structure bonus:  3 , knight placement bonus:  0 , king safety bonus:  0
+♟︎ ( a5 ) material:  -32 , centre bonus:  8 , mobility bonus:  -3 , pawn structure bonus:  1 , knight placement bonus:  0 , king safety bonus:  0
+♟︎ ( a6 ) material:  -8 , centre bonus:  -8 , mobility bonus:  -3 , pawn structure bonus:  6 , knight placement bonus:  0 , king safety bonus:  0
+♟︎ ( b6 ) material:  -32 , centre bonus:  8 , mobility bonus:  0 , pawn structure bonus:  2 , knight placement bonus:  0 , king safety bonus:  0
+♟︎ ( g5 ) material:  -32 , centre bonus:  8 , mobility bonus:  -6 , pawn structure bonus:  3 , knight placement bonus:  0 , king safety bonus:  0
+♟︎ ( f6 ) material:  -32 , centre bonus:  8 , mobility bonus:  -6 , pawn structure bonus:  1 , knight placement bonus:  0 , king safety bonus:  0
+♟︎ ( h5 ) material:  -32 , centre bonus:  8 , mobility bonus:  -6 , pawn structure bonus:  1 , knight placement bonus:  0 , king safety bonus:  0
+♟︎ ( f5 ) material:  -16 , centre bonus:  0 , mobility bonus:  -6 , pawn structure bonus:  6 , knight placement bonus:  0 , king safety bonus:  0
+♛ ( g5 ) material:  -80 , centre bonus:  8 , mobility bonus:  -12 , pawn structure bonus:  4 , knight placement bonus:  0 , king safety bonus:  0
+♟︎ ( h6 ) material:  -32 , centre bonus:  8 , mobility bonus:  -6 , pawn structure bonus:  0 , knight placement bonus:  0 , king safety bonus:  0
+♟︎ ( g6 ) material:  -32 , centre bonus:  8 , mobility bonus:  -6 , pawn structure bonus:  3 , knight placement bonus:  0 , king safety bonus:  0
+♟︎ ( d6 ) material:  -16 , centre bonus:  -8 , mobility bonus:  0 , pawn structure bonus:  7 , knight placement bonus:  0 , king safety bonus:  -18
+♚ ( f8 ) material:  0 , centre bonus:  0 , mobility bonus:  -18 , pawn structure bonus:  1 , knight placement bonus:  0 , king safety bonus:  -18
+♟︎ ( d5 ) material:  0 , centre bonus:  8 , mobility bonus:  -15 , pawn structure bonus:  1 , knight placement bonus:  0 , king safety bonus:  0
+♚ ( e7 ) material:  -16 , centre bonus:  -16 , mobility bonus:  0 , pawn structure bonus:  0 , knight placement bonus:  0 , king safety bonus:  -18
+♚ ( g8 ) material:  -8 , centre bonus:  8 , mobility bonus:  -6 , pawn structure bonus:  5 , knight placement bonus:  0 , king safety bonus:  0
+-------------------
+♜ ▢ ♝ ♛ ♜ ▢ ♚ ▢ |8
+♟︎ ♟︎ ♟︎ ♟︎ ▢ ♟︎ ♟︎ ♟︎ |7
+▢ ▢ ♞ ▢ ▢ ▢ ▢ ▢ |6
+▢ ♗ ▢ ▢ ▢ ▢ ▢ ▢ |5
+▢ ♝ ▢ ♟︎ ♖ ▢ ▢ ▢ |4
+▢ ▢ ▢ ▢ ▢ ♘ ▢ ▢ |3
+♙ ♙ ♙ ▢ ▢ ♙ ♙ ♙ |2
+♖ ♘ ♗ ♕ ▢ ▢ ♔ ▢ |1
+-------------------
+a b c d e f g h
+Enter move: [yoo@Yooleus engine]$ ^C
+
+[yoo@Yooleus engine]$  cd /home/yoo/Desktop/Bakalauras/engine ; /usr/bin/env GOPATH=/home/yoo/go /usr/bin/dlv dap --client-addr=:45579 
+Enter moves in standard chess notation (e.g., 'e2e4'), type 'exit' to quit:
+Enter move: e2e4
+
+-------------------
+♜ ♞ ♝ ♛ ♚ ♝ ♞ ♜ |8
+♟︎ ♟︎ ♟︎ ♟︎ ♟︎ ♟︎ ♟︎ ♟︎ |7
+▢ ▢ ▢ ▢ ▢ ▢ ▢ ▢ |6
+▢ ▢ ▢ ▢ ▢ ▢ ▢ ▢ |5
+▢ ▢ ▢ ▢ ♙ ▢ ▢ ▢ |4
+▢ ▢ ▢ ▢ ▢ ▢ ▢ ▢ |3
+♙ ♙ ♙ ♙ ▢ ♙ ♙ ♙ |2
+♖ ♘ ♗ ♕ ♔ ♗ ♘ ♖ |1
+-------------------
+a b c d e f g h
+Move made: e2e4
+♞ ( f6 ) material:  0 , centre bonus:  0 , mobility bonus:  3 , pawn structure bonus:  -1 , knight placement bonus:  0 , king safety bonus:  0
+♞ ( a6 ) material:  0 , centre bonus:  -8 , mobility bonus:  -9 , pawn structure bonus:  1 , knight placement bonus:  0 , king safety bonus:  0
+♞ ( c6 ) material:  0 , centre bonus:  0 , mobility bonus:  3 , pawn structure bonus:  -1 , knight placement bonus:  0 , king safety bonus:  0
+♞ ( h6 ) material:  0 , centre bonus:  -8 , mobility bonus:  -9 , pawn structure bonus:  1 , knight placement bonus:  -1 , king safety bonus:  0
+♟︎ ( a5 ) material:  0 , centre bonus:  -8 , mobility bonus:  -12 , pawn structure bonus:  2 , knight placement bonus:  0 , king safety bonus:  0
+♟︎ ( a6 ) material:  0 , centre bonus:  0 , mobility bonus:  -18 , pawn structure bonus:  0 , knight placement bonus:  0 , king safety bonus:  0
+♟︎ ( b5 ) material:  -8 , centre bonus:  -8 , mobility bonus:  6 , pawn structure bonus:  1 , knight placement bonus:  0 , king safety bonus:  0
+♟︎ ( c5 ) material:  0 , centre bonus:  0 , mobility bonus:  -18 , pawn structure bonus:  0 , knight placement bonus:  0 , king safety bonus:  0
+♟︎ ( b6 ) material:  8 , centre bonus:  -16 , mobility bonus:  3 , pawn structure bonus:  -2 , knight placement bonus:  0 , king safety bonus:  0
+♟︎ ( c6 ) material:  0 , centre bonus:  0 , mobility bonus:  -18 , pawn structure bonus:  0 , knight placement bonus:  0 , king safety bonus:  0
+♟︎ ( h5 ) material:  0 , centre bonus:  -8 , mobility bonus:  -12 , pawn structure bonus:  2 , knight placement bonus:  0 , king safety bonus:  0
+♟︎ ( g5 ) material:  0 , centre bonus:  0 , mobility bonus:  -6 , pawn structure bonus:  0 , knight placement bonus:  0 , king safety bonus:  0
+♟︎ ( f6 ) material:  0 , centre bonus:  0 , mobility bonus:  -30 , pawn structure bonus:  2 , knight placement bonus:  0 , king safety bonus:  0
+♟︎ ( f5 ) material:  0 , centre bonus:  8 , mobility bonus:  -30 , pawn structure bonus:  2 , knight placement bonus:  0 , king safety bonus:  0
+♟︎ ( g6 ) material:  8 , centre bonus:  -16 , mobility bonus:  3 , pawn structure bonus:  -2 , knight placement bonus:  0 , king safety bonus:  0
+♟︎ ( h6 ) material:  0 , centre bonus:  -8 , mobility bonus:  -15 , pawn structure bonus:  1 , knight placement bonus:  0 , king safety bonus:  0
+♟︎ ( d6 ) material:  0 , centre bonus:  0 , mobility bonus:  -9 , pawn structure bonus:  0 , knight placement bonus:  0 , king safety bonus:  0
+♟︎ ( e5 ) material:  8 , centre bonus:  0 , mobility bonus:  0 , pawn structure bonus:  0 , knight placement bonus:  0 , king safety bonus:  0
+♟︎ ( d5 ) material:  0 , centre bonus:  8 , mobility bonus:  -3 , pawn structure bonus:  -1 , knight placement bonus:  0 , king safety bonus:  0
+♟︎ ( e6 ) material:  8 , centre bonus:  0 , mobility bonus:  0 , pawn structure bonus:  0 , knight placement bonus:  0 , king safety bonus:  0
+♟︎ ( e5 ) material:  8 , centre bonus:  0 , mobility bonus:  0 , pawn structure bonus:  0 , knight placement bonus:  0 , king safety bonus:  0
+-------------------
+♜ ♞ ♝ ♛ ♚ ♝ ♞ ♜ |8
+♟︎ ♟︎ ♟︎ ♟︎ ▢ ♟︎ ♟︎ ♟︎ |7
+▢ ▢ ▢ ▢ ▢ ▢ ▢ ▢ |6
+▢ ▢ ▢ ▢ ♟︎ ▢ ▢ ▢ |5
+▢ ▢ ▢ ▢ ♙ ▢ ▢ ▢ |4
+▢ ▢ ▢ ▢ ▢ ▢ ▢ ▢ |3
+♙ ♙ ♙ ♙ ▢ ♙ ♙ ♙ |2
+♖ ♘ ♗ ♕ ♔ ♗ ♘ ♖ |1
+-------------------
+a b c d e f g h
+Enter move: g1f3
+
+-------------------
+♜ ♞ ♝ ♛ ♚ ♝ ♞ ♜ |8
+♟︎ ♟︎ ♟︎ ♟︎ ▢ ♟︎ ♟︎ ♟︎ |7
+▢ ▢ ▢ ▢ ▢ ▢ ▢ ▢ |6
+▢ ▢ ▢ ▢ ♟︎ ▢ ▢ ▢ |5
+▢ ▢ ▢ ▢ ♙ ▢ ▢ ▢ |4
+▢ ▢ ▢ ▢ ▢ ♘ ▢ ▢ |3
+♙ ♙ ♙ ♙ ▢ ♙ ♙ ♙ |2
+♖ ♘ ♗ ♕ ♔ ♗ ▢ ♖ |1
+-------------------
+a b c d e f g h
+Move made: g1f3
+♞ ( e7 ) material:  -8 , centre bonus:  -8 , mobility bonus:  3 , pawn structure bonus:  3 , knight placement bonus:  0 , king safety bonus:  0
+♞ ( h6 ) material:  0 , centre bonus:  0 , mobility bonus:  -3 , pawn structure bonus:  0 , knight placement bonus:  0 , king safety bonus:  0
+♞ ( a6 ) material:  0 , centre bonus:  -8 , mobility bonus:  -9 , pawn structure bonus:  0 , knight placement bonus:  0 , king safety bonus:  0
+♞ ( c6 ) material:  0 , centre bonus:  0 , mobility bonus:  27 , pawn structure bonus:  0 , knight placement bonus:  0 , king safety bonus:  -14
+♞ ( f6 ) material:  16 , centre bonus:  -8 , mobility bonus:  0 , pawn structure bonus:  0 , knight placement bonus:  0 , king safety bonus:  0
+♝ ( a3 ) material:  -16 , centre bonus:  0 , mobility bonus:  -9 , pawn structure bonus:  0 , knight placement bonus:  1 , king safety bonus:  0
+♝ ( d6 ) material:  8 , centre bonus:  0 , mobility bonus:  -9 , pawn structure bonus:  0 , knight placement bonus:  0 , king safety bonus:  0
+♝ ( c5 ) material:  8 , centre bonus:  -8 , mobility bonus:  -6 , pawn structure bonus:  -1 , knight placement bonus:  0 , king safety bonus:  0
+♝ ( e7 ) material:  -8 , centre bonus:  -8 , mobility bonus:  12 , pawn structure bonus:  3 , knight placement bonus:  0 , king safety bonus:  0
+♝ ( b4 ) material:  -16 , centre bonus:  16 , mobility bonus:  9 , pawn structure bonus:  -3 , knight placement bonus:  0 , king safety bonus:  0
+♛ ( h4 ) material:  -64 , centre bonus:  8 , mobility bonus:  -3 , pawn structure bonus:  1 , knight placement bonus:  0 , king safety bonus:  0
+♟︎ ( a5 ) material:  8 , centre bonus:  -8 , mobility bonus:  -6 , pawn structure bonus:  0 , knight placement bonus:  0 , king safety bonus:  0
+♛ ( e7 ) material:  24 , centre bonus:  -16 , mobility bonus:  -12 , pawn structure bonus:  1 , knight placement bonus:  0 , king safety bonus:  0
+♟︎ ( b5 ) material:  -8 , centre bonus:  8 , mobility bonus:  15 , pawn structure bonus:  1 , knight placement bonus:  0 , king safety bonus:  -16
+♟︎ ( b6 ) material:  -8 , centre bonus:  -8 , mobility bonus:  15 , pawn structure bonus:  1 , knight placement bonus:  0 , king safety bonus:  0
+♛ ( g5 ) material:  -48 , centre bonus:  -8 , mobility bonus:  0 , pawn structure bonus:  0 , knight placement bonus:  0 , king safety bonus:  0
+♛ ( f6 ) material:  24 , centre bonus:  -8 , mobility bonus:  -6 , pawn structure bonus:  1 , knight placement bonus:  0 , king safety bonus:  0
+♟︎ ( c5 ) material:  0 , centre bonus:  8 , mobility bonus:  -15 , pawn structure bonus:  2 , knight placement bonus:  0 , king safety bonus:  0
+♟︎ ( a6 ) material:  8 , centre bonus:  -8 , mobility bonus:  -6 , pawn structure bonus:  1 , knight placement bonus:  0 , king safety bonus:  0
+♟︎ ( c6 ) material:  24 , centre bonus:  -16 , mobility bonus:  -18 , pawn structure bonus:  3 , knight placement bonus:  0 , king safety bonus:  0
+♟︎ ( f6 ) material:  0 , centre bonus:  0 , mobility bonus:  -9 , pawn structure bonus:  1 , knight placement bonus:  0 , king safety bonus:  0
+♟︎ ( g5 ) material:  8 , centre bonus:  -8 , mobility bonus:  0 , pawn structure bonus:  1 , knight placement bonus:  0 , king safety bonus:  0
+♟︎ ( h5 ) material:  -8 , centre bonus:  -8 , mobility bonus:  9 , pawn structure bonus:  0 , knight placement bonus:  0 , king safety bonus:  0
+♟︎ ( d6 ) material:  0 , centre bonus:  0 , mobility bonus:  -6 , pawn structure bonus:  1 , knight placement bonus:  0 , king safety bonus:  0
+♟︎ ( g6 ) material:  8 , centre bonus:  -8 , mobility bonus:  0 , pawn structure bonus:  1 , knight placement bonus:  0 , king safety bonus:  0
+♟︎ ( h6 ) material:  -8 , centre bonus:  -8 , mobility bonus:  6 , pawn structure bonus:  -1 , knight placement bonus:  0 , king safety bonus:  0
+♟︎ ( f5 ) material:  0 , centre bonus:  0 , mobility bonus:  -21 , pawn structure bonus:  1 , knight placement bonus:  0 , king safety bonus:  0
+♚ ( e7 ) material:  0 , centre bonus:  0 , mobility bonus:  -24 , pawn structure bonus:  0 , knight placement bonus:  0 , king safety bonus:  0
+♟︎ ( d5 ) material:  -8 , centre bonus:  0 , mobility bonus:  15 , pawn structure bonus:  0 , knight placement bonus:  0 , king safety bonus:  0
+♞ ( c6 ) material:  0 , centre bonus:  0 , mobility bonus:  27 , pawn structure bonus:  0 , knight placement bonus:  0 , king safety bonus:  -14
+-------------------
+♜ ▢ ♝ ♛ ♚ ♝ ♞ ♜ |8
+♟︎ ♟︎ ♟︎ ♟︎ ▢ ♟︎ ♟︎ ♟︎ |7
+▢ ▢ ♞ ▢ ▢ ▢ ▢ ▢ |6
+▢ ▢ ▢ ▢ ♟︎ ▢ ▢ ▢ |5
+▢ ▢ ▢ ▢ ♙ ▢ ▢ ▢ |4
+▢ ▢ ▢ ▢ ▢ ♘ ▢ ▢ |3
+♙ ♙ ♙ ♙ ▢ ♙ ♙ ♙ |2
+♖ ♘ ♗ ♕ ♔ ♗ ▢ ♖ |1
+-------------------
+a b c d e f g h
+Enter move: f1b5
+
+-------------------
+♜ ▢ ♝ ♛ ♚ ♝ ♞ ♜ |8
+♟︎ ♟︎ ♟︎ ♟︎ ▢ ♟︎ ♟︎ ♟︎ |7
+▢ ▢ ♞ ▢ ▢ ▢ ▢ ▢ |6
+▢ ♗ ▢ ▢ ♟︎ ▢ ▢ ▢ |5
+▢ ▢ ▢ ▢ ♙ ▢ ▢ ▢ |4
+▢ ▢ ▢ ▢ ▢ ♘ ▢ ▢ |3
+♙ ♙ ♙ ♙ ▢ ♙ ♙ ♙ |2
+♖ ♘ ♗ ♕ ♔ ▢ ▢ ♖ |1
+-------------------
+a b c d e f g h
+Move made: f1b5
+♟︎ ( d6 ) material:  -8 , centre bonus:  -16 , mobility bonus:  -12 , pawn structure bonus:  4 , knight placement bonus:  0 , king safety bonus:  0
+♟︎ ( d5 ) material:  -24 , centre bonus:  8 , mobility bonus:  -9 , pawn structure bonus:  7 , knight placement bonus:  0 , king safety bonus:  0
+♞ ( e7 ) material:  -8 , centre bonus:  -16 , mobility bonus:  -3 , pawn structure bonus:  3 , knight placement bonus:  0 , king safety bonus:  0
+♞ ( e7 ) material:  0 , centre bonus:  0 , mobility bonus:  -9 , pawn structure bonus:  3 , knight placement bonus:  0 , king safety bonus:  0
+♞ ( d4 ) material:  0 , centre bonus:  8 , mobility bonus:  3 , pawn structure bonus:  4 , knight placement bonus:  0 , king safety bonus:  -16
+♚ ( e7 ) material:  -8 , centre bonus:  -16 , mobility bonus:  -3 , pawn structure bonus:  3 , knight placement bonus:  0 , king safety bonus:  0
+♞ ( b4 ) material:  8 , centre bonus:  0 , mobility bonus:  3 , pawn structure bonus:  2 , knight placement bonus:  0 , king safety bonus:  -16
+♞ ( a5 ) material:  8 , centre bonus:  -8 , mobility bonus:  -9 , pawn structure bonus:  -1 , knight placement bonus:  -1 , king safety bonus:  0
+♞ ( b8 ) material:  24 , centre bonus:  -8 , mobility bonus:  -30 , pawn structure bonus:  0 , knight placement bonus:  0 , king safety bonus:  0
+♞ ( h6 ) material:  -8 , centre bonus:  -8 , mobility bonus:  -3 , pawn structure bonus:  6 , knight placement bonus:  -1 , king safety bonus:  0
+♞ ( f6 ) material:  0 , centre bonus:  0 , mobility bonus:  15 , pawn structure bonus:  4 , knight placement bonus:  0 , king safety bonus:  0
+♝ ( b4 ) material:  -8 , centre bonus:  -16 , mobility bonus:  27 , pawn structure bonus:  3 , knight placement bonus:  0 , king safety bonus:  0
+♜ ( b8 ) material:  -8 , centre bonus:  -16 , mobility bonus:  21 , pawn structure bonus:  4 , knight placement bonus:  0 , king safety bonus:  0
+♝ ( a3 ) material:  -24 , centre bonus:  0 , mobility bonus:  6 , pawn structure bonus:  4 , knight placement bonus:  1 , king safety bonus:  0
+♝ ( d6 ) material:  8 , centre bonus:  8 , mobility bonus:  -9 , pawn structure bonus:  1 , knight placement bonus:  0 , king safety bonus:  0
+♝ ( c5 ) material:  -8 , centre bonus:  -8 , mobility bonus:  24 , pawn structure bonus:  3 , knight placement bonus:  0 , king safety bonus:  0
+♝ ( e7 ) material:  -8 , centre bonus:  -16 , mobility bonus:  18 , pawn structure bonus:  3 , knight placement bonus:  0 , king safety bonus:  0
+♟︎ ( b6 ) material:  -8 , centre bonus:  -8 , mobility bonus:  3 , pawn structure bonus:  4 , knight placement bonus:  0 , king safety bonus:  0
+♟︎ ( a6 ) material:  -8 , centre bonus:  -8 , mobility bonus:  0 , pawn structure bonus:  4 , knight placement bonus:  0 , king safety bonus:  0
+♟︎ ( f6 ) material:  0 , centre bonus:  0 , mobility bonus:  -9 , pawn structure bonus:  0 , knight placement bonus:  0 , king safety bonus:  0
+♛ ( e7 ) material:  0 , centre bonus:  -8 , mobility bonus:  3 , pawn structure bonus:  5 , knight placement bonus:  0 , king safety bonus:  0
+♛ ( f6 ) material:  24 , centre bonus:  0 , mobility bonus:  0 , pawn structure bonus:  0 , knight placement bonus:  0 , king safety bonus:  -16
+♟︎ ( g5 ) material:  -8 , centre bonus:  -8 , mobility bonus:  3 , pawn structure bonus:  9 , knight placement bonus:  0 , king safety bonus:  0
+♟︎ ( a5 ) material:  -8 , centre bonus:  -8 , mobility bonus:  0 , pawn structure bonus:  4 , knight placement bonus:  0 , king safety bonus:  0
+♛ ( g5 ) material:  -48 , centre bonus:  0 , mobility bonus:  9 , pawn structure bonus:  0 , knight placement bonus:  0 , king safety bonus:  -16
+♟︎ ( h5 ) material:  -8 , centre bonus:  -16 , mobility bonus:  9 , pawn structure bonus:  4 , knight placement bonus:  0 , king safety bonus:  0
+♛ ( h4 ) material:  -48 , centre bonus:  8 , mobility bonus:  -3 , pawn structure bonus:  0 , knight placement bonus:  0 , king safety bonus:  0
+♟︎ ( h6 ) material:  -8 , centre bonus:  -8 , mobility bonus:  -6 , pawn structure bonus:  5 , knight placement bonus:  0 , king safety bonus:  0
+♟︎ ( g6 ) material:  -8 , centre bonus:  -8 , mobility bonus:  3 , pawn structure bonus:  9 , knight placement bonus:  0 , king safety bonus:  0
+♟︎ ( f5 ) material:  0 , centre bonus:  0 , mobility bonus:  -6 , pawn structure bonus:  5 , knight placement bonus:  0 , king safety bonus:  0
+♞ ( f6 ) material:  0 , centre bonus:  0 , mobility bonus:  15 , pawn structure bonus:  4 , knight placement bonus:  0 , king safety bonus:  0
+-------------------
+♜ ▢ ♝ ♛ ♚ ♝ ▢ ♜ |8
+♟︎ ♟︎ ♟︎ ♟︎ ▢ ♟︎ ♟︎ ♟︎ |7
+▢ ▢ ♞ ▢ ▢ ♞ ▢ ▢ |6
+▢ ♗ ▢ ▢ ♟︎ ▢ ▢ ▢ |5
+▢ ▢ ▢ ▢ ♙ ▢ ▢ ▢ |4
+▢ ▢ ▢ ▢ ▢ ♘ ▢ ▢ |3
+♙ ♙ ♙ ♙ ▢ ♙ ♙ ♙ |2
+♖ ♘ ♗ ♕ ♔ ▢ ▢ ♖ |1
+-------------------
+a b c d e f g h
+Enter move: e1g1
+
+-------------------
+♜ ▢ ♝ ♛ ♚ ♝ ▢ ♜ |8
+♟︎ ♟︎ ♟︎ ♟︎ ▢ ♟︎ ♟︎ ♟︎ |7
+▢ ▢ ♞ ▢ ▢ ♞ ▢ ▢ |6
+▢ ♗ ▢ ▢ ♟︎ ▢ ▢ ▢ |5
+▢ ▢ ▢ ▢ ♙ ▢ ▢ ▢ |4
+▢ ▢ ▢ ▢ ▢ ♘ ▢ ▢ |3
+♙ ♙ ♙ ♙ ▢ ♙ ♙ ♙ |2
+♖ ♘ ♗ ♕ ▢ ♖ ♔ ▢ |1
+-------------------
+a b c d e f g h
+Move made: e1g1
+♟︎ ( d6 ) material:  -8 , centre bonus:  -8 , mobility bonus:  -3 , pawn structure bonus:  4 , knight placement bonus:  0 , king safety bonus:  -16
+♟︎ ( d5 ) material:  -8 , centre bonus:  -8 , mobility bonus:  0 , pawn structure bonus:  6 , knight placement bonus:  0 , king safety bonus:  -16
+♞ ( e7 ) material:  0 , centre bonus:  0 , mobility bonus:  -3 , pawn structure bonus:  -1 , knight placement bonus:  0 , king safety bonus:  -16
+♞ ( d4 ) material:  0 , centre bonus:  8 , mobility bonus:  15 , pawn structure bonus:  2 , knight placement bonus:  0 , king safety bonus:  -16
+♞ ( b8 ) material:  0 , centre bonus:  -8 , mobility bonus:  9 , pawn structure bonus:  5 , knight placement bonus:  0 , king safety bonus:  -16
+♞ ( e4 ) material:  24 , centre bonus:  16 , mobility bonus:  -12 , pawn structure bonus:  5 , knight placement bonus:  0 , king safety bonus:  -16
+♞ ( a5 ) material:  0 , centre bonus:  0 , mobility bonus:  9 , pawn structure bonus:  -1 , knight placement bonus:  0 , king safety bonus:  -16
+♞ ( g4 ) material:  0 , centre bonus:  0 , mobility bonus:  21 , pawn structure bonus:  0 , knight placement bonus:  0 , king safety bonus:  -14
+♞ ( h5 ) material:  -8 , centre bonus:  -8 , mobility bonus:  21 , pawn structure bonus:  3 , knight placement bonus:  0 , king safety bonus:  -16
+♞ ( d5 ) material:  -40 , centre bonus:  16 , mobility bonus:  -3 , pawn structure bonus:  6 , knight placement bonus:  0 , king safety bonus:  -16
+♞ ( b4 ) material:  8 , centre bonus:  0 , mobility bonus:  6 , pawn structure bonus:  0 , knight placement bonus:  0 , king safety bonus:  -16
+♞ ( g8 ) material:  -8 , centre bonus:  -8 , mobility bonus:  3 , pawn structure bonus:  6 , knight placement bonus:  0 , king safety bonus:  -16
+♜ ( g8 ) material:  0 , centre bonus:  0 , mobility bonus:  18 , pawn structure bonus:  4 , knight placement bonus:  0 , king safety bonus:  -16
+♝ ( b4 ) material:  0 , centre bonus:  0 , mobility bonus:  24 , pawn structure bonus:  5 , knight placement bonus:  0 , king safety bonus:  -16
+♜ ( b8 ) material:  0 , centre bonus:  0 , mobility bonus:  18 , pawn structure bonus:  4 , knight placement bonus:  0 , king safety bonus:  -16
+♝ ( a3 ) material:  -16 , centre bonus:  16 , mobility bonus:  15 , pawn structure bonus:  6 , knight placement bonus:  1 , king safety bonus:  -16
+♝ ( c5 ) material:  0 , centre bonus:  16 , mobility bonus:  12 , pawn structure bonus:  4 , knight placement bonus:  0 , king safety bonus:  -16
+♝ ( e7 ) material:  0 , centre bonus:  0 , mobility bonus:  24 , pawn structure bonus:  3 , knight placement bonus:  0 , king safety bonus:  -16
+♝ ( d6 ) material:  0 , centre bonus:  0 , mobility bonus:  24 , pawn structure bonus:  3 , knight placement bonus:  0 , king safety bonus:  -16
+♟︎ ( a5 ) material:  0 , centre bonus:  0 , mobility bonus:  15 , pawn structure bonus:  5 , knight placement bonus:  0 , king safety bonus:  -16
+♛ ( e7 ) material:  8 , centre bonus:  16 , mobility bonus:  -12 , pawn structure bonus:  0 , knight placement bonus:  0 , king safety bonus:  -16
+♟︎ ( a6 ) material:  0 , centre bonus:  0 , mobility bonus:  15 , pawn structure bonus:  5 , knight placement bonus:  0 , king safety bonus:  -16
+♚ ( e7 ) material:  0 , centre bonus:  0 , mobility bonus:  3 , pawn structure bonus:  4 , knight placement bonus:  0 , king safety bonus:  -16
+♟︎ ( b6 ) material:  0 , centre bonus:  0 , mobility bonus:  21 , pawn structure bonus:  5 , knight placement bonus:  0 , king safety bonus:  -16
+♟︎ ( h5 ) material:  0 , centre bonus:  0 , mobility bonus:  15 , pawn structure bonus:  5 , knight placement bonus:  0 , king safety bonus:  -16
+♟︎ ( g6 ) material:  0 , centre bonus:  0 , mobility bonus:  21 , pawn structure bonus:  6 , knight placement bonus:  0 , king safety bonus:  -16
+♟︎ ( g5 ) material:  0 , centre bonus:  0 , mobility bonus:  18 , pawn structure bonus:  7 , knight placement bonus:  0 , king safety bonus:  -16
+♟︎ ( h6 ) material:  0 , centre bonus:  0 , mobility bonus:  15 , pawn structure bonus:  4 , knight placement bonus:  0 , king safety bonus:  -16
+♞ ( e4 ) material:  24 , centre bonus:  16 , mobility bonus:  -12 , pawn structure bonus:  5 , knight placement bonus:  0 , king safety bonus:  -16
+-------------------
+♜ ▢ ♝ ♛ ♚ ♝ ▢ ♜ |8
+♟︎ ♟︎ ♟︎ ♟︎ ▢ ♟︎ ♟︎ ♟︎ |7
+▢ ▢ ♞ ▢ ▢ ▢ ▢ ▢ |6
+▢ ♗ ▢ ▢ ♟︎ ▢ ▢ ▢ |5
+▢ ▢ ▢ ▢ ♞ ▢ ▢ ▢ |4
+▢ ▢ ▢ ▢ ▢ ♘ ▢ ▢ |3
+♙ ♙ ♙ ♙ ▢ ♙ ♙ ♙ |2
+♖ ♘ ♗ ♕ ▢ ♖ ♔ ▢ |1
+-------------------
+a b c d e f g h
+Enter move: d2d4
+
+-------------------
+♜ ▢ ♝ ♛ ♚ ♝ ▢ ♜ |8
+♟︎ ♟︎ ♟︎ ♟︎ ▢ ♟︎ ♟︎ ♟︎ |7
+▢ ▢ ♞ ▢ ▢ ▢ ▢ ▢ |6
+▢ ♗ ▢ ▢ ♟︎ ▢ ▢ ▢ |5
+▢ ▢ ▢ ♙ ♞ ▢ ▢ ▢ |4
+▢ ▢ ▢ ▢ ▢ ♘ ▢ ▢ |3
+♙ ♙ ♙ ▢ ▢ ♙ ♙ ♙ |2
+♖ ♘ ♗ ♕ ▢ ♖ ♔ ▢ |1
+-------------------
+a b c d e f g h
+Move made: d2d4
+♞ ( d2 ) material:  -16 , centre bonus:  8 , mobility bonus:  -6 , pawn structure bonus:  5 , knight placement bonus:  0 , king safety bonus:  -16
+♞ ( g5 ) material:  -16 , centre bonus:  8 , mobility bonus:  -18 , pawn structure bonus:  1 , knight placement bonus:  0 , king safety bonus:  -16
+♞ ( g3 ) material:  -16 , centre bonus:  8 , mobility bonus:  15 , pawn structure bonus:  -4 , knight placement bonus:  0 , king safety bonus:  -16
+♞ ( d6 ) material:  0 , centre bonus:  -8 , mobility bonus:  6 , pawn structure bonus:  3 , knight placement bonus:  0 , king safety bonus:  -16
+♟︎ ( d4 ) material:  8 , centre bonus:  8 , mobility bonus:  21 , pawn structure bonus:  7 , knight placement bonus:  0 , king safety bonus:  -18
+♞ ( f2 ) material:  -8 , centre bonus:  8 , mobility bonus:  3 , pawn structure bonus:  0 , knight placement bonus:  0 , king safety bonus:  -18
+♞ ( e7 ) material:  0 , centre bonus:  8 , mobility bonus:  -6 , pawn structure bonus:  0 , knight placement bonus:  0 , king safety bonus:  -16
+♞ ( f6 ) material:  8 , centre bonus:  0 , mobility bonus:  -6 , pawn structure bonus:  4 , knight placement bonus:  0 , king safety bonus:  -18
+♞ ( d4 ) material:  8 , centre bonus:  0 , mobility bonus:  24 , pawn structure bonus:  0 , knight placement bonus:  0 , king safety bonus:  -18
+♞ ( c3 ) material:  -16 , centre bonus:  0 , mobility bonus:  6 , pawn structure bonus:  4 , knight placement bonus:  0 , king safety bonus:  -16
+♞ ( c5 ) material:  -8 , centre bonus:  16 , mobility bonus:  -6 , pawn structure bonus:  1 , knight placement bonus:  0 , king safety bonus:  -16
+♞ ( b4 ) material:  8 , centre bonus:  0 , mobility bonus:  3 , pawn structure bonus:  0 , knight placement bonus:  0 , king safety bonus:  -16
+♝ ( e7 ) material:  0 , centre bonus:  8 , mobility bonus:  24 , pawn structure bonus:  0 , knight placement bonus:  0 , king safety bonus:  -16
+♞ ( a5 ) material:  -8 , centre bonus:  8 , mobility bonus:  9 , pawn structure bonus:  3 , knight placement bonus:  0 , king safety bonus:  -16
+♜ ( b8 ) material:  0 , centre bonus:  8 , mobility bonus:  18 , pawn structure bonus:  -1 , knight placement bonus:  0 , king safety bonus:  -16
+♞ ( b8 ) material:  0 , centre bonus:  0 , mobility bonus:  0 , pawn structure bonus:  0 , knight placement bonus:  0 , king safety bonus:  -16
+♟︎ ( d5 ) material:  0 , centre bonus:  0 , mobility bonus:  24 , pawn structure bonus:  6 , knight placement bonus:  0 , king safety bonus:  -16
+♝ ( a3 ) material:  -16 , centre bonus:  16 , mobility bonus:  15 , pawn structure bonus:  5 , knight placement bonus:  1 , king safety bonus:  -16
+♜ ( g8 ) material:  8 , centre bonus:  8 , mobility bonus:  6 , pawn structure bonus:  4 , knight placement bonus:  0 , king safety bonus:  -18
+♝ ( b4 ) material:  0 , centre bonus:  8 , mobility bonus:  30 , pawn structure bonus:  0 , knight placement bonus:  0 , king safety bonus:  -16
+♝ ( d6 ) material:  8 , centre bonus:  8 , mobility bonus:  6 , pawn structure bonus:  0 , knight placement bonus:  0 , king safety bonus:  -16
+♝ ( c5 ) material:  -16 , centre bonus:  16 , mobility bonus:  9 , pawn structure bonus:  3 , knight placement bonus:  0 , king safety bonus:  -16
+♟︎ ( a5 ) material:  8 , centre bonus:  8 , mobility bonus:  3 , pawn structure bonus:  5 , knight placement bonus:  0 , king safety bonus:  -18
+♛ ( e7 ) material:  32 , centre bonus:  0 , mobility bonus:  -6 , pawn structure bonus:  0 , knight placement bonus:  0 , king safety bonus:  -16
+♟︎ ( a6 ) material:  8 , centre bonus:  8 , mobility bonus:  3 , pawn structure bonus:  5 , knight placement bonus:  0 , king safety bonus:  -18
+♟︎ ( b6 ) material:  0 , centre bonus:  0 , mobility bonus:  27 , pawn structure bonus:  1 , knight placement bonus:  0 , king safety bonus:  -16
+♟︎ ( g5 ) material:  0 , centre bonus:  8 , mobility bonus:  15 , pawn structure bonus:  2 , knight placement bonus:  0 , king safety bonus:  -16
+♛ ( f6 ) material:  32 , centre bonus:  0 , mobility bonus:  -3 , pawn structure bonus:  0 , knight placement bonus:  0 , king safety bonus:  -16
+♛ ( g5 ) material:  -64 , centre bonus:  8 , mobility bonus:  12 , pawn structure bonus:  4 , knight placement bonus:  0 , king safety bonus:  -16
+♟︎ ( f6 ) material:  8 , centre bonus:  8 , mobility bonus:  9 , pawn structure bonus:  5 , knight placement bonus:  0 , king safety bonus:  -16
+♟︎ ( d6 ) material:  8 , centre bonus:  0 , mobility bonus:  -3 , pawn structure bonus:  1 , knight placement bonus:  0 , king safety bonus:  -16
+♟︎ ( g6 ) material:  0 , centre bonus:  8 , mobility bonus:  18 , pawn structure bonus:  2 , knight placement bonus:  0 , king safety bonus:  -16
+♟︎ ( h5 ) material:  8 , centre bonus:  8 , mobility bonus:  3 , pawn structure bonus:  5 , knight placement bonus:  0 , king safety bonus:  -18
+♟︎ ( f5 ) material:  8 , centre bonus:  16 , mobility bonus:  -6 , pawn structure bonus:  5 , knight placement bonus:  0 , king safety bonus:  -18
+♟︎ ( h6 ) material:  0 , centre bonus:  8 , mobility bonus:  15 , pawn structure bonus:  -1 , knight placement bonus:  0 , king safety bonus:  -16
+♛ ( h4 ) material:  -32 , centre bonus:  16 , mobility bonus:  15 , pawn structure bonus:  1 , knight placement bonus:  1 , king safety bonus:  -16
+♚ ( e7 ) material:  0 , centre bonus:  0 , mobility bonus:  9 , pawn structure bonus:  -1 , knight placement bonus:  0 , king safety bonus:  -16
+♟︎ ( d4 ) material:  8 , centre bonus:  8 , mobility bonus:  21 , pawn structure bonus:  7 , knight placement bonus:  0 , king safety bonus:  -18
+-------------------
+♜ ▢ ♝ ♛ ♚ ♝ ▢ ♜ |8
+♟︎ ♟︎ ♟︎ ♟︎ ▢ ♟︎ ♟︎ ♟︎ |7
+▢ ▢ ♞ ▢ ▢ ▢ ▢ ▢ |6
+▢ ♗ ▢ ▢ ▢ ▢ ▢ ▢ |5
+▢ ▢ ▢ ♟︎ ♞ ▢ ▢ ▢ |4
+▢ ▢ ▢ ▢ ▢ ♘ ▢ ▢ |3
+♙ ♙ ♙ ▢ ▢ ♙ ♙ ♙ |2
+♖ ♘ ♗ ♕ ▢ ♖ ♔ ▢ |1
+-------------------
+a b c d e f g h
+Enter move: f1e1
+
+-------------------
+♜ ▢ ♝ ♛ ♚ ♝ ▢ ♜ |8
+♟︎ ♟︎ ♟︎ ♟︎ ▢ ♟︎ ♟︎ ♟︎ |7
+▢ ▢ ♞ ▢ ▢ ▢ ▢ ▢ |6
+▢ ♗ ▢ ▢ ▢ ▢ ▢ ▢ |5
+▢ ▢ ▢ ♟︎ ♞ ▢ ▢ ▢ |4
+▢ ▢ ▢ ▢ ▢ ♘ ▢ ▢ |3
+♙ ♙ ♙ ▢ ▢ ♙ ♙ ♙ |2
+♖ ♘ ♗ ♕ ♖ ▢ ♔ ▢ |1
+-------------------
+a b c d e f g h
+Move made: f1e1
+♞ ( g3 ) material:  -32 , centre bonus:  8 , mobility bonus:  30 , pawn structure bonus:  6 , knight placement bonus:  0 , king safety bonus:  -16
+♞ ( d6 ) material:  32 , centre bonus:  0 , mobility bonus:  -18 , pawn structure bonus:  1 , knight placement bonus:  0 , king safety bonus:  -16
+♞ ( e7 ) material:  -8 , centre bonus:  0 , mobility bonus:  -21 , pawn structure bonus:  3 , knight placement bonus:  0 , king safety bonus:  -16
+♞ ( d2 ) material:  -8 , centre bonus:  8 , mobility bonus:  -15 , pawn structure bonus:  8 , knight placement bonus:  0 , king safety bonus:  -16
+♞ ( f6 ) material:  8 , centre bonus:  0 , mobility bonus:  9 , pawn structure bonus:  0 , knight placement bonus:  0 , king safety bonus:  -16
+♞ ( f2 ) material:  -24 , centre bonus:  -8 , mobility bonus:  12 , pawn structure bonus:  -3 , knight placement bonus:  0 , king safety bonus:  16
+♞ ( g5 ) material:  -8 , centre bonus:  8 , mobility bonus:  -15 , pawn structure bonus:  4 , knight placement bonus:  0 , king safety bonus:  -16
+♞ ( c3 ) material:  -16 , centre bonus:  -8 , mobility bonus:  3 , pawn structure bonus:  -3 , knight placement bonus:  0 , king safety bonus:  16
+♞ ( c5 ) material:  -16 , centre bonus:  -16 , mobility bonus:  21 , pawn structure bonus:  -3 , knight placement bonus:  0 , king safety bonus:  16
+♞ ( b4 ) material:  8 , centre bonus:  0 , mobility bonus:  -12 , pawn structure bonus:  0 , knight placement bonus:  0 , king safety bonus:  -18
+♞ ( a5 ) material:  24 , centre bonus:  0 , mobility bonus:  -30 , pawn structure bonus:  1 , knight placement bonus:  -1 , king safety bonus:  -18
+♞ ( e5 ) material:  -8 , centre bonus:  8 , mobility bonus:  -21 , pawn structure bonus:  3 , knight placement bonus:  0 , king safety bonus:  -18
+♞ ( b8 ) material:  8 , centre bonus:  0 , mobility bonus:  -24 , pawn structure bonus:  0 , knight placement bonus:  0 , king safety bonus:  -18
+♝ ( a3 ) material:  8 , centre bonus:  16 , mobility bonus:  -15 , pawn structure bonus:  2 , knight placement bonus:  1 , king safety bonus:  -18
+♝ ( c5 ) material:  -8 , centre bonus:  24 , mobility bonus:  -9 , pawn structure bonus:  4 , knight placement bonus:  0 , king safety bonus:  -16
+♝ ( d6 ) material:  8 , centre bonus:  8 , mobility bonus:  3 , pawn structure bonus:  1 , knight placement bonus:  0 , king safety bonus:  -18
+♝ ( e7 ) material:  8 , centre bonus:  16 , mobility bonus:  -21 , pawn structure bonus:  4 , knight placement bonus:  0 , king safety bonus:  -18
+♝ ( b4 ) material:  -8 , centre bonus:  8 , mobility bonus:  12 , pawn structure bonus:  11 , knight placement bonus:  0 , king safety bonus:  -18
+♜ ( b8 ) material:  -8 , centre bonus:  16 , mobility bonus:  -12 , pawn structure bonus:  4 , knight placement bonus:  0 , king safety bonus:  -16
+♜ ( g8 ) material:  -8 , centre bonus:  8 , mobility bonus:  -3 , pawn structure bonus:  4 , knight placement bonus:  0 , king safety bonus:  -16
+♛ ( e7 ) material:  8 , centre bonus:  8 , mobility bonus:  6 , pawn structure bonus:  0 , knight placement bonus:  0 , king safety bonus:  -18
+♟︎ ( d3 ) material:  -8 , centre bonus:  8 , mobility bonus:  -3 , pawn structure bonus:  4 , knight placement bonus:  0 , king safety bonus:  -16
+♛ ( f6 ) material:  24 , centre bonus:  0 , mobility bonus:  -12 , pawn structure bonus:  0 , knight placement bonus:  0 , king safety bonus:  -18
+♟︎ ( a5 ) material:  -8 , centre bonus:  16 , mobility bonus:  -12 , pawn structure bonus:  5 , knight placement bonus:  0 , king safety bonus:  -16
+♟︎ ( a6 ) material:  0 , centre bonus:  8 , mobility bonus:  0 , pawn structure bonus:  6 , knight placement bonus:  0 , king safety bonus:  -18
+♛ ( h4 ) material:  -40 , centre bonus:  16 , mobility bonus:  12 , pawn structure bonus:  0 , knight placement bonus:  1 , king safety bonus:  -18
+♟︎ ( b6 ) material:  -8 , centre bonus:  8 , mobility bonus:  0 , pawn structure bonus:  6 , knight placement bonus:  0 , king safety bonus:  -16
+♟︎ ( h5 ) material:  -8 , centre bonus:  8 , mobility bonus:  -6 , pawn structure bonus:  6 , knight placement bonus:  0 , king safety bonus:  -16
+♟︎ ( g5 ) material:  -8 , centre bonus:  8 , mobility bonus:  3 , pawn structure bonus:  8 , knight placement bonus:  0 , king safety bonus:  -16
+♟︎ ( g6 ) material:  -8 , centre bonus:  16 , mobility bonus:  -12 , pawn structure bonus:  6 , knight placement bonus:  0 , king safety bonus:  -16
+♛ ( g5 ) material:  -40 , centre bonus:  16 , mobility bonus:  -12 , pawn structure bonus:  0 , knight placement bonus:  0 , king safety bonus:  -18
+♟︎ ( h6 ) material:  -8 , centre bonus:  8 , mobility bonus:  -6 , pawn structure bonus:  6 , knight placement bonus:  0 , king safety bonus:  -16
+♟︎ ( f6 ) material:  -8 , centre bonus:  8 , mobility bonus:  -3 , pawn structure bonus:  4 , knight placement bonus:  0 , king safety bonus:  -16
+♟︎ ( f5 ) material:  16 , centre bonus:  16 , mobility bonus:  -18 , pawn structure bonus:  9 , knight placement bonus:  0 , king safety bonus:  -16
+♟︎ ( d5 ) material:  -8 , centre bonus:  8 , mobility bonus:  12 , pawn structure bonus:  11 , knight placement bonus:  0 , king safety bonus:  -18
+♟︎ ( d6 ) material:  -16 , centre bonus:  0 , mobility bonus:  6 , pawn structure bonus:  1 , knight placement bonus:  0 , king safety bonus:  -16
+♚ ( e7 ) material:  -8 , centre bonus:  8 , mobility bonus:  -30 , pawn structure bonus:  5 , knight placement bonus:  0 , king safety bonus:  -16
+♟︎ ( f5 ) material:  16 , centre bonus:  16 , mobility bonus:  -18 , pawn structure bonus:  9 , knight placement bonus:  0 , king safety bonus:  -16
+-------------------
+♜ ▢ ♝ ♛ ♚ ♝ ▢ ♜ |8
+♟︎ ♟︎ ♟︎ ♟︎ ▢ ▢ ♟︎ ♟︎ |7
+▢ ▢ ♞ ▢ ▢ ▢ ▢ ▢ |6
+▢ ♗ ▢ ▢ ▢ ♟︎ ▢ ▢ |5
+▢ ▢ ▢ ♟︎ ♞ ▢ ▢ ▢ |4
+▢ ▢ ▢ ▢ ▢ ♘ ▢ ▢ |3
+♙ ♙ ♙ ▢ ▢ ♙ ♙ ♙ |2
+♖ ♘ ♗ ♕ ♖ ▢ ♔ ▢ |1
+-------------------
+a b c d e f g h
+Enter move: f3d4
+
+-------------------
+♜ ▢ ♝ ♛ ♚ ♝ ▢ ♜ |8
+♟︎ ♟︎ ♟︎ ♟︎ ▢ ▢ ♟︎ ♟︎ |7
+▢ ▢ ♞ ▢ ▢ ▢ ▢ ▢ |6
+▢ ♗ ▢ ▢ ▢ ♟︎ ▢ ▢ |5
+▢ ▢ ▢ ♘ ♞ ▢ ▢ ▢ |4
+▢ ▢ ▢ ▢ ▢ ▢ ▢ ▢ |3
+♙ ♙ ♙ ▢ ▢ ♙ ♙ ♙ |2
+♖ ♘ ♗ ♕ ♖ ▢ ♔ ▢ |1
+-------------------
+a b c d e f g h
+Move made: f3d4
+♞ ( g3 ) material:  -16 , centre bonus:  8 , mobility bonus:  0 , pawn structure bonus:  -3 , knight placement bonus:  0 , king safety bonus:  -18
+♞ ( f2 ) material:  16 , centre bonus:  0 , mobility bonus:  -3 , pawn structure bonus:  1 , knight placement bonus:  0 , king safety bonus:  -16
+♞ ( e7 ) material:  -16 , centre bonus:  8 , mobility bonus:  -42 , pawn structure bonus:  1 , knight placement bonus:  0 , king safety bonus:  -16
+♞ ( d6 ) material:  8 , centre bonus:  0 , mobility bonus:  -18 , pawn structure bonus:  6 , knight placement bonus:  0 , king safety bonus:  -18
+♞ ( c3 ) material:  -16 , centre bonus:  8 , mobility bonus:  -18 , pawn structure bonus:  1 , knight placement bonus:  0 , king safety bonus:  -18
+♞ ( d2 ) material:  -40 , centre bonus:  16 , mobility bonus:  9 , pawn structure bonus:  1 , knight placement bonus:  0 , king safety bonus:  -18
+♞ ( g5 ) material:  0 , centre bonus:  0 , mobility bonus:  -9 , pawn structure bonus:  0 , knight placement bonus:  0 , king safety bonus:  -18
+♞ ( d4 ) material:  -32 , centre bonus:  -8 , mobility bonus:  15 , pawn structure bonus:  -1 , knight placement bonus:  0 , king safety bonus:  18
+♞ ( f6 ) material:  40 , centre bonus:  -16 , mobility bonus:  -27 , pawn structure bonus:  0 , knight placement bonus:  0 , king safety bonus:  -18
+♞ ( c5 ) material:  0 , centre bonus:  8 , mobility bonus:  -12 , pawn structure bonus:  1 , knight placement bonus:  0 , king safety bonus:  -16
+♞ ( b4 ) material:  -16 , centre bonus:  0 , mobility bonus:  -24 , pawn structure bonus:  1 , knight placement bonus:  0 , king safety bonus:  -16
+♞ ( a5 ) material:  -16 , centre bonus:  8 , mobility bonus:  -24 , pawn structure bonus:  1 , knight placement bonus:  0 , king safety bonus:  -16
+♞ ( e5 ) material:  -16 , centre bonus:  0 , mobility bonus:  -18 , pawn structure bonus:  1 , knight placement bonus:  0 , king safety bonus:  -16
+♞ ( b8 ) material:  -16 , centre bonus:  0 , mobility bonus:  -39 , pawn structure bonus:  1 , knight placement bonus:  0 , king safety bonus:  -16
+♝ ( a3 ) material:  -16 , centre bonus:  8 , mobility bonus:  -12 , pawn structure bonus:  1 , knight placement bonus:  1 , king safety bonus:  0
+♝ ( d6 ) material:  0 , centre bonus:  -8 , mobility bonus:  -3 , pawn structure bonus:  0 , knight placement bonus:  0 , king safety bonus:  0
+♜ ( b8 ) material:  0 , centre bonus:  8 , mobility bonus:  -15 , pawn structure bonus:  1 , knight placement bonus:  0 , king safety bonus:  -18
+♝ ( c5 ) material:  8 , centre bonus:  16 , mobility bonus:  -3 , pawn structure bonus:  1 , knight placement bonus:  0 , king safety bonus:  -18
+♝ ( e7 ) material:  0 , centre bonus:  8 , mobility bonus:  0 , pawn structure bonus:  1 , knight placement bonus:  0 , king safety bonus:  -18
+♜ ( g8 ) material:  0 , centre bonus:  8 , mobility bonus:  -12 , pawn structure bonus:  1 , knight placement bonus:  0 , king safety bonus:  -18
+♟︎ ( f4 ) material:  0 , centre bonus:  0 , mobility bonus:  -24 , pawn structure bonus:  0 , knight placement bonus:  0 , king safety bonus:  -18
+♛ ( e7 ) material:  0 , centre bonus:  8 , mobility bonus:  -15 , pawn structure bonus:  7 , knight placement bonus:  0 , king safety bonus:  -18
+♝ ( b4 ) material:  24 , centre bonus:  0 , mobility bonus:  -6 , pawn structure bonus:  3 , knight placement bonus:  0 , king safety bonus:  -18
+♟︎ ( g5 ) material:  24 , centre bonus:  0 , mobility bonus:  -36 , pawn structure bonus:  3 , knight placement bonus:  0 , king safety bonus:  -18
+♟︎ ( a6 ) material:  0 , centre bonus:  8 , mobility bonus:  -9 , pawn structure bonus:  2 , knight placement bonus:  0 , king safety bonus:  -18
+♟︎ ( a5 ) material:  0 , centre bonus:  8 , mobility bonus:  -15 , pawn structure bonus:  2 , knight placement bonus:  0 , king safety bonus:  -18
+♛ ( h4 ) material:  24 , centre bonus:  8 , mobility bonus:  -12 , pawn structure bonus:  3 , knight placement bonus:  0 , king safety bonus:  -18
+♛ ( f6 ) material:  24 , centre bonus:  0 , mobility bonus:  -15 , pawn structure bonus:  5 , knight placement bonus:  0 , king safety bonus:  -18
+♛ ( g5 ) material:  -48 , centre bonus:  0 , mobility bonus:  6 , pawn structure bonus:  0 , knight placement bonus:  0 , king safety bonus:  -18
+♟︎ ( b6 ) material:  0 , centre bonus:  0 , mobility bonus:  -15 , pawn structure bonus:  5 , knight placement bonus:  0 , king safety bonus:  -18
+♟︎ ( d5 ) material:  8 , centre bonus:  8 , mobility bonus:  -9 , pawn structure bonus:  4 , knight placement bonus:  0 , king safety bonus:  -16
+♟︎ ( g6 ) material:  16 , centre bonus:  8 , mobility bonus:  -12 , pawn structure bonus:  3 , knight placement bonus:  0 , king safety bonus:  -18
+♟︎ ( h5 ) material:  0 , centre bonus:  0 , mobility bonus:  -3 , pawn structure bonus:  2 , knight placement bonus:  0 , king safety bonus:  -16
+♟︎ ( h6 ) material:  0 , centre bonus:  0 , mobility bonus:  -12 , pawn structure bonus:  1 , knight placement bonus:  0 , king safety bonus:  -16
+♟︎ ( d6 ) material:  24 , centre bonus:  0 , mobility bonus:  -27 , pawn structure bonus:  2 , knight placement bonus:  0 , king safety bonus:  -18
+♚ ( e7 ) material:  0 , centre bonus:  0 , mobility bonus:  -24 , pawn structure bonus:  0 , knight placement bonus:  0 , king safety bonus:  -18
+♚ ( f7 ) material:  0 , centre bonus:  8 , mobility bonus:  -12 , pawn structure bonus:  1 , knight placement bonus:  0 , king safety bonus:  -18
+♛ ( h4 ) material:  24 , centre bonus:  8 , mobility bonus:  -12 , pawn structure bonus:  3 , knight placement bonus:  0 , king safety bonus:  -18
+-------------------
+♜ ▢ ♝ ▢ ♚ ♝ ▢ ♜ |8
+♟︎ ♟︎ ♟︎ ♟︎ ▢ ▢ ♟︎ ♟︎ |7
+▢ ▢ ♞ ▢ ▢ ▢ ▢ ▢ |6
+▢ ♗ ▢ ▢ ▢ ♟︎ ▢ ▢ |5
+▢ ▢ ▢ ♘ ♞ ▢ ▢ ♛ |4
+▢ ▢ ▢ ▢ ▢ ▢ ▢ ▢ |3
+♙ ♙ ♙ ▢ ▢ ♙ ♙ ♙ |2
+♖ ♘ ♗ ♕ ♖ ▢ ♔ ▢ |1
+-------------------
+a b c d e f g h
+Enter move: g2g3
+
+-------------------
+♜ ▢ ♝ ▢ ♚ ♝ ▢ ♜ |8
+♟︎ ♟︎ ♟︎ ♟︎ ▢ ▢ ♟︎ ♟︎ |7
+▢ ▢ ♞ ▢ ▢ ▢ ▢ ▢ |6
+▢ ♗ ▢ ▢ ▢ ♟︎ ▢ ▢ |5
+▢ ▢ ▢ ♘ ♞ ▢ ▢ ♛ |4
+▢ ▢ ▢ ▢ ▢ ▢ ♙ ▢ |3
+♙ ♙ ♙ ▢ ▢ ♙ ▢ ♙ |2
+♖ ♘ ♗ ♕ ♖ ▢ ♔ ▢ |1
+-------------------
+a b c d e f g h
+Move made: g2g3
+♛ ( h2 ) material:  -56 , centre bonus:  8 , mobility bonus:  30 , pawn structure bonus:  -1 , knight placement bonus:  0 , king safety bonus:  -18
+♛ ( g3 ) material:  -56 , centre bonus:  8 , mobility bonus:  30 , pawn structure bonus:  -1 , knight placement bonus:  0 , king safety bonus:  -18
+♞ ( g3 ) material:  -32 , centre bonus:  16 , mobility bonus:  21 , pawn structure bonus:  1 , knight placement bonus:  0 , king safety bonus:  -18
+♛ ( h3 ) material:  24 , centre bonus:  0 , mobility bonus:  -9 , pawn structure bonus:  2 , knight placement bonus:  0 , king safety bonus:  -18
+♞ ( f2 ) material:  16 , centre bonus:  0 , mobility bonus:  -3 , pawn structure bonus:  2 , knight placement bonus:  0 , king safety bonus:  -18
+♞ ( d4 ) material:  -32 , centre bonus:  -16 , mobility bonus:  3 , pawn structure bonus:  2 , knight placement bonus:  0 , king safety bonus:  16
+♞ ( d2 ) material:  -40 , centre bonus:  8 , mobility bonus:  9 , pawn structure bonus:  -4 , knight placement bonus:  0 , king safety bonus:  -18
+♞ ( c3 ) material:  -40 , centre bonus:  8 , mobility bonus:  21 , pawn structure bonus:  -10 , knight placement bonus:  0 , king safety bonus:  -18
+♞ ( c5 ) material:  -64 , centre bonus:  8 , mobility bonus:  6 , pawn structure bonus:  0 , knight placement bonus:  0 , king safety bonus:  -18
+♞ ( d6 ) material:  -40 , centre bonus:  0 , mobility bonus:  12 , pawn structure bonus:  -4 , knight placement bonus:  0 , king safety bonus:  -18
+♞ ( g5 ) material:  -40 , centre bonus:  16 , mobility bonus:  21 , pawn structure bonus:  -4 , knight placement bonus:  0 , king safety bonus:  -18
+♞ ( f6 ) material:  -64 , centre bonus:  0 , mobility bonus:  18 , pawn structure bonus:  0 , knight placement bonus:  0 , king safety bonus:  -18
+♞ ( b4 ) material:  -64 , centre bonus:  0 , mobility bonus:  12 , pawn structure bonus:  -4 , knight placement bonus:  0 , king safety bonus:  -16
+♞ ( a5 ) material:  -48 , centre bonus:  8 , mobility bonus:  -12 , pawn structure bonus:  -4 , knight placement bonus:  -1 , king safety bonus:  -18
+♞ ( e7 ) material:  -64 , centre bonus:  8 , mobility bonus:  0 , pawn structure bonus:  -4 , knight placement bonus:  0 , king safety bonus:  -18
+♞ ( e5 ) material:  -64 , centre bonus:  16 , mobility bonus:  3 , pawn structure bonus:  -4 , knight placement bonus:  0 , king safety bonus:  -16
+♞ ( b8 ) material:  -64 , centre bonus:  8 , mobility bonus:  0 , pawn structure bonus:  -4 , knight placement bonus:  0 , king safety bonus:  -18
+♞ ( d8 ) material:  -64 , centre bonus:  8 , mobility bonus:  0 , pawn structure bonus:  -4 , knight placement bonus:  0 , king safety bonus:  -18
+♝ ( c5 ) material:  -24 , centre bonus:  24 , mobility bonus:  15 , pawn structure bonus:  -4 , knight placement bonus:  0 , king safety bonus:  -18
+♝ ( a3 ) material:  -64 , centre bonus:  24 , mobility bonus:  21 , pawn structure bonus:  -4 , knight placement bonus:  1 , king safety bonus:  0
+♝ ( b4 ) material:  -24 , centre bonus:  8 , mobility bonus:  15 , pawn structure bonus:  -4 , knight placement bonus:  0 , king safety bonus:  -18
+♝ ( e7 ) material:  -64 , centre bonus:  8 , mobility bonus:  18 , pawn structure bonus:  -4 , knight placement bonus:  0 , king safety bonus:  0
+♜ ( b8 ) material:  -64 , centre bonus:  8 , mobility bonus:  27 , pawn structure bonus:  -4 , knight placement bonus:  0 , king safety bonus:  -18
+♝ ( d6 ) material:  -56 , centre bonus:  24 , mobility bonus:  24 , pawn structure bonus:  -1 , knight placement bonus:  0 , king safety bonus:  -18
+♛ ( g4 ) material:  8 , centre bonus:  0 , mobility bonus:  -3 , pawn structure bonus:  0 , knight placement bonus:  0 , king safety bonus:  -18
+♜ ( g8 ) material:  -64 , centre bonus:  8 , mobility bonus:  27 , pawn structure bonus:  -4 , knight placement bonus:  0 , king safety bonus:  -18
+♛ ( h5 ) material:  -16 , centre bonus:  -8 , mobility bonus:  -18 , pawn structure bonus:  2 , knight placement bonus:  0 , king safety bonus:  -18
+♛ ( f4 ) material:  -48 , centre bonus:  0 , mobility bonus:  -12 , pawn structure bonus:  -2 , knight placement bonus:  0 , king safety bonus:  -18
+♛ ( g5 ) material:  -40 , centre bonus:  0 , mobility bonus:  0 , pawn structure bonus:  0 , knight placement bonus:  0 , king safety bonus:  -18
+♛ ( f6 ) material:  24 , centre bonus:  0 , mobility bonus:  -12 , pawn structure bonus:  2 , knight placement bonus:  0 , king safety bonus:  -18
+♛ ( h6 ) material:  -40 , centre bonus:  8 , mobility bonus:  -3 , pawn structure bonus:  2 , knight placement bonus:  0 , king safety bonus:  -18
+♛ ( e7 ) material:  0 , centre bonus:  8 , mobility bonus:  -9 , pawn structure bonus:  4 , knight placement bonus:  0 , king safety bonus:  -18
+♛ ( d8 ) material:  16 , centre bonus:  0 , mobility bonus:  -15 , pawn structure bonus:  -2 , knight placement bonus:  0 , king safety bonus:  -18
+♟︎ ( f4 ) material:  -56 , centre bonus:  0 , mobility bonus:  18 , pawn structure bonus:  -1 , knight placement bonus:  0 , king safety bonus:  -18
+♟︎ ( a5 ) material:  -64 , centre bonus:  8 , mobility bonus:  30 , pawn structure bonus:  -3 , knight placement bonus:  0 , king safety bonus:  -18
+♟︎ ( a6 ) material:  -40 , centre bonus:  8 , mobility bonus:  21 , pawn structure bonus:  -1 , knight placement bonus:  0 , king safety bonus:  -18
+♟︎ ( g5 ) material:  -56 , centre bonus:  8 , mobility bonus:  15 , pawn structure bonus:  3 , knight placement bonus:  0 , king safety bonus:  -18
+♟︎ ( b6 ) material:  -64 , centre bonus:  8 , mobility bonus:  30 , pawn structure bonus:  -2 , knight placement bonus:  0 , king safety bonus:  -18
+♟︎ ( g6 ) material:  -8 , centre bonus:  0 , mobility bonus:  -15 , pawn structure bonus:  -1 , knight placement bonus:  0 , king safety bonus:  -18
+♟︎ ( d5 ) material:  -48 , centre bonus:  8 , mobility bonus:  15 , pawn structure bonus:  -3 , knight placement bonus:  0 , king safety bonus:  -18
+♟︎ ( h5 ) material:  -64 , centre bonus:  8 , mobility bonus:  30 , pawn structure bonus:  -2 , knight placement bonus:  0 , king safety bonus:  -18
+♟︎ ( d6 ) material:  -48 , centre bonus:  8 , mobility bonus:  0 , pawn structure bonus:  -3 , knight placement bonus:  0 , king safety bonus:  -18
+♟︎ ( h6 ) material:  -64 , centre bonus:  8 , mobility bonus:  24 , pawn structure bonus:  -3 , knight placement bonus:  0 , king safety bonus:  -18
+♚ ( d8 ) material:  -64 , centre bonus:  8 , mobility bonus:  30 , pawn structure bonus:  -4 , knight placement bonus:  0 , king safety bonus:  -18
+♚ ( f7 ) material:  -64 , centre bonus:  8 , mobility bonus:  33 , pawn structure bonus:  -4 , knight placement bonus:  0 , king safety bonus:  -18
+♚ ( e7 ) material:  -64 , centre bonus:  8 , mobility bonus:  9 , pawn structure bonus:  -4 , knight placement bonus:  0 , king safety bonus:  -18
+♛ ( h3 ) material:  24 , centre bonus:  0 , mobility bonus:  -9 , pawn structure bonus:  2 , knight placement bonus:  0 , king safety bonus:  -18
+-------------------
+♜ ▢ ♝ ▢ ♚ ♝ ▢ ♜ |8
+♟︎ ♟︎ ♟︎ ♟︎ ▢ ▢ ♟︎ ♟︎ |7
+▢ ▢ ♞ ▢ ▢ ▢ ▢ ▢ |6
+▢ ♗ ▢ ▢ ▢ ♟︎ ▢ ▢ |5
+▢ ▢ ▢ ♘ ♞ ▢ ▢ ▢ |4
+▢ ▢ ▢ ▢ ▢ ▢ ♙ ♛ |3
+♙ ♙ ♙ ▢ ▢ ♙ ▢ ♙ |2
+♖ ♘ ♗ ♕ ♖ ▢ ♔ ▢ |1
+-------------------
+a b c d e f g h
+Enter move: b5v6
+Illegal move, please try again.
+Enter move: b5c6
+
+-------------------
+♜ ▢ ♝ ▢ ♚ ♝ ▢ ♜ |8
+♟︎ ♟︎ ♟︎ ♟︎ ▢ ▢ ♟︎ ♟︎ |7
+▢ ▢ ♗ ▢ ▢ ▢ ▢ ▢ |6
+▢ ▢ ▢ ▢ ▢ ♟︎ ▢ ▢ |5
+▢ ▢ ▢ ♘ ♞ ▢ ▢ ▢ |4
+▢ ▢ ▢ ▢ ▢ ▢ ♙ ♛ |3
+♙ ♙ ♙ ▢ ▢ ♙ ▢ ♙ |2
+♖ ♘ ♗ ♕ ♖ ▢ ♔ ▢ |1
+-------------------
+a b c d e f g h
+Move made: b5c6
+♛ ( g2 ) material:  -48 , centre bonus:  0 , mobility bonus:  -12 , pawn structure bonus:  2 , knight placement bonus:  0 , king safety bonus:  -18
+♛ ( f1 ) material:  -48 , centre bonus:  0 , mobility bonus:  -12 , pawn structure bonus:  2 , knight placement bonus:  0 , king safety bonus:  -18
+♛ ( h2 ) material:  -40 , centre bonus:  0 , mobility bonus:  -6 , pawn structure bonus:  3 , knight placement bonus:  0 , king safety bonus:  -20
+♛ ( g3 ) material:  -40 , centre bonus:  0 , mobility bonus:  -6 , pawn structure bonus:  3 , knight placement bonus:  0 , king safety bonus:  -20
+♟︎ ( d5 ) material:  -64 , centre bonus:  16 , mobility bonus:  -9 , pawn structure bonus:  5 , knight placement bonus:  0 , king safety bonus:  -18
+♟︎ ( d6 ) material:  -64 , centre bonus:  8 , mobility bonus:  -9 , pawn structure bonus:  3 , knight placement bonus:  0 , king safety bonus:  -18
+♞ ( g3 ) material:  -8 , centre bonus:  0 , mobility bonus:  -21 , pawn structure bonus:  4 , knight placement bonus:  0 , king safety bonus:  -18
+♟︎ ( c6 ) material:  8 , centre bonus:  0 , mobility bonus:  -6 , pawn structure bonus:  3 , knight placement bonus:  0 , king safety bonus:  -18
+♞ ( d6 ) material:  -64 , centre bonus:  8 , mobility bonus:  0 , pawn structure bonus:  -1 , knight placement bonus:  0 , king safety bonus:  -18
+♟︎ ( c6 ) material:  8 , centre bonus:  8 , mobility bonus:  -9 , pawn structure bonus:  2 , knight placement bonus:  0 , king safety bonus:  -18
+♞ ( g5 ) material:  -16 , centre bonus:  0 , mobility bonus:  -36 , pawn structure bonus:  3 , knight placement bonus:  0 , king safety bonus:  -18
+♞ ( d2 ) material:  -16 , centre bonus:  0 , mobility bonus:  -30 , pawn structure bonus:  3 , knight placement bonus:  0 , king safety bonus:  -18
+♞ ( c3 ) material:  -16 , centre bonus:  0 , mobility bonus:  -24 , pawn structure bonus:  3 , knight placement bonus:  0 , king safety bonus:  -18
+♟︎ ( f4 ) material:  -24 , centre bonus:  -8 , mobility bonus:  -18 , pawn structure bonus:  -3 , knight placement bonus:  0 , king safety bonus:  -18
+♞ ( c5 ) material:  -24 , centre bonus:  0 , mobility bonus:  -9 , pawn structure bonus:  -1 , knight placement bonus:  0 , king safety bonus:  -18
+♝ ( a3 ) material:  0 , centre bonus:  0 , mobility bonus:  -27 , pawn structure bonus:  -2 , knight placement bonus:  0 , king safety bonus:  -18
+♜ ( g8 ) material:  -16 , centre bonus:  0 , mobility bonus:  -21 , pawn structure bonus:  3 , knight placement bonus:  0 , king safety bonus:  -18
+♜ ( b8 ) material:  0 , centre bonus:  0 , mobility bonus:  -27 , pawn structure bonus:  -2 , knight placement bonus:  0 , king safety bonus:  -18
+♚ ( d8 ) material:  -24 , centre bonus:  -8 , mobility bonus:  -9 , pawn structure bonus:  -3 , knight placement bonus:  0 , king safety bonus:  -18
+♚ ( e7 ) material:  -24 , centre bonus:  -8 , mobility bonus:  -30 , pawn structure bonus:  -2 , knight placement bonus:  0 , king safety bonus:  -18
+♚ ( f7 ) material:  -24 , centre bonus:  -8 , mobility bonus:  -30 , pawn structure bonus:  -2 , knight placement bonus:  0 , king safety bonus:  -18
+♝ ( d6 ) material:  0 , centre bonus:  0 , mobility bonus:  -27 , pawn structure bonus:  -2 , knight placement bonus:  0 , king safety bonus:  -18
+♝ ( e7 ) material:  -24 , centre bonus:  8 , mobility bonus:  -9 , pawn structure bonus:  -1 , knight placement bonus:  0 , king safety bonus:  -18
+♝ ( c5 ) material:  -8 , centre bonus:  8 , mobility bonus:  3 , pawn structure bonus:  -1 , knight placement bonus:  0 , king safety bonus:  -18
+♟︎ ( b6 ) material:  -40 , centre bonus:  8 , mobility bonus:  -15 , pawn structure bonus:  0 , knight placement bonus:  0 , king safety bonus:  -18
+♟︎ ( h6 ) material:  -16 , centre bonus:  0 , mobility bonus:  -24 , pawn structure bonus:  3 , knight placement bonus:  0 , king safety bonus:  -18
+♟︎ ( a6 ) material:  -16 , centre bonus:  8 , mobility bonus:  -27 , pawn structure bonus:  -1 , knight placement bonus:  0 , king safety bonus:  -18
+♟︎ ( a5 ) material:  -16 , centre bonus:  0 , mobility bonus:  -21 , pawn structure bonus:  3 , knight placement bonus:  0 , king safety bonus:  -18
+♟︎ ( g5 ) material:  -16 , centre bonus:  0 , mobility bonus:  -21 , pawn structure bonus:  3 , knight placement bonus:  0 , king safety bonus:  -18
+♝ ( b4 ) material:  0 , centre bonus:  0 , mobility bonus:  -24 , pawn structure bonus:  -2 , knight placement bonus:  0 , king safety bonus:  -18
+♟︎ ( g6 ) material:  -16 , centre bonus:  0 , mobility bonus:  -24 , pawn structure bonus:  5 , knight placement bonus:  0 , king safety bonus:  -18
+♟︎ ( b5 ) material:  -40 , centre bonus:  8 , mobility bonus:  -12 , pawn structure bonus:  0 , knight placement bonus:  0 , king safety bonus:  -18
+♞ ( f6 ) material:  -64 , centre bonus:  16 , mobility bonus:  21 , pawn structure bonus:  -2 , knight placement bonus:  0 , king safety bonus:  -18
+♞ ( f2 ) material:  -8 , centre bonus:  0 , mobility bonus:  6 , pawn structure bonus:  -1 , knight placement bonus:  0 , king safety bonus:  -18
+♟︎ ( h5 ) material:  -16 , centre bonus:  0 , mobility bonus:  -24 , pawn structure bonus:  5 , knight placement bonus:  0 , king safety bonus:  -18
+♛ ( h4 ) material:  -48 , centre bonus:  0 , mobility bonus:  -18 , pawn structure bonus:  -2 , knight placement bonus:  0 , king safety bonus:  -18
+♛ ( g4 ) material:  -16 , centre bonus:  -16 , mobility bonus:  -27 , pawn structure bonus:  4 , knight placement bonus:  0 , king safety bonus:  -18
+♛ ( h5 ) material:  -40 , centre bonus:  -8 , mobility bonus:  -30 , pawn structure bonus:  2 , knight placement bonus:  0 , king safety bonus:  -18
+♛ ( h6 ) material:  -48 , centre bonus:  0 , mobility bonus:  -18 , pawn structure bonus:  2 , knight placement bonus:  0 , king safety bonus:  -18
+♟︎ ( c6 ) material:  8 , centre bonus:  8 , mobility bonus:  -9 , pawn structure bonus:  2 , knight placement bonus:  0 , king safety bonus:  -18
+-------------------
+♜ ▢ ♝ ▢ ♚ ♝ ▢ ♜ |8
+♟︎ ♟︎ ♟︎ ▢ ▢ ▢ ♟︎ ♟︎ |7
+▢ ▢ ♟︎ ▢ ▢ ▢ ▢ ▢ |6
+▢ ▢ ▢ ▢ ▢ ♟︎ ▢ ▢ |5
+▢ ▢ ▢ ♘ ♞ ▢ ▢ ▢ |4
+▢ ▢ ▢ ▢ ▢ ▢ ♙ ♛ |3
+♙ ♙ ♙ ▢ ▢ ♙ ▢ ♙ |2
+♖ ♘ ♗ ♕ ♖ ▢ ♔ ▢ |1
+-------------------
+a b c d e f g h
+Enter move: f2f3
+
+-------------------
+♜ ▢ ♝ ▢ ♚ ♝ ▢ ♜ |8
+♟︎ ♟︎ ♟︎ ▢ ▢ ▢ ♟︎ ♟︎ |7
+▢ ▢ ♟︎ ▢ ▢ ▢ ▢ ▢ |6
+▢ ▢ ▢ ▢ ▢ ♟︎ ▢ ▢ |5
+▢ ▢ ▢ ♘ ♞ ▢ ▢ ▢ |4
+▢ ▢ ▢ ▢ ▢ ♙ ♙ ♛ |3
+♙ ♙ ♙ ▢ ▢ ▢ ▢ ♙ |2
+♖ ♘ ♗ ♕ ♖ ▢ ♔ ▢ |1
+-------------------
+a b c d e f g h
+Move made: f2f3
+♛ ( g2 ) material:  -64 , centre bonus:  8 , mobility bonus:  9 , pawn structure bonus:  4 , knight placement bonus:  0 , king safety bonus:  -18
+♛ ( f1 ) material:  -64 , centre bonus:  8 , mobility bonus:  9 , pawn structure bonus:  4 , knight placement bonus:  0 , king safety bonus:  -18
+♛ ( h2 ) material:  -56 , centre bonus:  0 , mobility bonus:  51 , pawn structure bonus:  3 , knight placement bonus:  0 , king safety bonus:  -18
+♛ ( g3 ) material:  -56 , centre bonus:  8 , mobility bonus:  15 , pawn structure bonus:  5 , knight placement bonus:  0 , king safety bonus:  -20
+♞ ( g3 ) material:  -8 , centre bonus:  0 , mobility bonus:  21 , pawn structure bonus:  5 , knight placement bonus:  0 , king safety bonus:  -18
+♞ ( f2 ) material:  8 , centre bonus:  8 , mobility bonus:  -6 , pawn structure bonus:  4 , knight placement bonus:  0 , king safety bonus:  -18
+♟︎ ( f4 ) material:  0 , centre bonus:  -8 , mobility bonus:  6 , pawn structure bonus:  3 , knight placement bonus:  0 , king safety bonus:  -18
+♜ ( b8 ) material:  8 , centre bonus:  8 , mobility bonus:  -3 , pawn structure bonus:  4 , knight placement bonus:  0 , king safety bonus:  -18
+♝ ( d7 ) material:  24 , centre bonus:  0 , mobility bonus:  -3 , pawn structure bonus:  4 , knight placement bonus:  0 , king safety bonus:  -18
+♜ ( g8 ) material:  8 , centre bonus:  8 , mobility bonus:  -3 , pawn structure bonus:  4 , knight placement bonus:  0 , king safety bonus:  -18
+♝ ( a3 ) material:  -16 , centre bonus:  8 , mobility bonus:  3 , pawn structure bonus:  -1 , knight placement bonus:  1 , king safety bonus:  -18
+♝ ( d6 ) material:  8 , centre bonus:  0 , mobility bonus:  12 , pawn structure bonus:  2 , knight placement bonus:  0 , king safety bonus:  -18
+♝ ( e7 ) material:  8 , centre bonus:  0 , mobility bonus:  12 , pawn structure bonus:  2 , knight placement bonus:  0 , king safety bonus:  -18
+♝ ( b4 ) material:  8 , centre bonus:  0 , mobility bonus:  15 , pawn structure bonus:  4 , knight placement bonus:  0 , king safety bonus:  -18
+♟︎ ( a5 ) material:  8 , centre bonus:  8 , mobility bonus:  -3 , pawn structure bonus:  5 , knight placement bonus:  0 , king safety bonus:  -18
+♝ ( c5 ) material:  8 , centre bonus:  0 , mobility bonus:  9 , pawn structure bonus:  2 , knight placement bonus:  0 , king safety bonus:  0
+♞ ( c3 ) material:  8 , centre bonus:  8 , mobility bonus:  -12 , pawn structure bonus:  4 , knight placement bonus:  0 , king safety bonus:  -18
+♝ ( e6 ) material:  -16 , centre bonus:  16 , mobility bonus:  15 , pawn structure bonus:  4 , knight placement bonus:  0 , king safety bonus:  -18
+♟︎ ( c5 ) material:  8 , centre bonus:  0 , mobility bonus:  18 , pawn structure bonus:  -1 , knight placement bonus:  0 , king safety bonus:  -20
+♟︎ ( b5 ) material:  -16 , centre bonus:  16 , mobility bonus:  12 , pawn structure bonus:  2 , knight placement bonus:  0 , king safety bonus:  -18
+♟︎ ( a6 ) material:  8 , centre bonus:  8 , mobility bonus:  -3 , pawn structure bonus:  5 , knight placement bonus:  0 , king safety bonus:  -18
+♟︎ ( g5 ) material:  0 , centre bonus:  8 , mobility bonus:  0 , pawn structure bonus:  5 , knight placement bonus:  0 , king safety bonus:  -18
+♚ ( f7 ) material:  8 , centre bonus:  8 , mobility bonus:  3 , pawn structure bonus:  4 , knight placement bonus:  0 , king safety bonus:  -18
+♟︎ ( b6 ) material:  -16 , centre bonus:  16 , mobility bonus:  9 , pawn structure bonus:  2 , knight placement bonus:  0 , king safety bonus:  -18
+♟︎ ( g6 ) material:  16 , centre bonus:  -16 , mobility bonus:  15 , pawn structure bonus:  3 , knight placement bonus:  0 , king safety bonus:  -18
+♟︎ ( h6 ) material:  8 , centre bonus:  8 , mobility bonus:  -6 , pawn structure bonus:  5 , knight placement bonus:  0 , king safety bonus:  -18
+♟︎ ( h5 ) material:  8 , centre bonus:  8 , mobility bonus:  -6 , pawn structure bonus:  6 , knight placement bonus:  0 , king safety bonus:  -18
+♞ ( d6 ) material:  -8 , centre bonus:  -8 , mobility bonus:  9 , pawn structure bonus:  -4 , knight placement bonus:  0 , king safety bonus:  18
+♚ ( d8 ) material:  -16 , centre bonus:  -16 , mobility bonus:  6 , pawn structure bonus:  2 , knight placement bonus:  0 , king safety bonus:  -18
+♚ ( d7 ) material:  0 , centre bonus:  0 , mobility bonus:  9 , pawn structure bonus:  3 , knight placement bonus:  0 , king safety bonus:  -18
+♚ ( e7 ) material:  -32 , centre bonus:  0 , mobility bonus:  9 , pawn structure bonus:  -4 , knight placement bonus:  0 , king safety bonus:  18
+♞ ( g5 ) material:  8 , centre bonus:  8 , mobility bonus:  -18 , pawn structure bonus:  4 , knight placement bonus:  0 , king safety bonus:  -18
+♞ ( d2 ) material:  -16 , centre bonus:  -8 , mobility bonus:  24 , pawn structure bonus:  4 , knight placement bonus:  0 , king safety bonus:  -18
+♞ ( c5 ) material:  -8 , centre bonus:  -8 , mobility bonus:  9 , pawn structure bonus:  -4 , knight placement bonus:  0 , king safety bonus:  18
+♞ ( f6 ) material:  8 , centre bonus:  0 , mobility bonus:  12 , pawn structure bonus:  4 , knight placement bonus:  0 , king safety bonus:  -18
+♛ ( g4 ) material:  -48 , centre bonus:  0 , mobility bonus:  9 , pawn structure bonus:  -1 , knight placement bonus:  0 , king safety bonus:  -18
+♛ ( h4 ) material:  -64 , centre bonus:  8 , mobility bonus:  12 , pawn structure bonus:  0 , knight placement bonus:  0 , king safety bonus:  -18
+♛ ( h5 ) material:  -8 , centre bonus:  0 , mobility bonus:  -6 , pawn structure bonus:  3 , knight placement bonus:  0 , king safety bonus:  -20
+♛ ( h6 ) material:  -56 , centre bonus:  0 , mobility bonus:  3 , pawn structure bonus:  7 , knight placement bonus:  0 , king safety bonus:  -20
+♝ ( c5 ) material:  8 , centre bonus:  0 , mobility bonus:  9 , pawn structure bonus:  2 , knight placement bonus:  0 , king safety bonus:  0
+-------------------
+♜ ▢ ♝ ▢ ♚ ▢ ▢ ♜ |8
+♟︎ ♟︎ ♟︎ ▢ ▢ ▢ ♟︎ ♟︎ |7
+▢ ▢ ♟︎ ▢ ▢ ▢ ▢ ▢ |6
+▢ ▢ ♝ ▢ ▢ ♟︎ ▢ ▢ |5
+▢ ▢ ▢ ♘ ♞ ▢ ▢ ▢ |4
+▢ ▢ ▢ ▢ ▢ ♙ ♙ ♛ |3
+♙ ♙ ♙ ▢ ▢ ▢ ▢ ♙ |2
+♖ ♘ ♗ ♕ ♖ ▢ ♔ ▢ |1
+-------------------
+a b c d e f g h
+Enter move: f3e4
+
+-------------------
+♜ ▢ ♝ ▢ ♚ ▢ ▢ ♜ |8
+♟︎ ♟︎ ♟︎ ▢ ▢ ▢ ♟︎ ♟︎ |7
+▢ ▢ ♟︎ ▢ ▢ ▢ ▢ ▢ |6
+▢ ▢ ♝ ▢ ▢ ♟︎ ▢ ▢ |5
+▢ ▢ ▢ ♘ ♙ ▢ ▢ ▢ |4
+▢ ▢ ▢ ▢ ▢ ▢ ♙ ♛ |3
+♙ ♙ ♙ ▢ ▢ ▢ ▢ ♙ |2
+♖ ♘ ♗ ♕ ♖ ▢ ♔ ▢ |1
+-------------------
+a b c d e f g h
+Move made: f3e4
+♛ ( g2 ) material:  -64 , centre bonus:  0 , mobility bonus:  3 , pawn structure bonus:  2 , knight placement bonus:  0 , king safety bonus:  0
+♛ ( f1 ) material:  -56 , centre bonus:  0 , mobility bonus:  -9 , pawn structure bonus:  1 , knight placement bonus:  0 , king safety bonus:  0
+♛ ( h2 ) material:  -56 , centre bonus:  0 , mobility bonus:  9 , pawn structure bonus:  3 , knight placement bonus:  0 , king safety bonus:  0
+♚ ( d7 ) material:  -16 , centre bonus:  8 , mobility bonus:  15 , pawn structure bonus:  2 , knight placement bonus:  0 , king safety bonus:  -18
+♛ ( g3 ) material:  -56 , centre bonus:  0 , mobility bonus:  9 , pawn structure bonus:  3 , knight placement bonus:  0 , king safety bonus:  0
+♝ ( d4 ) material:  -8 , centre bonus:  -8 , mobility bonus:  15 , pawn structure bonus:  3 , knight placement bonus:  0 , king safety bonus:  -20
+♝ ( e6 ) material:  0 , centre bonus:  0 , mobility bonus:  21 , pawn structure bonus:  1 , knight placement bonus:  0 , king safety bonus:  -18
+♝ ( a3 ) material:  -16 , centre bonus:  0 , mobility bonus:  -12 , pawn structure bonus:  -1 , knight placement bonus:  0 , king safety bonus:  -18
+♝ ( f8 ) material:  -24 , centre bonus:  -8 , mobility bonus:  18 , pawn structure bonus:  1 , knight placement bonus:  0 , king safety bonus:  -18
+♝ ( b4 ) material:  8 , centre bonus:  0 , mobility bonus:  -15 , pawn structure bonus:  3 , knight placement bonus:  0 , king safety bonus:  -20
+♝ ( e7 ) material:  -16 , centre bonus:  0 , mobility bonus:  6 , pawn structure bonus:  1 , knight placement bonus:  0 , king safety bonus:  -18
+♟︎ ( e4 ) material:  8 , centre bonus:  0 , mobility bonus:  15 , pawn structure bonus:  -1 , knight placement bonus:  0 , king safety bonus:  -20
+♝ ( d6 ) material:  8 , centre bonus:  0 , mobility bonus:  -6 , pawn structure bonus:  2 , knight placement bonus:  0 , king safety bonus:  -18
+♚ ( f8 ) material:  -8 , centre bonus:  8 , mobility bonus:  3 , pawn structure bonus:  0 , knight placement bonus:  0 , king safety bonus:  -18
+♝ ( b6 ) material:  -8 , centre bonus:  0 , mobility bonus:  -3 , pawn structure bonus:  3 , knight placement bonus:  0 , king safety bonus:  0
+♚ ( g8 ) material:  -8 , centre bonus:  8 , mobility bonus:  3 , pawn structure bonus:  0 , knight placement bonus:  0 , king safety bonus:  0
+♜ ( f8 ) material:  -8 , centre bonus:  8 , mobility bonus:  3 , pawn structure bonus:  0 , knight placement bonus:  0 , king safety bonus:  -18
+♜ ( b8 ) material:  -8 , centre bonus:  8 , mobility bonus:  6 , pawn structure bonus:  0 , knight placement bonus:  0 , king safety bonus:  -18
+♝ ( d7 ) material:  -16 , centre bonus:  8 , mobility bonus:  21 , pawn structure bonus:  2 , knight placement bonus:  0 , king safety bonus:  -18
+♜ ( g8 ) material:  -8 , centre bonus:  8 , mobility bonus:  6 , pawn structure bonus:  0 , knight placement bonus:  0 , king safety bonus:  -18
+♚ ( d8 ) material:  -32 , centre bonus:  0 , mobility bonus:  -15 , pawn structure bonus:  3 , knight placement bonus:  0 , king safety bonus:  -18
+♟︎ ( f4 ) material:  -16 , centre bonus:  0 , mobility bonus:  27 , pawn structure bonus:  -1 , knight placement bonus:  0 , king safety bonus:  -18
+♟︎ ( b5 ) material:  0 , centre bonus:  0 , mobility bonus:  3 , pawn structure bonus:  4 , knight placement bonus:  0 , king safety bonus:  -18
+♟︎ ( a5 ) material:  0 , centre bonus:  -8 , mobility bonus:  6 , pawn structure bonus:  2 , knight placement bonus:  0 , king safety bonus:  0
+♟︎ ( a6 ) material:  0 , centre bonus:  0 , mobility bonus:  15 , pawn structure bonus:  2 , knight placement bonus:  0 , king safety bonus:  -18
+♟︎ ( h5 ) material:  -8 , centre bonus:  8 , mobility bonus:  3 , pawn structure bonus:  2 , knight placement bonus:  0 , king safety bonus:  -18
+♟︎ ( g5 ) material:  -8 , centre bonus:  8 , mobility bonus:  6 , pawn structure bonus:  2 , knight placement bonus:  0 , king safety bonus:  -18
+♟︎ ( h6 ) material:  -8 , centre bonus:  8 , mobility bonus:  3 , pawn structure bonus:  1 , knight placement bonus:  0 , king safety bonus:  -18
+♟︎ ( b6 ) material:  8 , centre bonus:  -8 , mobility bonus:  6 , pawn structure bonus:  3 , knight placement bonus:  0 , king safety bonus:  -20
+♟︎ ( g6 ) material:  -8 , centre bonus:  8 , mobility bonus:  3 , pawn structure bonus:  2 , knight placement bonus:  0 , king safety bonus:  -18
+♚ ( e7 ) material:  -8 , centre bonus:  8 , mobility bonus:  3 , pawn structure bonus:  0 , knight placement bonus:  0 , king safety bonus:  -18
+♚ ( f7 ) material:  -8 , centre bonus:  8 , mobility bonus:  12 , pawn structure bonus:  0 , knight placement bonus:  0 , king safety bonus:  -18
+♛ ( g4 ) material:  8 , centre bonus:  0 , mobility bonus:  -3 , pawn structure bonus:  4 , knight placement bonus:  0 , king safety bonus:  -20
+♛ ( h5 ) material:  -64 , centre bonus:  8 , mobility bonus:  3 , pawn structure bonus:  2 , knight placement bonus:  0 , king safety bonus:  -18
+♛ ( h4 ) material:  -64 , centre bonus:  8 , mobility bonus:  15 , pawn structure bonus:  0 , knight placement bonus:  0 , king safety bonus:  -18
+♛ ( h6 ) material:  -64 , centre bonus:  8 , mobility bonus:  -9 , pawn structure bonus:  2 , knight placement bonus:  0 , king safety bonus:  0
+♝ ( e6 ) material:  0 , centre bonus:  0 , mobility bonus:  21 , pawn structure bonus:  1 , knight placement bonus:  0 , king safety bonus:  -18
+-------------------
+♜ ▢ ▢ ▢ ♚ ▢ ▢ ♜ |8
+♟︎ ♟︎ ♟︎ ▢ ▢ ▢ ♟︎ ♟︎ |7
+▢ ▢ ♟︎ ▢ ♝ ▢ ▢ ▢ |6
+▢ ▢ ♝ ▢ ▢ ♟︎ ▢ ▢ |5
+▢ ▢ ▢ ♘ ♙ ▢ ▢ ▢ |4
+▢ ▢ ▢ ▢ ▢ ▢ ♙ ♛ |3
+♙ ♙ ♙ ▢ ▢ ▢ ▢ ♙ |2
+♖ ♘ ♗ ♕ ♖ ▢ ♔ ▢ |1
+-------------------
+a b c d e f g h
+Enter move: e4f5
+
+-------------------
+♜ ▢ ▢ ▢ ♚ ▢ ▢ ♜ |8
+♟︎ ♟︎ ♟︎ ▢ ▢ ▢ ♟︎ ♟︎ |7
+▢ ▢ ♟︎ ▢ ♝ ▢ ▢ ▢ |6
+▢ ▢ ♝ ▢ ▢ ♙ ▢ ▢ |5
+▢ ▢ ▢ ♘ ▢ ▢ ▢ ▢ |4
+▢ ▢ ▢ ▢ ▢ ▢ ♙ ♛ |3
+♙ ♙ ♙ ▢ ▢ ▢ ▢ ♙ |2
+♖ ♘ ♗ ♕ ♖ ▢ ♔ ▢ |1
+-------------------
+a b c d e f g h
+Move made: e4f5
+♛ ( g2 ) material:  -96 , centre bonus:  8 , mobility bonus:  9 , pawn structure bonus:  1 , knight placement bonus:  0 , king safety bonus:  -20
+♛ ( h2 ) material:  -88 , centre bonus:  8 , mobility bonus:  15 , pawn structure bonus:  2 , knight placement bonus:  0 , king safety bonus:  -20
+♛ ( f1 ) material:  -96 , centre bonus:  8 , mobility bonus:  9 , pawn structure bonus:  1 , knight placement bonus:  0 , king safety bonus:  -20
+♝ ( g8 ) material:  0 , centre bonus:  0 , mobility bonus:  21 , pawn structure bonus:  1 , knight placement bonus:  0 , king safety bonus:  -18
+♛ ( g3 ) material:  -64 , centre bonus:  0 , mobility bonus:  15 , pawn structure bonus:  2 , knight placement bonus:  0 , king safety bonus:  -20
+♛ ( f5 ) material:  0 , centre bonus:  -8 , mobility bonus:  -9 , pawn structure bonus:  2 , knight placement bonus:  0 , king safety bonus:  -20
+♚ ( f8 ) material:  -64 , centre bonus:  0 , mobility bonus:  -33 , pawn structure bonus:  2 , knight placement bonus:  0 , king safety bonus:  -20
+♝ ( d4 ) material:  -32 , centre bonus:  -8 , mobility bonus:  42 , pawn structure bonus:  1 , knight placement bonus:  0 , king safety bonus:  -20
+♝ ( a3 ) material:  -40 , centre bonus:  0 , mobility bonus:  -9 , pawn structure bonus:  2 , knight placement bonus:  1 , king safety bonus:  -20
+♝ ( f8 ) material:  -48 , centre bonus:  8 , mobility bonus:  -12 , pawn structure bonus:  -1 , knight placement bonus:  0 , king safety bonus:  -20
+♝ ( d7 ) material:  -16 , centre bonus:  -8 , mobility bonus:  -3 , pawn structure bonus:  2 , knight placement bonus:  0 , king safety bonus:  -20
+♝ ( f5 ) material:  -16 , centre bonus:  0 , mobility bonus:  9 , pawn structure bonus:  4 , knight placement bonus:  0 , king safety bonus:  -20
+♝ ( b4 ) material:  -48 , centre bonus:  8 , mobility bonus:  6 , pawn structure bonus:  -1 , knight placement bonus:  0 , king safety bonus:  -20
+♜ ( f8 ) material:  -24 , centre bonus:  0 , mobility bonus:  12 , pawn structure bonus:  1 , knight placement bonus:  0 , king safety bonus:  -20
+♚ ( g8 ) material:  -24 , centre bonus:  0 , mobility bonus:  9 , pawn structure bonus:  -2 , knight placement bonus:  0 , king safety bonus:  0
+♝ ( b6 ) material:  -24 , centre bonus:  -8 , mobility bonus:  15 , pawn structure bonus:  1 , knight placement bonus:  0 , king safety bonus:  -18
+♝ ( d6 ) material:  -64 , centre bonus:  0 , mobility bonus:  0 , pawn structure bonus:  2 , knight placement bonus:  0 , king safety bonus:  0
+♝ ( b3 ) material:  -32 , centre bonus:  8 , mobility bonus:  -6 , pawn structure bonus:  -3 , knight placement bonus:  0 , king safety bonus:  -20
+♚ ( c8 ) material:  8 , centre bonus:  0 , mobility bonus:  -3 , pawn structure bonus:  1 , knight placement bonus:  0 , king safety bonus:  -20
+♝ ( a2 ) material:  -24 , centre bonus:  8 , mobility bonus:  -9 , pawn structure bonus:  1 , knight placement bonus:  0 , king safety bonus:  -20
+♜ ( d8 ) material:  -24 , centre bonus:  0 , mobility bonus:  9 , pawn structure bonus:  1 , knight placement bonus:  0 , king safety bonus:  0
+♜ ( b8 ) material:  -24 , centre bonus:  -8 , mobility bonus:  -12 , pawn structure bonus:  1 , knight placement bonus:  0 , king safety bonus:  0
+♝ ( e7 ) material:  -48 , centre bonus:  0 , mobility bonus:  -3 , pawn structure bonus:  1 , knight placement bonus:  0 , king safety bonus:  -20
+♜ ( c8 ) material:  -24 , centre bonus:  -8 , mobility bonus:  -12 , pawn structure bonus:  1 , knight placement bonus:  0 , king safety bonus:  0
+♝ ( c4 ) material:  -48 , centre bonus:  0 , mobility bonus:  15 , pawn structure bonus:  -1 , knight placement bonus:  0 , king safety bonus:  18
+♝ ( c8 ) material:  -16 , centre bonus:  -8 , mobility bonus:  -3 , pawn structure bonus:  2 , knight placement bonus:  0 , king safety bonus:  -20
+♝ ( d5 ) material:  -16 , centre bonus:  8 , mobility bonus:  15 , pawn structure bonus:  2 , knight placement bonus:  0 , king safety bonus:  -20
+♝ ( f7 ) material:  -24 , centre bonus:  -8 , mobility bonus:  33 , pawn structure bonus:  1 , knight placement bonus:  0 , king safety bonus:  -20
+♚ ( d8 ) material:  -64 , centre bonus:  0 , mobility bonus:  -33 , pawn structure bonus:  2 , knight placement bonus:  0 , king safety bonus:  -20
+♜ ( g8 ) material:  -8 , centre bonus:  0 , mobility bonus:  -3 , pawn structure bonus:  -2 , knight placement bonus:  0 , king safety bonus:  -20
+♟︎ ( a6 ) material:  -24 , centre bonus:  -8 , mobility bonus:  -6 , pawn structure bonus:  2 , knight placement bonus:  0 , king safety bonus:  0
+♟︎ ( h5 ) material:  -24 , centre bonus:  -8 , mobility bonus:  -15 , pawn structure bonus:  3 , knight placement bonus:  0 , king safety bonus:  0
+♟︎ ( b5 ) material:  -24 , centre bonus:  0 , mobility bonus:  -3 , pawn structure bonus:  4 , knight placement bonus:  0 , king safety bonus:  -20
+♟︎ ( g5 ) material:  -32 , centre bonus:  8 , mobility bonus:  -3 , pawn structure bonus:  2 , knight placement bonus:  0 , king safety bonus:  -20
+♟︎ ( b6 ) material:  -24 , centre bonus:  0 , mobility bonus:  -6 , pawn structure bonus:  2 , knight placement bonus:  0 , king safety bonus:  -20
+♟︎ ( g6 ) material:  -24 , centre bonus:  -8 , mobility bonus:  -12 , pawn structure bonus:  3 , knight placement bonus:  0 , king safety bonus:  0
+♟︎ ( h6 ) material:  -24 , centre bonus:  -8 , mobility bonus:  -15 , pawn structure bonus:  3 , knight placement bonus:  0 , king safety bonus:  0
+♟︎ ( a5 ) material:  -8 , centre bonus:  0 , mobility bonus:  -3 , pawn structure bonus:  -1 , knight placement bonus:  0 , king safety bonus:  -20
+♚ ( f7 ) material:  -24 , centre bonus:  0 , mobility bonus:  -6 , pawn structure bonus:  1 , knight placement bonus:  0 , king safety bonus:  -20
+♚ ( e7 ) material:  -40 , centre bonus:  16 , mobility bonus:  -18 , pawn structure bonus:  2 , knight placement bonus:  0 , king safety bonus:  -20
+♚ ( d7 ) material:  -48 , centre bonus:  -16 , mobility bonus:  -15 , pawn structure bonus:  1 , knight placement bonus:  0 , king safety bonus:  -18
+♛ ( g4 ) material:  -72 , centre bonus:  0 , mobility bonus:  6 , pawn structure bonus:  1 , knight placement bonus:  0 , king safety bonus:  -20
+♛ ( h4 ) material:  -72 , centre bonus:  0 , mobility bonus:  12 , pawn structure bonus:  -1 , knight placement bonus:  0 , king safety bonus:  -20
+♛ ( h5 ) material:  -96 , centre bonus:  -8 , mobility bonus:  15 , pawn structure bonus:  1 , knight placement bonus:  0 , king safety bonus:  -18
+♛ ( h6 ) material:  -72 , centre bonus:  -16 , mobility bonus:  12 , pawn structure bonus:  5 , knight placement bonus:  0 , king safety bonus:  -20
+♝ ( g8 ) material:  0 , centre bonus:  0 , mobility bonus:  21 , pawn structure bonus:  1 , knight placement bonus:  0 , king safety bonus:  -18
+-------------------
+♜ ▢ ▢ ▢ ♚ ▢ ♝ ♜ |8
+♟︎ ♟︎ ♟︎ ▢ ▢ ▢ ♟︎ ♟︎ |7
+▢ ▢ ♟︎ ▢ ▢ ▢ ▢ ▢ |6
+▢ ▢ ♝ ▢ ▢ ♙ ▢ ▢ |5
+▢ ▢ ▢ ♘ ▢ ▢ ▢ ▢ |4
+▢ ▢ ▢ ▢ ▢ ▢ ♙ ♛ |3
+♙ ♙ ♙ ▢ ▢ ▢ ▢ ♙ |2
+♖ ♘ ♗ ♕ ♖ ▢ ♔ ▢ |1
+-------------------
+a b c d e f g h
+Enter move: 

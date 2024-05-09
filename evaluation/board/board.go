@@ -56,6 +56,7 @@ type Board struct {
 	TurnBlack bool // Flag to indicate if it's black's turn to move
 
 	HalfTurn int // What is the half turn
+	Debug    bool
 }
 
 func New() Board {

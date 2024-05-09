@@ -6,7 +6,7 @@ import (
 	"engine/evaluation/board/bitboards"
 )
 
-var centralSquares = bitboards.BitBoard(0x3C3C3C3C0000)
+var centralSquares = bitboards.BitBoard(0x3C3C000000)
 
 func Captures(board *Board) []Move {
 	moves := board.LegalMoves()

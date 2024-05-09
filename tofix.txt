@@ -1,0 +1,19 @@
+1. Illegal:
+//Illegal moves leaving king exposed
+//White castle when in check
+//En passant for White
+
+2. Optimize:
+//Material misnomer
+//Optimize bitwise operations
+Quiesce search
+//Better ordering
+Optimize variables
+Merge move library with search
+
+3. Presentation:
+Add testing results
+Fix UML:
+    Split diagrams up
+White background
+

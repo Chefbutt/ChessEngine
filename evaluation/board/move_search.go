@@ -31,7 +31,7 @@ type MoveUndo struct {
 	PreviousCastleBlackQueenside bool
 	PreviousTurnBlack            bool
 	PreviousHalfTurn             int
-	PreviousAggregateBitboards   AggregateBitboards // Assume this type holds all necessary board state
+	PreviousAggregateBitboards   AggregateBitboards
 }
 
 func (board *Board) UndoMove(undo *MoveUndo) {
@@ -124,7 +124,7 @@ func setTranspositionEntry(hashKey uint64, entry TranspositionEntry) {
 	tableLock.Unlock()
 }
 
-func (board *Board) BestMove(depth int, strategy func(Board) []Move) (Move, Evaluation) {
+func (board *Board) BestMove(depth int, strategy func(Board) []Move, materialModifier, mobilityModifier, centreModifier, penaltyModifier int8) (Move, Evaluation) {
 	InitZobristTable()
 	legalMoves := strategy(*board)
 	if len(legalMoves) == 0 {
@@ -141,7 +141,7 @@ func (board *Board) BestMove(depth int, strategy func(Board) []Move) (Move, Eval
 			if err != nil {
 				panic(err)
 			}
-			score := tmpBoard.MiniMax(depth, -9999, 9999, false, strategy)
+			score := tmpBoard.MiniMax(depth, -9999, 9999, false, strategy, materialModifier, mobilityModifier, centreModifier, penaltyModifier)
 			tmpBoard.UndoMove(undo)
 			results <- MoveEvaluation{Move: move, Score: score}
 		}(move)
@@ -153,7 +153,9 @@ func (board *Board) BestMove(depth int, strategy func(Board) []Move) (Move, Eval
 
 	for range legalMoves {
 		result := <-results
-		fmt.Println(PieceSymbols[board.PieceAt(int(result.Move.Source))], "(", IndexToPosition(uint64(result.Move.Destination)), ") material: ", result.Score.material, ", centre bonus: ", result.Score.centreBonus, ", mobility bonus: ", result.Score.mobilityBonus, ", pawn structure bonus: ", result.Score.pawnPenalties, ", knight placement bonus: ", result.Score.knightBonus, ", king safety bonus: ", result.Score.safety)
+		if board.Debug {
+			fmt.Println(PieceSymbols[board.PieceAt(int(result.Move.Source))], "(", IndexToPosition(uint64(result.Move.Destination)), ") material: ", result.Score.material, ", centre bonus: ", result.Score.centreBonus, ", mobility bonus: ", result.Score.mobilityBonus, ", pawn structure bonus: ", result.Score.pawnPenalties, ", knight placement bonus: ", result.Score.knightBonus, ", king safety bonus: ", result.Score.safety)
+		}
 		if result.Score.Sum() > bestScore.Sum() {
 			bestScore = result.Score
 			bestMove = result.Move
@@ -177,9 +179,9 @@ func min(a, b int16) int16 {
 	return b
 }
 
-func (board *Board) MiniMax(depth int, alpha, beta int16, maximizingPlayer bool, strategy func(Board) []Move) Evaluation {
+func (board *Board) MiniMax(depth int, alpha, beta int16, maximizingPlayer bool, strategy func(Board) []Move, materialModifier, mobilityModifier, centreModifier, penaltyModifier int8) Evaluation {
 	if depth == 0 {
-		return board.Evaluate()
+		return board.Evaluate(materialModifier, mobilityModifier, centreModifier, penaltyModifier)
 	}
 	hashKey := board.hash()
 	if entry, exists := getTranspositionEntry(hashKey); exists && entry.Depth >= depth {
@@ -198,7 +200,7 @@ func (board *Board) MiniMax(depth int, alpha, beta int16, maximizingPlayer bool,
 	}
 	legalMoves := strategy(*board)
 	if len(legalMoves) == 0 {
-		return board.Evaluate()
+		return board.Evaluate(materialModifier, mobilityModifier, centreModifier, penaltyModifier)
 	}
 
 	if maximizingPlayer {
@@ -210,7 +212,7 @@ func (board *Board) MiniMax(depth int, alpha, beta int16, maximizingPlayer bool,
 			if err != nil {
 				panic(err) // Handle the error appropriately.
 			}
-			eval := tmpBoard.MiniMax(depth-1, -beta, -alpha, false, strategy)
+			eval := tmpBoard.MiniMax(depth-1, -beta, -alpha, false, strategy, materialModifier, mobilityModifier, centreModifier, penaltyModifier)
 			tmpBoard.UndoMove(undo)
 
 			if eval.Sum() > maxEval.Sum() {
@@ -232,7 +234,7 @@ func (board *Board) MiniMax(depth int, alpha, beta int16, maximizingPlayer bool,
 			if err != nil {
 				panic(err) // Handle the error appropriately.
 			}
-			eval := tmpBoard.MiniMax(depth-1, -beta, -alpha, true, strategy)
+			eval := tmpBoard.MiniMax(depth-1, -beta, -alpha, true, strategy, materialModifier, mobilityModifier, centreModifier, penaltyModifier)
 			tmpBoard.UndoMove(undo)
 
 			if eval.Sum() < minEval.Sum() {
