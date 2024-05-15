@@ -42,7 +42,7 @@ func TestConvertPosition(t *testing.T) {
 func TestFormFile(t *testing.T) {
 	// rnbqkbnr should be 10100110100011001110100001101010
 	// fmt.Println(strconv.FormatInt(position.FormFile("rnbqkbnr"), 2))
-	file := FormFile("rnbqkbnr")
+	file := FormFile("1rb1k2r")
 	assert.Equal(t, strconv.FormatInt(int64(file), 2), "10100110100011001110100001101010")
 }
 
@@ -54,13 +54,10 @@ func TestFormExtraneous(t *testing.T) {
 func TestFormBoardState(t *testing.T) {
 	//  w KQkq c6 0 2 should be 01111
 
-	// 10100110100011001110100001101010
-	// 01000100111101000100010001000100
-	// 10011001100110011001100110010000
-	//  100100110011001100110010000
-	pos := FormBoardState("2bq1rk1/pr3ppn/1p2p3/7P/2pP1B1P/2P5/PPQ2PB1/R3R1K1 w - -")
+	// 101001101000110011101000011010100100010011110100010001000100010010011001100110011001100110010000100100110011001100110010000
+	pos := FormBoardState("1rb1k2r/p2p1ppp/2p1p3/4P1N1/1b1q1P2/2Bn4/PP1K2PP/2Q2B2 w - - 0 1")
 	for _, positionFragment := range pos {
-		fmt.Print(positionFragment, " ")
+		fmt.Printf("%b\n", positionFragment)
 	}
 
 	// assert.Equal(t, strconv.FormatInt(int64(, 2), "1111")

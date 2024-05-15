@@ -68,62 +68,6 @@ func (board *Board) UndoMove(undo *MoveUndo) {
 	board.updateAggregateBitboards()
 }
 
-// func (board *Board) Quiesce(depth int, alpha int, beta int, maximizingPlayer bool) Evaluation {
-// 	standPat := toEval(board.Evaluate())
-// 	if maximizingPlayer {
-// 		if standPat.Sum() >= beta {
-// 			return Evaluation{float64(beta), 0, 0, 0, 0, 0}
-// 		}
-// 		if alpha < standPat.Sum() {
-// 			alpha = standPat.Sum()
-// 		}
-// 	} else {
-// 		if standPat.Sum() <= alpha {
-// 			return Evaluation{float64(alpha), 0, 0, 0, 0, 0}
-// 		}
-// 		if beta > standPat.Sum() {
-// 			beta = standPat.Sum()
-// 		}
-// 	}
-
-// 	if depth == 0 {
-// 		return toEval(board.Evaluate())
-// 	}
-
-// 	legalMoves := Captures(board) // This should be modified to return only capture moves
-// 	for _, move := range legalMoves {
-// 		if board.PieceAt(move.Destination) == -1 { // Assuming you have a way to determine if the move is a capture
-// 			continue
-// 		}
-// 		undo, err := board.MakeNativeMove(move)
-// 		if err != nil {
-// 			panic(err) // Handle errors appropriately
-// 		}
-// 		score := -board.Quiesce(depth-1, -beta, -alpha, !maximizingPlayer).Sum()
-// 		board.UndoMove(undo)
-
-// 		if maximizingPlayer {
-// 			if score >= beta {
-// 				return Evaluation{float64(beta), 0, 0, 0, 0, 0}
-// 			}
-// 			if score > alpha {
-// 				alpha = score
-// 			}
-// 		} else {
-// 			if score <= alpha {
-// 				return Evaluation{float64(alpha), 0, 0, 0, 0, 0}
-// 			}
-// 			if score < beta {
-// 				beta = score
-// 			}
-// 		}
-// 	}
-// 	if maximizingPlayer {
-// 		return Evaluation{float64(alpha), 0, 0, 0, 0, 0}
-// 	}
-// 	return Evaluation{float64(beta), 0, 0, 0, 0, 0}
-// }
-
 type MoveEvaluation struct {
 	Move  Move
 	Score int
