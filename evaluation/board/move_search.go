@@ -126,12 +126,12 @@ func (board *Board) UndoMove(undo *MoveUndo) {
 
 type MoveEvaluation struct {
 	Move  Move
-	Score Evaluation
+	Score int
 }
 
 type TranspositionEntry struct {
 	Depth    int
-	Score    Evaluation
+	Score    int
 	Flag     int
 	BestMove Move
 }
@@ -180,11 +180,11 @@ func setTranspositionEntry(hashKey uint64, entry TranspositionEntry) {
 	tableLock.Unlock()
 }
 
-func (board *Board) BestMove(depth int, strategy func(Board) []Move, materialModifier, mobilityModifier, centreModifier, penaltyModifier int8) (Move, Evaluation) {
+func (board *Board) BestMove(depth int, strategy func(Board) []Move, materialModifier, mobilityModifier, centreModifier, penaltyModifier int) (Move, int) {
 	InitZobristTable()
 	legalMoves := strategy(*board)
 	if len(legalMoves) == 0 {
-		return Move{}, Evaluation{} // or appropriate error handling
+		return Move{}, 0 // or appropriate error handling
 	}
 
 	results := make(chan MoveEvaluation, len(legalMoves))
@@ -197,7 +197,7 @@ func (board *Board) BestMove(depth int, strategy func(Board) []Move, materialMod
 			if err != nil {
 				panic(err)
 			}
-			score := tmpBoard.MiniMax(depth, -9999, 9999, false, strategy, materialModifier, mobilityModifier, centreModifier, penaltyModifier)
+			score := MiniMax(tmpBoard, depth, -9999, 9999, false, strategy, materialModifier, mobilityModifier, centreModifier, penaltyModifier)
 			tmpBoard.UndoMove(undo)
 			results <- MoveEvaluation{Move: move, Score: score}
 		}(move)
@@ -205,14 +205,14 @@ func (board *Board) BestMove(depth int, strategy func(Board) []Move, materialMod
 
 	// Find the best move based on evaluations
 	bestMove := Move{}
-	bestScore := Evaluation{-128, -128, -128, -128, -128, -128}
+	bestScore := -9999
 
 	for range legalMoves {
 		result := <-results
 		if board.Debug {
-			fmt.Println(PieceSymbols[board.PieceAt(int(result.Move.Source))], "(", IndexToPosition(uint64(result.Move.Destination)), ") material: ", result.Score.material, ", centre bonus: ", result.Score.centreBonus, ", mobility bonus: ", result.Score.mobilityBonus, ", pawn structure bonus: ", result.Score.pawnPenalties, ", knight placement bonus: ", result.Score.knightBonus, ", king safety bonus: ", result.Score.safety)
+			fmt.Println(PieceSymbols[board.PieceAt(int(result.Move.Source))], "(", IndexToPosition(uint64(result.Move.Destination)), ") :", result.Score)
 		}
-		if result.Score.Sum() > bestScore.Sum() {
+		if result.Score > bestScore {
 			bestScore = result.Score
 			bestMove = result.Move
 		}
@@ -221,21 +221,21 @@ func (board *Board) BestMove(depth int, strategy func(Board) []Move, materialMod
 	return bestMove, bestScore
 }
 
-func max(a, b int16) int16 {
+func max(a, b int) int {
 	if a > b {
 		return a
 	}
 	return b
 }
 
-func min(a, b int16) int16 {
+func min(a, b int) int {
 	if a < b {
 		return a
 	}
 	return b
 }
 
-func (board *Board) MiniMax(depth int, alpha, beta int16, maximizingPlayer bool, strategy func(Board) []Move, materialModifier, mobilityModifier, centreModifier, penaltyModifier int8) Evaluation {
+func MiniMax(board Board, depth int, alpha, beta int, maximizingPlayer bool, strategy func(Board) []Move, materialModifier, mobilityModifier, centreModifier, penaltyModifier int) int {
 	if depth == 0 {
 		return board.Evaluate(materialModifier, mobilityModifier, centreModifier, penaltyModifier)
 	}
@@ -245,63 +245,96 @@ func (board *Board) MiniMax(depth int, alpha, beta int16, maximizingPlayer bool,
 		case exact:
 			return entry.Score
 		case lowerBound:
-			alpha = max(alpha, entry.Score.Sum())
+			alpha = max(alpha, entry.Score)
 		case upperBound:
-			beta = min(beta, entry.Score.Sum())
+			beta = min(beta, entry.Score)
 		}
 
 		if alpha >= beta {
 			return entry.Score
 		}
 	}
-	legalMoves := strategy(*board)
-	if len(legalMoves) == 0 {
-		return board.Evaluate(materialModifier, mobilityModifier, centreModifier, penaltyModifier)
+	legalMoves := strategy(board)
+	if len(legalMoves) == 0 && board.IsCheckMate() {
+		if maximizingPlayer {
+			return -9999
+		} else {
+			return 9999
+		}
 	}
 
 	if maximizingPlayer {
-		maxEval := Evaluation{material: -128, pawnPenalties: -128, mobilityBonus: -128, centreBonus: -128, safety: -128, knightBonus: -128}
+		maxEval := -9999
 		var bestMove Move
 		for _, move := range legalMoves {
-			tmpBoard := *board
+			tmpBoard := board
 			undo, err := tmpBoard.MakeNativeMove(move)
 			if err != nil {
 				panic(err) // Handle the error appropriately.
 			}
-			eval := tmpBoard.MiniMax(depth-1, -beta, -alpha, false, strategy, materialModifier, mobilityModifier, centreModifier, penaltyModifier)
+
+			eval := MiniMax(tmpBoard, depth-1, alpha, beta, false, strategy, materialModifier, mobilityModifier, centreModifier, penaltyModifier)
 			tmpBoard.UndoMove(undo)
 
-			if eval.Sum() > maxEval.Sum() {
-				maxEval = eval
-			}
-			alpha = max(alpha, eval.Sum())
+			maxEval = max(maxEval, eval)
+			alpha = max(alpha, eval)
+
 			if beta <= alpha {
 				break // alpha cut-off
 			}
 		}
+		if len(legalMoves) == 0 {
+			board.Display()
+			fmt.Print("f")
+		}
 		setTranspositionEntry(hashKey, TranspositionEntry{Depth: depth, Score: maxEval, Flag: exact, BestMove: bestMove})
 		return maxEval
 	} else {
-		minEval := Evaluation{material: 127, pawnPenalties: 127, mobilityBonus: 127, centreBonus: 127, safety: 127, knightBonus: 127}
+		minEval := 9999
 		var bestMove Move
 		for _, move := range legalMoves {
-			tmpBoard := *board
+			tmpBoard := board
 			undo, err := tmpBoard.MakeNativeMove(move)
 			if err != nil {
 				panic(err) // Handle the error appropriately.
 			}
-			eval := tmpBoard.MiniMax(depth-1, -beta, -alpha, true, strategy, materialModifier, mobilityModifier, centreModifier, penaltyModifier)
+
+			eval := MiniMax(tmpBoard, depth-1, alpha, beta, true, strategy, materialModifier, mobilityModifier, centreModifier, penaltyModifier)
 			tmpBoard.UndoMove(undo)
 
-			if eval.Sum() < minEval.Sum() {
-				minEval = eval
-			}
-			beta = min(beta, eval.Sum())
-			if alpha >= beta {
+			minEval = min(eval, minEval)
+			beta = min(beta, eval)
+
+			if beta <= alpha {
 				break // beta cut-off
 			}
 		}
 		setTranspositionEntry(hashKey, TranspositionEntry{Depth: depth, Score: minEval, Flag: exact, BestMove: bestMove})
 		return minEval
 	}
+}
+
+func (b *Board) QuiescentSearch(alpha, beta, materialModifier, mobilityModifier, centreModifier, penaltyModifier int) int {
+	standPat := b.Evaluate(materialModifier, mobilityModifier, centreModifier, penaltyModifier)
+	if standPat >= beta {
+		return beta
+	}
+	if alpha < standPat {
+		alpha = standPat
+	}
+
+	captures := b.Captures()
+	for _, move := range captures {
+		b.makeMove(move)
+		score := -b.QuiescentSearch(-beta, -alpha, materialModifier, mobilityModifier, centreModifier, penaltyModifier)
+
+		if score >= beta {
+			return beta
+		}
+		if score > alpha {
+			alpha = score
+		}
+	}
+
+	return alpha
 }

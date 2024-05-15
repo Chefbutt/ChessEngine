@@ -7,12 +7,38 @@ import (
 
 type BitBoard uint64
 
-var SquareBB [65]BitBoard
+var (
+	SquareBB        [65]BitBoard
+	BlackPawnPushes map[BitBoard]BitBoard
+	WhitePawnPushes map[BitBoard]BitBoard
+	KnightMoves     map[BitBoard]BitBoard
+	KingMoves       map[BitBoard]BitBoard
+)
 
 func InitBitboards() {
 	var sq uint8
 	for sq = 0; sq < 65; sq++ {
 		SquareBB[sq] = 0x8000000000000000 << sq
+	}
+
+	WhitePawnPushes = make(map[BitBoard]BitBoard)
+	BlackPawnPushes = make(map[BitBoard]BitBoard)
+	KnightMoves = make(map[BitBoard]BitBoard)
+	KingMoves = make(map[BitBoard]BitBoard)
+
+	for sq = 0; sq < 64; sq++ {
+		squareBB := New(int(sq))
+
+		// White Pawn Pushes
+		WhitePawnPushes[squareBB] = squareBB << 8
+
+		BlackPawnPushes[squareBB] = squareBB >> 8
+
+		// Knight Moves
+		KnightMoves[squareBB] = (squareBB<<17)&notAFile | (squareBB<<10)&notABFile | (squareBB>>6)&notABFile | (squareBB>>15)&notAFile | (squareBB<<15)&notHFile | (squareBB<<6)&notGHFile | (squareBB>>10)&notGHFile | (squareBB>>17)&notHFile
+
+		// King Moves
+		KingMoves[squareBB] = squareBB.eastOne() | squareBB.westOne() | squareBB.northOne() | squareBB.southOne() | squareBB.southEastOne() | squareBB.southWestOne() | squareBB.northEastOne() | squareBB.northWestOne()
 	}
 }
 

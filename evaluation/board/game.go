@@ -55,9 +55,7 @@ func (board *Board) MakeHumanMove(move string) error {
 
 // Create a fixed number of workers
 
-func (board *Board) MakeMove() error {
-	// parsedMove := board.UCItoMove(move)
-
+func (board *Board) MakeMove(depth int) error {
 	// f, err := os.Create("cpu.prof")
 	// if err != nil {
 	// 	log.Fatal("could not create CPU profile: ", err)
@@ -78,14 +76,46 @@ func (board *Board) MakeMove() error {
 	// 	log.Fatal("could not write memory profile: ", err)
 	// }
 
-	bestMove, eval := board.BestMove(4, OrderedMoves, 8, -3, -8, 1)
+	bestMove, eval := board.BestMove(depth, OrderedMoves, -8, 3, 8, 1)
+
+	if board.TurnBlack {
+		if board.LastMoveWhite != bestMove {
+			board.Repetition = 0
+		}
+	} else {
+		if board.LastMoveWhite != bestMove {
+			board.Repetition = 0
+		}
+	}
+
+	if board.TurnBlack {
+		if board.LastMoveBlack == bestMove {
+			board.Repetition = board.Repetition + 1
+		}
+		board.LastMoveBlack = bestMove
+	} else {
+		if board.LastMoveWhite == bestMove {
+			board.Repetition = board.Repetition + 1
+		}
+		board.LastMoveWhite = bestMove
+	}
+
+	if board.Repetition == 3 {
+		fmt.Println("Draw by threefold repetition")
+		return errors.New("Repetition")
+	}
 
 	if board.Debug {
-		fmt.Println(PieceSymbols[board.PieceAt(int(bestMove.Source))], "(", IndexToPosition(uint64(bestMove.Destination)), ") material: ", eval.material, ", centre bonus: ", eval.centreBonus, ", mobility bonus: ", eval.mobilityBonus, ", pawn structure bonus: ", eval.pawnPenalties, ", knight placement bonus: ", eval.knightBonus, ", king safety bonus: ", eval.safety)
+		fmt.Println(PieceSymbols[board.PieceAt(int(bestMove.Source))], "(", IndexToPosition(uint64(bestMove.Destination)), ") : ", eval)
 	}
 
 	if bestMove.Source == bestMove.Destination {
-		fmt.Println("Resign")
+		if board.TurnBlack {
+			fmt.Println("Black resigns")
+		} else {
+			fmt.Println("White resigns")
+		}
+		return errors.New("Resign")
 	}
 
 	_, err := board.makeMove(bestMove)

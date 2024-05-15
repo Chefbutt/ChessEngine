@@ -2,12 +2,13 @@ package main
 
 import (
 	"bufio"
-	"engine/evaluation/board"
-	"engine/evaluation/board/bitboards"
 	"fmt"
 	"os"
 	"strings"
 	"testing"
+
+	"engine/evaluation/board"
+	"engine/evaluation/board/bitboards"
 
 	"github.com/stretchr/testify/assert"
 )
@@ -19,7 +20,7 @@ func TestAgainstItself(t *testing.T) {
 	b := board.New()
 
 	for {
-		err := b.MakeMove()
+		err := b.MakeMove(4)
 		if err != nil {
 			break
 		}
@@ -66,7 +67,7 @@ func TestAgainstHuman(t *testing.T) {
 
 		fmt.Println("Move made:", text)
 
-		b.MakeMove()
+		b.MakeMove(4)
 		b.Display()
 	}
 }

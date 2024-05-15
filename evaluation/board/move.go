@@ -108,6 +108,207 @@ func (originalBoard Board) AvailableWhiteAttacks() bitboards.BitBoard {
 	return attack
 }
 
+func (originalBoard Board) AvailableWhiteCaptures() []Move {
+	board := originalBoard
+	var moves []Move
+
+	knights := board.WhiteKnights
+	for knights != 0 {
+		from := knights.BitBoardPointer().PopLSB()
+
+		movesList := bitboards.KnightBitboard(bitboards.New(int(from))).Moves(board.EmptySquares, board.BlackPieces) & board.BlackPieces
+		for movesList != 0 {
+			to := movesList.PopLSB()
+			moves = append(moves, Move{Source: int(from), Destination: int(to), Piece: WhiteKnight})
+		}
+	}
+
+	bishops := board.WhiteBishops
+	for bishops != 0 {
+		from := bishops.BitBoardPointer().PopLSB()
+
+		movesList := bitboards.BishopBitboard(bitboards.New(int(from))).Moves(board.WhitePieces, board.BlackPieces) & board.BlackPieces
+		for movesList != 0 {
+			to := movesList.PopLSB()
+
+			moves = append(moves, Move{Source: int(from), Destination: int(to), Piece: WhiteBishop})
+		}
+	}
+
+	rooks := board.WhiteRooks
+	for rooks != 0 {
+		from := rooks.BitBoardPointer().PopLSB()
+
+		movesList := bitboards.RookBitboard(bitboards.New(int(from))).Moves(board.WhitePieces, board.BlackPieces) & board.BlackPieces
+		for movesList != 0 {
+			to := movesList.PopLSB()
+
+			moves = append(moves, Move{Source: int(from), Destination: int(to), Piece: WhiteRook})
+		}
+	}
+
+	queens := board.WhiteQueens
+	for queens != 0 {
+		from := queens.BitBoardPointer().PopLSB()
+
+		movesList := bitboards.QueenBitboard(bitboards.New(int(from))).Moves(board.WhitePieces, board.BlackPieces) & board.BlackPieces
+		for movesList != 0 {
+			to := movesList.PopLSB()
+
+			moves = append(moves, Move{Source: int(from), Destination: int(to), Piece: WhiteQueen})
+		}
+	}
+
+	pawns := board.WhitePawns
+	for pawns != 0 {
+		from := pawns.BitBoardPointer().PopLSB()
+
+		movesList := bitboards.WhitePawnBitboard(bitboards.New(int(from))).Moves(board.EmptySquares, board.BlackPieces, board.EnPassantTarget) & board.BlackPieces
+		for movesList != 0 {
+			to := movesList.PopLSB()
+
+			moves = append(moves, Move{Source: int(from), Destination: int(to), Piece: WhitePawn})
+		}
+	}
+
+	// Remove attacked
+	kings := board.WhiteKing
+	for kings != 0 {
+		from := kings.BitBoardPointer().PopLSB()
+
+		movesList := bitboards.KingBitboard(bitboards.New(int(from))).Moves(board.EmptySquares, board.BlackPieces) & board.BlackPieces
+		for movesList != 0 {
+			board := board
+			to := movesList.PopLSB()
+
+			move := Move{Source: bits.TrailingZeros64(uint64(board.WhiteKing)), Destination: int(to), Piece: WhiteKing}
+			board.makeMove(move)
+			if !board.isKingInCheck(board.WhiteKing, true) && move.Source != move.Destination {
+				moves = append(moves, move)
+			}
+		}
+	}
+
+	if board.isKingInCheck(board.WhiteKing, true) {
+		var legalMoves []Move
+		for _, move := range moves {
+			tempBoard := board
+			_, err := tempBoard.makeMove(move)
+			if err != nil {
+				panic(err)
+			}
+			if !tempBoard.isKingInCheck(tempBoard.WhiteKing, false) {
+				legalMoves = append(legalMoves, move)
+			}
+		}
+		return legalMoves
+	}
+
+	return moves
+}
+
+func (originalBoard Board) AvailableBlackCaptures() []Move {
+	board := originalBoard
+	var moves []Move
+
+	knights := board.BlackKnights
+	for knights != 0 {
+		from := knights.BitBoardPointer().PopLSB()
+
+		movesList := bitboards.KnightBitboard(bitboards.New(int(from))).Moves(board.EmptySquares, board.WhitePieces) & originalBoard.WhitePieces
+		for movesList != 0 {
+			to := movesList.PopLSB()
+
+			moves = append(moves, Move{Source: int(from), Destination: int(to), Piece: BlackKnight})
+		}
+	}
+
+	bishops := board.BlackBishops
+	for bishops != 0 {
+		from := bishops.BitBoardPointer().PopLSB()
+
+		movesList := bitboards.BishopBitboard(bitboards.New(int(from))).Moves(board.BlackPieces, board.WhitePieces) & originalBoard.WhitePieces
+		for movesList != 0 {
+			to := movesList.PopLSB()
+
+			moves = append(moves, Move{Source: int(from), Destination: int(to), Piece: BlackBishop})
+		}
+	}
+
+	rooks := board.BlackRooks
+	for rooks != 0 {
+		from := rooks.BitBoardPointer().PopLSB()
+
+		movesList := bitboards.RookBitboard(bitboards.New(int(from))).Moves(board.BlackPieces, board.WhitePieces) & originalBoard.WhitePieces
+		for movesList != 0 {
+			to := movesList.PopLSB()
+
+			moves = append(moves, Move{Source: int(from), Destination: int(to), Piece: BlackRook})
+		}
+	}
+
+	queens := board.BlackQueens
+	for queens != 0 {
+		from := queens.BitBoardPointer().PopLSB()
+
+		movesList := bitboards.QueenBitboard(bitboards.New(int(from))).Moves(board.BlackPieces, board.WhitePieces) & originalBoard.WhitePieces
+		for movesList != 0 {
+			to := movesList.PopLSB()
+
+			moves = append(moves, Move{Source: int(from), Destination: int(to), Piece: BlackQueen})
+		}
+	}
+
+	pawns := board.BlackPawns
+	for pawns != 0 {
+		from := pawns.BitBoardPointer().PopLSB()
+
+		movesList := bitboards.BlackPawnBitboard(bitboards.New(int(from))).Moves(board.EmptySquares, board.WhitePieces, board.EnPassantTarget) & originalBoard.WhitePieces
+		for movesList != 0 {
+			to := movesList.PopLSB()
+
+			moves = append(moves, Move{Source: int(from), Destination: int(to), Piece: BlackPawn})
+		}
+	}
+
+	kings := board.BlackKing
+	for kings != 0 {
+		from := kings.BitBoardPointer().PopLSB()
+
+		movesList := bitboards.KingBitboard(bitboards.New(int(from))).Moves(board.EmptySquares, board.WhitePieces) & originalBoard.WhitePieces
+		for movesList != 0 {
+			board := board
+			to := movesList.PopLSB()
+
+			move := Move{Source: bits.TrailingZeros64(uint64(board.BlackKing)), Destination: int(to), Piece: BlackKing}
+			board.makeMove(move)
+			if !board.isKingInCheck(board.BlackKing, false) && move.Source != move.Destination {
+				moves = append(moves, move)
+			}
+		}
+	}
+	// Remove attacked
+
+	if board.isKingInCheck(board.BlackKing, false) {
+		var legalMoves []Move
+		for _, move := range moves {
+			tempBoard := board
+			_, err := tempBoard.makeMove(move)
+			if err != nil {
+				panic(err)
+			}
+
+			// tempBoard.Display()
+			if !tempBoard.isKingInCheck(tempBoard.BlackKing, false) {
+				legalMoves = append(legalMoves, move)
+			}
+		}
+		return legalMoves
+	}
+
+	return moves
+}
+
 func (originalBoard Board) AvailableBlackMoves() []Move {
 	board := originalBoard
 	var moves []Move
@@ -175,8 +376,11 @@ func (originalBoard Board) AvailableBlackMoves() []Move {
 		movesList := bitboards.BlackPawnBitboard(bitboards.New(int(from))).Moves(board.EmptySquares, board.WhitePieces, board.EnPassantTarget)
 		for movesList != 0 {
 			to := movesList.PopLSB()
-
-			moves = append(moves, Move{Source: int(from), Destination: int(to), Piece: BlackPawn})
+			if to < 255 {
+				moves = append(moves, Move{Source: int(from), Destination: int(to), Piece: BlackPawn, PromotionPiece: BlackQueen})
+			} else {
+				moves = append(moves, Move{Source: int(from), Destination: int(to), Piece: BlackPawn})
+			}
 		}
 	}
 
@@ -184,7 +388,7 @@ func (originalBoard Board) AvailableBlackMoves() []Move {
 	for kings != 0 {
 		from := kings.BitBoardPointer().PopLSB()
 
-		movesList := bitboards.KingBitboard(bitboards.New(int(from))).Moves(board.EmptySquares, board.WhitePieces)
+		movesList := bitboards.KingBitboard(bitboards.New(int(from))).Moves(board.EmptySquares, board.WhitePieces) &^ attacks
 		for movesList != 0 {
 			board := board
 			to := movesList.PopLSB()
@@ -206,8 +410,9 @@ func (originalBoard Board) AvailableBlackMoves() []Move {
 			if err != nil {
 				panic(err)
 			}
+
 			// tempBoard.Display()
-			if !board.isKingInCheck(tempBoard.BlackKing, false) {
+			if !tempBoard.isKingInCheck(tempBoard.BlackKing, false) {
 				legalMoves = append(legalMoves, move)
 			}
 		}
@@ -283,6 +488,11 @@ func (originalBoard Board) AvailableWhiteMoves() []Move {
 		movesList := bitboards.WhitePawnBitboard(bitboards.New(int(from))).Moves(board.EmptySquares, board.BlackPieces, board.EnPassantTarget)
 		for movesList != 0 {
 			to := movesList.PopLSB()
+			if to > 2^56 {
+				moves = append(moves, Move{Source: int(from), Destination: int(to), Piece: WhitePawn, PromotionPiece: WhiteQueen})
+			} else {
+				moves = append(moves, Move{Source: int(from), Destination: int(to), Piece: WhitePawn})
+			}
 
 			moves = append(moves, Move{Source: int(from), Destination: int(to), Piece: WhitePawn})
 		}
@@ -293,7 +503,7 @@ func (originalBoard Board) AvailableWhiteMoves() []Move {
 	for kings != 0 {
 		from := kings.BitBoardPointer().PopLSB()
 
-		movesList := bitboards.KingBitboard(bitboards.New(int(from))).Moves(board.EmptySquares, board.BlackPieces)
+		movesList := bitboards.KingBitboard(bitboards.New(int(from))).Moves(board.EmptySquares, board.BlackPieces) &^ attacks
 		for movesList != 0 {
 			board := board
 			to := movesList.PopLSB()
@@ -309,12 +519,12 @@ func (originalBoard Board) AvailableWhiteMoves() []Move {
 	if board.isKingInCheck(board.WhiteKing, true) {
 		var legalMoves []Move
 		for _, move := range moves {
-			board := board
-			_, err := board.makeMove(move)
+			tempBoard := board
+			_, err := tempBoard.makeMove(move)
 			if err != nil {
 				panic(err)
 			}
-			if !board.isKingInCheck(board.WhiteKing, true) {
+			if !tempBoard.isKingInCheck(tempBoard.WhiteKing, true) {
 				legalMoves = append(legalMoves, move)
 			}
 		}

@@ -31,7 +31,14 @@ func (p WhitePawnBitboard) Attacks() BitBoard {
 }
 
 func (p WhitePawnBitboard) Moves(empty, oppositeColorOccupancy, enPassantTarget BitBoard) BitBoard {
-	return p.SinglePushTargets(empty) | p.DoublePushTargets(empty) | ((p.whitePawnEastAttacks() | p.whitePawnWestAttacks()) & (oppositeColorOccupancy | enPassantTarget))
+	var pushes BitBoard
+	temp := p
+	for temp != 0 {
+		tempPawn := temp.BitBoardPointer().PopLSB()
+		pushes = pushes | (WhitePawnPushes[New(int(tempPawn))] & empty)
+	}
+
+	return pushes | p.DoublePushTargets(empty) | ((p.whitePawnEastAttacks() | p.whitePawnWestAttacks()) & (oppositeColorOccupancy | enPassantTarget))
 }
 
 func (b WhitePawnBitboard) MovesByPiece(empty, oppositeColorOccupancy, enPassantTarget BitBoard) map[BitBoard]BitBoard {
@@ -82,7 +89,14 @@ func (p WhitePawnBitboard) whitePawnWestAttacks() BitBoard {
 }
 
 func (p BlackPawnBitboard) Moves(empty, oppositeColorOccupancy, enPassantTarget BitBoard) BitBoard {
-	return p.SinglePushTargets(empty) | p.DoublePushTargets(empty) | ((p.eastAttacks() | p.westAttacks()) & (oppositeColorOccupancy | enPassantTarget))
+	var pushes BitBoard
+	temp := p
+	for temp != 0 {
+		tempPawn := temp.BitBoardPointer().PopLSB()
+		pushes = pushes | (BlackPawnPushes[New(int(tempPawn))] & empty)
+	}
+
+	return pushes | p.DoublePushTargets(empty) | ((p.eastAttacks() | p.westAttacks()) & (oppositeColorOccupancy | enPassantTarget))
 }
 
 // whitePawnEastAttacks computes the eastward attacks for white pawns.

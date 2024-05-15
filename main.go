@@ -30,11 +30,39 @@ func main() {
 		playEngineVsEngine(debug)
 	case "engine-vs-human":
 		playEngineVsHuman(debug)
+	case "evaluate":
+		if len(os.Args) < 3 {
+			fmt.Println("No FEN")
+			os.Exit(1)
+		}
+		fen := os.Args[3]
+		evaluate(debug, fen)
 	default:
 		fmt.Println("Invalid mode specified")
 		fmt.Println("Usage: go run main.go [engine-vs-engine | engine-vs-human]")
 		os.Exit(1)
 	}
+}
+
+func evaluate(debug, fen string) {
+	bitboards.InitBitboards()
+	board.TranspositionTable = make(map[uint64]board.TranspositionEntry)
+	board.InitZobristTable()
+
+	board := board.FromFEN(fen)
+
+	if debug == "debug" {
+		board.Debug = true
+	}
+
+	board.Display()
+
+	err := board.MakeMove(6)
+	if err != nil {
+		panic(err)
+	}
+
+	board.Display()
 }
 
 func playEngineVsEngine(debug string) {
@@ -48,7 +76,7 @@ func playEngineVsEngine(debug string) {
 	}
 
 	for {
-		err := b.MakeMove()
+		err := b.MakeMove(4)
 		if err != nil {
 			break
 		}
@@ -98,7 +126,7 @@ func playEngineVsHuman(debug string) {
 		fmt.Println("Move made:", text)
 		// b.Display() // Assuming there's a function to display the board state
 
-		b.MakeMove()
+		b.MakeMove(5)
 		b.Display()
 	}
 }

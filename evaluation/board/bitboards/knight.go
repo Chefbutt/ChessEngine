@@ -40,17 +40,7 @@ func (k KnightBitboard) Attacks(oppositeColorOccupancy BitBoard) BitBoard {
 }
 
 func (k KnightBitboard) Moves(empty, oppositeColorOccupancy BitBoard) BitBoard {
-	pos := BitBoard(k)
-	northNorthEast := (pos << 17) & notAFile // two up, one right
-	northEastEast := (pos << 10) & notABFile // one up, two right
-	southEastEast := (pos >> 6) & notABFile  // one down, two right
-	southSouthEast := (pos >> 15) & notAFile // two down, one right
-	northNorthWest := (pos << 15) & notHFile // two up, one left
-	northWestWest := (pos << 6) & notGHFile  // one up, two left
-	southWestWest := (pos >> 10) & notGHFile // one down, two left
-	southSouthWest := (pos >> 17) & notHFile // two down, one left
-
-	return (northNorthEast | northEastEast | southEastEast | southSouthEast | northNorthWest | northWestWest | southWestWest | southSouthWest) & (empty | oppositeColorOccupancy)
+	return KnightMoves[k.BitBoard()] & (empty | oppositeColorOccupancy)
 }
 
 // Board edges that knights can't wrap around
