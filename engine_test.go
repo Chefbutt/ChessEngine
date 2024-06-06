@@ -19,7 +19,7 @@ func TestAgainstItself(t *testing.T) {
 	b := board.New()
 
 	for {
-		err := b.MakeMove()
+		err := b.MakeMove(4)
 		if err != nil {
 			break
 		}
@@ -66,7 +66,7 @@ func TestAgainstHuman(t *testing.T) {
 
 		fmt.Println("Move made:", text)
 
-		b.MakeMove()
+		b.MakeMove(4)
 		b.Display()
 	}
 }

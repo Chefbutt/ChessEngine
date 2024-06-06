@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"strconv"
 	"strings"
 	"time"
 
@@ -17,7 +18,12 @@ import (
 func main() {
 	if len(os.Args) < 2 {
 		fmt.Println("No mode specified")
-		fmt.Println("Usage: go run main.go [engine-vs-engine | engine-vs-human]")
+		fmt.Println("Usage: go run main.go [engine-vs-engine | engine-vs-human] [debug | no-debug] [depth]")
+		os.Exit(1)
+	}
+
+	if len(os.Args) < 4 {
+		fmt.Println("Missing arguments. Usage: go run main.go [engine-vs-engine | engine-vs-human] [debug | no-debug] [depth]")
 		os.Exit(1)
 	}
 
@@ -25,19 +31,26 @@ func main() {
 
 	debug := os.Args[2]
 
+	depth, _ := strconv.Atoi(os.Args[3])
+
+	depth = depth - 2
+	if depth == 0 {
+		depth = 4
+	}
+
 	switch mode {
 	case "engine-vs-engine":
-		playEngineVsEngine(debug)
+		playEngineVsEngine(debug, depth)
 	case "engine-vs-human":
-		playEngineVsHuman(debug)
+		playEngineVsHuman(debug, depth)
 	default:
 		fmt.Println("Invalid mode specified")
-		fmt.Println("Usage: go run main.go [engine-vs-engine | engine-vs-human]")
+		fmt.Println("Usage: go run main.go [engine-vs-engine | engine-vs-human] [debug | no-debug] [depth]")
 		os.Exit(1)
 	}
 }
 
-func playEngineVsEngine(debug string) {
+func playEngineVsEngine(debug string, depth int) {
 	bitboards.InitBitboards()
 	board.TranspositionTable = make(map[uint64]board.TranspositionEntry)
 	board.InitZobristTable()
@@ -48,7 +61,7 @@ func playEngineVsEngine(debug string) {
 	}
 
 	for {
-		err := b.MakeMove()
+		err := b.MakeMove(depth)
 		if err != nil {
 			break
 		}
@@ -56,7 +69,7 @@ func playEngineVsEngine(debug string) {
 	}
 }
 
-func playEngineVsHuman(debug string) {
+func playEngineVsHuman(debug string, depth int) {
 	b := board.New()
 	reader := bufio.NewReader(os.Stdin)
 
@@ -98,7 +111,7 @@ func playEngineVsHuman(debug string) {
 		fmt.Println("Move made:", text)
 		// b.Display() // Assuming there's a function to display the board state
 
-		b.MakeMove()
+		b.MakeMove(depth)
 		b.Display()
 	}
 }
