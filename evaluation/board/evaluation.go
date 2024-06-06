@@ -1,13 +1,13 @@
 package board
 
 import (
-	"fmt"
+	"math"
 	"math/bits"
 
 	"engine/evaluation/board/bitboards"
 )
 
-func (board Board) whiteMaterial() int8 {
+func (board Board) whiteMaterial() int {
 	queenWt, rookWt, knightWt, bishopWt, pawnWt := 9, 5, 3, 3, 1
 
 	wQ := bits.OnesCount64(uint64(board.WhiteQueens))
@@ -16,10 +16,10 @@ func (board Board) whiteMaterial() int8 {
 	wB := bits.OnesCount64(uint64(board.WhiteBishops))
 	wP := bits.OnesCount64(uint64(board.WhitePawns))
 
-	return int8(queenWt*wQ + rookWt*wR + knightWt*wN + bishopWt*wB + pawnWt*wP)
+	return queenWt*wQ + rookWt*wR + knightWt*wN + bishopWt*wB + pawnWt*wP
 }
 
-func (board Board) blackMaterial() int8 {
+func (board Board) blackMaterial() int {
 	queenWt, rookWt, knightWt, bishopWt, pawnWt := 9, 5, 3, 3, 1
 
 	bQ := bits.OnesCount64(uint64(board.BlackQueens))
@@ -28,36 +28,36 @@ func (board Board) blackMaterial() int8 {
 	bB := bits.OnesCount64(uint64(board.BlackBishops))
 	bP := bits.OnesCount64(uint64(board.BlackPawns))
 
-	return int8(queenWt*bQ + rookWt*bR + knightWt*bN + bishopWt*bB + pawnWt*bP)
+	return queenWt*bQ + rookWt*bR + knightWt*bN + bishopWt*bB + pawnWt*bP
 }
 
-func (board Board) calculateDoubledPawns() int8 {
-	var doubled int8
+func (board Board) calculateDoubledPawns() int {
+	var doubled int
 	for file := 0; file < 8; file++ {
 		fileMask := bitboards.FileMask(file)
 		pawnsInFile := board.WhitePawns.BitBoard() & fileMask
 		if bits.OnesCount64(uint64(pawnsInFile)) > 1 {
-			doubled += int8(bits.OnesCount64(uint64(pawnsInFile)))
+			doubled += bits.OnesCount64(uint64(pawnsInFile))
 		}
 
 		pawnsInFile = board.BlackPawns.BitBoard() & fileMask
 		if bits.OnesCount64(uint64(pawnsInFile)) > 1 {
-			doubled -= int8(bits.OnesCount64(uint64(pawnsInFile)))
+			doubled -= bits.OnesCount64(uint64(pawnsInFile))
 		}
 	}
 
 	return doubled
 }
 
-func (board Board) calculateBlockedPawns() int8 {
+func (board Board) calculateBlockedPawns() int {
 	occupied := bitboards.BitBoard(board.WhitePawns) | bitboards.BitBoard(board.BlackPawns)
 	blockedWhite := (bitboards.BitBoard(board.WhitePawns) << 8) & occupied
 	blockedBlack := (bitboards.BitBoard(board.BlackPawns) >> 8) & occupied
 
-	return int8(bits.OnesCount64(uint64(blockedWhite)) - bits.OnesCount64(uint64(blockedBlack)))
+	return bits.OnesCount64(uint64(blockedWhite)) - bits.OnesCount64(uint64(blockedBlack))
 }
 
-func (board Board) calculateIsolatedPawns() int8 {
+func (board Board) calculateIsolatedPawns() int {
 	isolatedWhite := board.WhitePawns
 	isolatedBlack := board.BlackPawns
 
@@ -68,11 +68,11 @@ func (board Board) calculateIsolatedPawns() int8 {
 	isolatedWhite &= ^neighborFilesWhite
 	isolatedBlack &= ^neighborFilesBlack
 
-	return int8(bits.OnesCount64(uint64(isolatedWhite)) - bits.OnesCount64(uint64(isolatedBlack)))
+	return bits.OnesCount64(uint64(isolatedWhite)) - bits.OnesCount64(uint64(isolatedBlack))
 }
 
 // Calculate mobility score (stub)
-func (board Board) mobilityScore() int8 {
+func (board Board) mobilityScore() int {
 	totalMoves := 0
 
 	totalMoves += bits.OnesCount64(uint64(board.WhitePawns.Moves(board.EmptySquares, board.BlackPieces, board.EnPassantTarget)))
@@ -89,21 +89,20 @@ func (board Board) mobilityScore() int8 {
 	// totalMoves -= bits.OnesCount64(uint64(board.BlackQueens.Moves(board.BlackPieces, board.WhitePieces)))
 	// totalMoves += board.BlackKing.Moves(board.EmptySquares, board.BlackPieces).PopCount()
 
-	return int8(totalMoves)
+	return totalMoves
 }
 
 var edgesOfBoard = bitboards.BitBoard(0x8181818181818181)
 
-func (board Board) knightsOnRim() int8 {
-	knightsOnRim := (board.WhiteKnights.BitBoard() & edgesOfBoard).PopCount() - (board.BlackKnights.BitBoard() & edgesOfBoard).PopCount()
-	return int8(knightsOnRim)
+func (board Board) knightsOnRim() int {
+	knightsOnRim := bits.OnesCount64(uint64(board.WhiteKnights.BitBoard()&edgesOfBoard)) - bits.OnesCount64(uint64(board.BlackKnights.BitBoard()&edgesOfBoard))
+	return knightsOnRim
 }
 
-func (board Board) piecesInCentre() int8 {
+func (board Board) piecesInCentre() int {
 	pieces := bits.OnesCount64(uint64(board.WhitePieces & centralSquares))
-	pieces = pieces - bits.OnesCount64(uint64(board.BlackPieces&centralSquares))
 
-	return int8(pieces)
+	return pieces - bits.OnesCount64(uint64(board.BlackPieces&centralSquares))
 }
 
 // IsAttacked
@@ -117,7 +116,7 @@ func (board Board) IsStaleMate() bool {
 	return false
 }
 
-func (board Board) KingSafetyBonus() int8 {
+func (board Board) KingSafetyBonus() int {
 	bonus := 0
 	if board.WhiteCastled {
 		bonus += 15 // Add 30 points for white castling
@@ -125,7 +124,7 @@ func (board Board) KingSafetyBonus() int8 {
 	if board.BlackCastled {
 		bonus -= 15 // Subtract 30 points when black castles, as lower is better for black
 	}
-	return int8(bonus)
+	return bonus
 }
 
 func (board Board) GamePhase() float64 {
@@ -138,24 +137,9 @@ func (board Board) GamePhase() float64 {
 	return 1 - float64(totalPieces)/32.0
 }
 
-func (board Board) DynamicKingSafety() int8 {
+func (board Board) DynamicKingSafety() float64 {
 	phase := board.GamePhase()
-	return int8(float64(board.KingSafetyBonus()) * (0.5 + 0.5*phase))
-}
-
-type Evaluation struct {
-	material      int8
-	pawnPenalties int8
-	mobilityBonus int8
-	centreBonus   int8
-	safety        int8
-	knightBonus   int8
-}
-
-func (e Evaluation) Sum() int16 {
-	var sum int16
-	sum = sum + int16(e.material) + int16(e.pawnPenalties) + int16(e.mobilityBonus) + int16(e.centreBonus) + int16(e.safety) + int16(e.knightBonus)
-	return sum
+	return (0.5 + 0.5*phase) * float64(board.KingSafetyBonus())
 }
 
 func (board Board) IsCheckMate() bool {
@@ -164,9 +148,15 @@ func (board Board) IsCheckMate() bool {
 	var kingMoves []Move
 
 	if board.TurnBlack {
+		if board.BlackKing == 0 {
+			return true
+		}
 		kingInCheck = board.isKingInCheck(board.BlackKing, false)
 		kingMoves = board.AvailableBlackMoves()
 	} else {
+		if board.WhiteKing == 0 {
+			return true
+		}
 		kingInCheck = board.isKingInCheck(board.WhiteKing, true)
 		kingMoves = board.AvailableWhiteMoves()
 	}
@@ -192,19 +182,10 @@ func (board Board) generateAttacks(opponentBlack bool) bitboards.BitBoard {
 	return board.AvailableWhiteAttacks()
 }
 
-func (board Board) Evaluate(materialModifier, mobilityModifier, centreModifier, penaltyModifier int8) Evaluation {
-	if board.IsCheckMate() {
-		// Checkmate detection
-		if board.TurnBlack {
-			return Evaluation{-128, -128, -128, -128, -128, -128}
-		} else {
-			return Evaluation{127, 127, 127, 127, 127, 127}
-		}
-	}
-
+func (board Board) Evaluate(materialModifier, mobilityModifier, centreModifier, penaltyModifier int) int {
 	if board.IsStaleMate() {
 		// Stalemate detection
-		return Evaluation{0, 0, 0, 0, 0, 0}
+		return 0
 	}
 
 	material := (board.whiteMaterial() - board.blackMaterial()) * materialModifier // 8
@@ -212,21 +193,20 @@ func (board Board) Evaluate(materialModifier, mobilityModifier, centreModifier, 
 	doubled := board.calculateDoubledPawns()
 	blocked := board.calculateBlockedPawns()
 	isolated := board.calculateIsolatedPawns()
-	mobility := board.mobilityScore()
-	centre := board.piecesInCentre()
+	mobility := board.mobilityScore() / 2
+	centre := board.piecesInCentre() * 2
 	kingSafety := board.DynamicKingSafety()
 	misplacedKnights := board.knightsOnRim()
 	aggression := board.GamePhase()
-	fmt.Sprint(aggression)
 
 	pawnPenalties := doubled + blocked + isolated
 	mobilityBonus := mobilityModifier * mobility //-1
-	centreBonus := centreModifier * centre       //-4
+	centreBonus := centreModifier * centre
 	// knightBonus := 0
 
 	if board.TurnBlack {
-		return Evaluation{material, penaltyModifier * pawnPenalties, -mobilityBonus, -centreBonus, kingSafety * 3, misplacedKnights}
+		return (-material - penaltyModifier*pawnPenalties - mobilityBonus + centreBonus - int(math.Round(kingSafety*3)) - misplacedKnights - int(math.Round(aggression*3)))
 	} else {
-		return Evaluation{-material, penaltyModifier * -pawnPenalties, mobilityBonus, centreBonus, -kingSafety * 3, misplacedKnights}
+		return (material + penaltyModifier*pawnPenalties + mobilityBonus - centreBonus + int(math.Round(kingSafety*3)) + misplacedKnights + int(math.Round(aggression*3)))
 	}
 }

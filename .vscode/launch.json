@@ -32,11 +32,11 @@
             "cwd": "${workspaceFolder}"
         },
         {
-            "name": "Engine vs Human Sans Output",
+            "name": "Evaluate Output",
             "type": "go",
             "request": "launch",
             "program": "./main.go",
-            "args": ["engine-vs-human", "no-debug"],
+            "args": ["evaluate", "debug", "r4r1k/1R1R2p1/7p/8/8/3Q1Ppq/P7/6K1 b - - 0 1"],
             "console": "integratedTerminal",
             "cwd": "${workspaceFolder}"
         }

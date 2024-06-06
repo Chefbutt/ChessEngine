@@ -2,12 +2,13 @@ package main
 
 import (
 	"bufio"
-	"engine/evaluation/board"
-	"engine/evaluation/board/bitboards"
 	"fmt"
 	"os"
 	"strings"
 	"testing"
+
+	"engine/evaluation/board"
+	"engine/evaluation/board/bitboards"
 
 	"github.com/stretchr/testify/assert"
 )

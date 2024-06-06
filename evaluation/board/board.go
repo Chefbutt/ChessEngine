@@ -56,7 +56,119 @@ type Board struct {
 	TurnBlack bool // Flag to indicate if it's black's turn to move
 
 	HalfTurn int // What is the half turn
-	Debug    bool
+
+	Repetition    int
+	LastMoveWhite Move
+	LastMoveBlack Move
+
+	Debug bool
+}
+
+func FromFEN(fen string) Board {
+	parts := strings.Split(fen, " ")
+	piecePlacement := parts[0]
+	activeColor := parts[1]
+	castlingAvailability := parts[2]
+	enPassantTarget := parts[3]
+
+	board := Board{}
+
+	// Parse piece placement
+	board.parsePiecePlacement(piecePlacement)
+
+	// Parse active color
+	if activeColor == "b" {
+		board.TurnBlack = true
+	} else {
+		board.TurnBlack = false
+	}
+
+	// Parse castling availability
+	board.CastleWhiteKingside = strings.Contains(castlingAvailability, "K")
+	board.CastleWhiteQueenside = strings.Contains(castlingAvailability, "Q")
+	board.CastleBlackKingside = strings.Contains(castlingAvailability, "k")
+	board.CastleBlackQueenside = strings.Contains(castlingAvailability, "q")
+
+	// Parse en passant target square
+	if enPassantTarget != "-" {
+		board.EnPassantTarget = parseSquare(enPassantTarget)
+	} else {
+		board.EnPassantTarget = bitboards.BitBoard(0)
+	}
+
+	// Calculate occupied and empty squares
+	board.OccupiedSquares = board.WhitePawns.BitBoard() | board.BlackPawns.BitBoard() | board.WhiteKnights.BitBoard() | board.BlackKnights.BitBoard() |
+		board.WhiteBishops.BitBoard() | board.BlackBishops.BitBoard() | board.WhiteRooks.BitBoard() | board.BlackRooks.BitBoard() |
+		board.WhiteQueens.BitBoard() | board.BlackQueens.BitBoard() | board.WhiteKing.BitBoard() | board.BlackKing.BitBoard()
+	board.EmptySquares = ^board.OccupiedSquares
+
+	// Calculate white and black pieces
+	board.WhitePieces = board.WhitePawns.BitBoard() | board.WhiteKnights.BitBoard() | board.WhiteBishops.BitBoard() | board.WhiteRooks.BitBoard() |
+		board.WhiteQueens.BitBoard() | board.WhiteKing.BitBoard()
+	board.BlackPieces = board.BlackPawns.BitBoard() | board.BlackKnights.BitBoard() | board.BlackBishops.BitBoard() | board.BlackRooks.BitBoard() |
+		board.BlackQueens.BitBoard() | board.BlackKing.BitBoard()
+
+	return board
+}
+
+// parsePiecePlacement parses the piece placement part of the FEN string and sets the bitboards accordingly.
+func (b *Board) parsePiecePlacement(piecePlacement string) {
+	ranks := strings.Split(piecePlacement, "/")
+	for rankIndex, rank := range ranks {
+		fileIndex := 0
+		for _, char := range rank {
+			if char >= '1' && char <= '8' {
+				// Empty squares
+				fileIndex += int(char - '0')
+			} else {
+				// Piece
+				square := (7-rankIndex)*8 + fileIndex
+				b.setPieceAtSquare(char, square)
+				fileIndex++
+			}
+		}
+	}
+}
+
+// setPieceAtSquare sets the bitboard for a specific piece at a given square.
+func (b *Board) setPieceAtSquare(piece rune, square int) {
+	bit := bitboards.New(square)
+	switch piece {
+	case 'P':
+		b.WhitePawns = bitboards.WhitePawnBitboard(b.WhitePawns.BitBoard() | bit)
+	case 'p':
+		b.BlackPawns = bitboards.BlackPawnBitboard(b.BlackPawns.BitBoard() | bit)
+	case 'N':
+		b.WhiteKnights = bitboards.KnightBitboard(b.WhiteKnights.BitBoard() | bit)
+	case 'n':
+		b.BlackKnights = bitboards.KnightBitboard(b.BlackKnights.BitBoard() | bit)
+	case 'B':
+		b.WhiteBishops = bitboards.BishopBitboard(b.WhiteBishops.BitBoard() | bit)
+	case 'b':
+		b.BlackBishops = bitboards.BishopBitboard(b.BlackBishops.BitBoard() | bit)
+	case 'R':
+		b.WhiteRooks = bitboards.RookBitboard(b.WhiteRooks.BitBoard() | bit)
+	case 'r':
+		b.BlackRooks = bitboards.RookBitboard(b.BlackRooks.BitBoard() | bit)
+	case 'Q':
+		b.WhiteQueens = bitboards.QueenBitboard(b.WhiteQueens.BitBoard() | bit)
+	case 'q':
+		b.BlackQueens = bitboards.QueenBitboard(b.BlackQueens.BitBoard() | bit)
+	case 'K':
+		b.WhiteKing = bitboards.KingBitboard(b.WhiteKing.BitBoard() | bit)
+	case 'k':
+		b.BlackKing = bitboards.KingBitboard(b.BlackKing.BitBoard() | bit)
+	}
+}
+
+// parseSquare converts a square in algebraic notation (e.g., "e4") to a bitboard.
+func parseSquare(square string) bitboards.BitBoard {
+	if len(square) != 2 {
+		return bitboards.BitBoard(0)
+	}
+	file := square[0] - 'a'
+	rank := square[1] - '1'
+	return bitboards.BitBoard(1) << (rank*8 + file)
 }
 
 func New() Board {

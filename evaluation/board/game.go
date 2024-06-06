@@ -81,11 +81,16 @@ func (board *Board) MakeMove(depth int) error {
 	bestMove, eval := board.BestMove(depth, OrderedMoves, 8, -3, -8, 1)
 
 	if board.Debug {
-		fmt.Println(PieceSymbols[board.PieceAt(int(bestMove.Source))], "(", IndexToPosition(uint64(bestMove.Destination)), ") material: ", eval.material, ", centre bonus: ", eval.centreBonus, ", mobility bonus: ", eval.mobilityBonus, ", pawn structure bonus: ", eval.pawnPenalties, ", knight placement bonus: ", eval.knightBonus, ", king safety bonus: ", eval.safety)
+		fmt.Println(PieceSymbols[board.PieceAt(int(bestMove.Source))], "(", IndexToPosition(uint64(bestMove.Destination)), ") : ", eval)
 	}
 
 	if bestMove.Source == bestMove.Destination {
-		fmt.Println("Resign")
+		if board.TurnBlack {
+			fmt.Println("Black resigns")
+		} else {
+			fmt.Println("White resigns")
+		}
+		return errors.New("Resign")
 	}
 
 	_, err := board.makeMove(bestMove)
